@@ -1,6 +1,5 @@
 package com.dooapp;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -14,12 +13,12 @@ import spoon.Launcher;
 
 import java.beans.IntrospectionException;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -81,6 +80,11 @@ public class Spoon extends AbstractMojo {
                     addURLToSystemClassLoader(artifact.getFile().toURI().toURL());
                 }
             }
+            fixStrangeClassLoaderIssue();
+            getLog().info("Running spoon with classpath : ");
+            for (URL url : ((URLClassLoader) ClassLoader.getSystemClassLoader()).getURLs()) {
+                getLog().info(url + "");
+            }
             getLog().info("Running spoon with parameters : ");
             getLog().info(parameters.toString());
             Launcher spoonLauncher = new Launcher(parameters.toArray(new String[parameters.size()]));
@@ -120,14 +124,22 @@ public class Spoon extends AbstractMojo {
     private String loadTemplateFile(String templateName) throws IOException {
         String name = templateName.replace('.', File.separatorChar) + ".java";
         InputStream in = Spoon.class.getClassLoader().getResourceAsStream(name);
-        if (in == null) {
-            throw new RuntimeException("Unable to load " + name + " did you configure the src folder as a resource " +
-                    "folder?");
+        String packageName = templateName.substring(0, templateName.lastIndexOf('.'));
+        String fileName = templateName.substring(templateName.lastIndexOf('.') + 1) + ".java";
+        return TemplateLoader.loadToTmpFolder(in, packageName, fileName).getAbsolutePath();
+    }
+    public void fixStrangeClassLoaderIssue() {
+        URLClassLoader systemClassLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
+        List<URL> systemUrl = Arrays.asList(systemClassLoader.getURLs());
+        for (URL url : ((URLClassLoader) Spoon.class.getClassLoader()).getURLs()) {
+            if (!systemUrl.contains(url)) {
+                try {
+                    addURLToSystemClassLoader(url);
+                } catch (IntrospectionException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        File tmp = File.createTempFile("template", ".java");
-        tmp.deleteOnExit();
-        IOUtils.copy(in, new FileOutputStream(tmp));
-        return tmp.getAbsolutePath();
     }
     public static void addURLToSystemClassLoader(URL url) throws IntrospectionException {
         URLClassLoader systemClassLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
