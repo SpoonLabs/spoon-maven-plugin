@@ -1,0 +1,33 @@
+target/
+target
+target/*
+target/**
+*.ipr
+*.iws
+.idea
+*.iml
+*.pydevproject
+.project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+nbproject/
+nbactions.xml
+.DS_Store
+Icon?
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
