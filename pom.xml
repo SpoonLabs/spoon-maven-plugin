@@ -37,7 +37,7 @@
         <dependency>
             <groupId>fr.inria.gforge.spoon</groupId>
             <artifactId>spoon-core</artifactId>
-            <version>1.5</version>
+            <version>1.5.1</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -93,4 +93,16 @@
             </plugin>
         </plugins>
     </build>
+    <distributionManagement>
+        <repository>
+            <id>dooapp-nexus</id>
+            <name>dooapp-artifactory-releases</name>
+            <url>http://nexus.jack.dooapp.com/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>dooapp-nexus</id>
+            <name>dooapp-artifactory-snapshots</name>
+            <url>http://nexus.jack.dooapp.com/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
