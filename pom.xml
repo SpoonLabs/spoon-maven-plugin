@@ -15,6 +15,13 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <scm>
+        <connection>scm:git:https://github.com/dooApp/spoon-maven-plugin.git</connection>
+        <developerConnection>scm:git:https://github.com/dooApp/spoon-maven-plugin.git</developerConnection>
+        <url>https://github.com/dooApp/spoon-maven-plugin.git</url>
+        <tag>HEAD</tag>
+    </scm>
+
 
     <dependencies>
         <dependency>
