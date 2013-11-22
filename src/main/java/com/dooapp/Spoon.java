@@ -101,10 +101,12 @@ public class Spoon extends AbstractMojo {
                 }
                 public FileGenerator<? extends CtElement> getFileGenerator() {
                     if (model.getFileGenerator() == null) {
+                        getLog().info("loading default fileGenerator");
                         return null;
                     }
                     try {
-                        return (FileGenerator<? extends CtElement>) Class.forName(model.getFileGenerator()).newInstance();
+                        getLog().info("loading fileGenerator : " + model.getFileGenerator());
+                        return (FileGenerator<? extends CtElement>) Class.forName(model.getFileGenerator()).getConstructor(File.class).newInstance(getArguments().getFile("output"));
                     } catch (Exception e) {
                         getLog().error(e.getMessage(), e);
                         return null;
