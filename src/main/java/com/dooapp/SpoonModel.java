@@ -18,6 +18,14 @@ import java.util.List;
 public class SpoonModel {
     private List<String> templates;
     private List<String> processors;
+    private String fileGenerator;
+    public String getFileGenerator() {
+        return fileGenerator;
+    }
+    @XmlElement(name = "fileGenerator")
+    public void setFileGenerator(String fileGenerator) {
+        this.fileGenerator = fileGenerator;
+    }
     public List<String> getProcessors() {
         return processors;
     }

@@ -10,6 +10,9 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import spoon.Launcher;
+import spoon.processing.FileGenerator;
+import spoon.reflect.Factory;
+import spoon.reflect.declaration.CtElement;
 
 import java.beans.IntrospectionException;
 import java.io.File;
@@ -87,7 +90,27 @@ public class Spoon extends AbstractMojo {
             }
             getLog().info("Running spoon with parameters : ");
             getLog().info(parameters.toString());
-            Launcher spoonLauncher = new Launcher(parameters.toArray(new String[parameters.size()]));
+            Launcher spoonLauncher = new Launcher(parameters.toArray(new String[parameters.size()])) {
+                @Override
+                protected Factory createFactory() {
+                    Factory factory = super.createFactory();
+                    if (getFileGenerator() != null) {
+                        factory.getEnvironment().setDefaultFileGenerator(getFileGenerator());
+                    }
+                    return factory;
+                }
+                public FileGenerator<? extends CtElement> getFileGenerator() {
+                    if (model.getFileGenerator() == null) {
+                        return null;
+                    }
+                    try {
+                        return (FileGenerator<? extends CtElement>) Class.forName(model.getFileGenerator()).newInstance();
+                    } catch (Exception e) {
+                        getLog().error(e.getMessage(), e);
+                        return null;
+                    }
+                }
+            };
             spoonLauncher.run();
         } catch (Exception e) {
             getLog().warn(e.getMessage(), e);
