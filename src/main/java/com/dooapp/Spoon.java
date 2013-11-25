@@ -147,7 +147,7 @@ public class Spoon extends AbstractMojo {
         return buffer.toString();
     }
     private String loadTemplateFile(String templateName) throws IOException {
-        String name = templateName.replace('.', File.separatorChar) + ".java";
+        String name = templateName.replace('.', '/') + ".java";
         InputStream in = Spoon.class.getClassLoader().getResourceAsStream(name);
         String packageName = templateName.substring(0, templateName.lastIndexOf('.'));
         String fileName = templateName.substring(templateName.lastIndexOf('.') + 1) + ".java";
