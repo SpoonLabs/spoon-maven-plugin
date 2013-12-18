@@ -3,7 +3,7 @@
 
     <groupId>com.dooapp</groupId>
     <artifactId>spoon-maven-plugin</artifactId>
-    <version>1.1</version>
+    <version>1.1-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <name>spoon-maven-plugin Maven Plugin</name>
@@ -18,7 +18,7 @@
         <connection>scm:git:https://github.com/dooApp/spoon-maven-plugin.git</connection>
         <developerConnection>scm:git:https://github.com/dooApp/spoon-maven-plugin.git</developerConnection>
         <url>https://github.com/dooApp/spoon-maven-plugin.git</url>
-        <tag>spoon-maven-plugin-1.1</tag>
+        <tag>HEAD</tag>
     </scm>
 
 
