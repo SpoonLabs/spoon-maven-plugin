@@ -78,7 +78,9 @@ abstract class AbstractSpoonConfigurationBuilder
 
 	@Override
 	public SpoonConfigurationBuilder addPreserveFormatting() {
-		parameters.add("-f");
+		if (spoon.isPreserveFormatting()) {
+			parameters.add("-f");
+		}
 		return this;
 	}
 
