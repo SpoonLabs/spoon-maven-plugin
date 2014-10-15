@@ -1,5 +1,6 @@
 package com.dooapp;
 
+import com.dooapp.util.XMLLoader;
 import org.junit.Test;
 
 /**
@@ -10,6 +11,7 @@ import org.junit.Test;
 public class XMLLoaderTest {
     @Test
     public void simpleTest() throws Exception {
-        SpoonModel model = XMLLoader.load(XMLLoaderTest.class.getResourceAsStream("spoon.xml"));
+        SpoonModel model = XMLLoader
+				.load(XMLLoaderTest.class.getResourceAsStream("spoon.xml"));
     }
 }

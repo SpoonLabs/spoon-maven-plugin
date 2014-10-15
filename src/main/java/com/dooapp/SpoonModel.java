@@ -16,30 +16,36 @@ import java.util.List;
 @XmlType(name = "spoonModel")
 @XmlRootElement(name = "spoonModel")
 public class SpoonModel {
-    private List<String> templates;
-    private List<String> processors;
-    private String fileGenerator;
-    public String getFileGenerator() {
-        return fileGenerator;
-    }
-    @XmlElement(name = "fileGenerator")
-    public void setFileGenerator(String fileGenerator) {
-        this.fileGenerator = fileGenerator;
-    }
-    public List<String> getProcessors() {
-        return processors;
-    }
-    @XmlElementWrapper(name = "processors")
-    @XmlElement(name = "processor")
-    public void setProcessors(List<String> processors) {
-        this.processors = processors;
-    }
-    public List<String> getTemplates() {
-        return templates;
-    }
-    @XmlElementWrapper(name = "templates")
-    @XmlElement(name = "template")
-    public void setTemplates(List<String> templates) {
-        this.templates = templates;
-    }
+	private List<String> templates;
+	private List<String> processors;
+	private String fileGenerator;
+
+	public String getFileGenerator() {
+		return fileGenerator;
+	}
+
+	@XmlElement(name = "fileGenerator")
+	public void setFileGenerator(String fileGenerator) {
+		this.fileGenerator = fileGenerator;
+	}
+
+	public List<String> getProcessors() {
+		return processors;
+	}
+
+	@XmlElementWrapper(name = "processors")
+	@XmlElement(name = "processor")
+	public void setProcessors(List<String> processors) {
+		this.processors = processors;
+	}
+
+	public List<String> getTemplates() {
+		return templates;
+	}
+
+	@XmlElementWrapper(name = "templates")
+	@XmlElement(name = "template")
+	public void setTemplates(List<String> templates) {
+		this.templates = templates;
+	}
 }
