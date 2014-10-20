@@ -2,6 +2,7 @@ package com.dooapp;
 
 import com.dooapp.configuration.SpoonConfigurationBuilder;
 import com.dooapp.configuration.SpoonConfigurationFactory;
+import com.dooapp.logging.PerformanceDecorator;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -116,7 +117,7 @@ public class Spoon extends AbstractMojo {
 			// Initialize and launch launcher
 			Launcher spoonLauncher = new Launcher();
 			spoonLauncher.setArgs(builder.build());
-			spoonLauncher.run();
+			new PerformanceDecorator(spoonLauncher).execute();
 		} catch (Exception e) {
 			getLog().warn(e.getMessage(), e);
 			throw new MojoExecutionException(e.getMessage(), e);
