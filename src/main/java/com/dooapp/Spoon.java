@@ -36,8 +36,7 @@ public class Spoon extends AbstractMojo {
 	 * Input directory for Spoon.
 	 */
 	@Parameter(
-			property = "folder.src",
-			defaultValue = "${basedir}/src/main/java")
+			property = "folder.src")
 	private File srcFolder;
 	/**
 	 * Output directory where Spoon must generate his output (spooned source code).
@@ -77,19 +76,19 @@ public class Spoon extends AbstractMojo {
 		try {
 			final SpoonConfigurationBuilder builder = factory.getConfig(this);
 
-			// Create output folder if it doesn't exist.
-			if (!outFolder.exists()) {
-				outFolder.mkdirs();
-			}
-
 			// Builds all parameters necessary.
-			builder.addInputFolder()
-					.addOutputFolder()
-					.addCompliance()
-					.addPreserveFormatting()
-					.addSourceClasspath()
-					.addProcessors()
-					.addTemplates();
+			try {
+				builder.addInputFolder()
+						.addOutputFolder()
+						.addCompliance()
+						.addPreserveFormatting()
+						.addSourceClasspath()
+						.addProcessors()
+						.addTemplates();
+			} catch (RuntimeException e) {
+				getLog().warn(e.getMessage());
+				return;
+			}
 
 			// Changes class loader.
 			if (project.getArtifacts() == null || project.getArtifacts()
@@ -117,7 +116,7 @@ public class Spoon extends AbstractMojo {
 			// Initialize and launch launcher
 			Launcher spoonLauncher = new Launcher();
 			spoonLauncher.setArgs(builder.build());
-			new PerformanceDecorator(spoonLauncher).execute();
+			new PerformanceDecorator(this, spoonLauncher).execute();
 		} catch (Exception e) {
 			getLog().warn(e.getMessage(), e);
 			throw new MojoExecutionException(e.getMessage(), e);

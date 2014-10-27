@@ -5,6 +5,7 @@ import com.dooapp.configuration.SpoonConfigurationBuilder;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.project.MavenProject;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,13 +30,33 @@ abstract class AbstractSpoonConfigurationBuilder
 
 	@Override
 	public SpoonConfigurationBuilder addInputFolder() {
-		parameters.add("-i");
-		parameters.add(spoon.getSrcFolder().getAbsolutePath());
-		return this;
+		final String srcDir = spoon.getProject().getBuild()
+				.getSourceDirectory();
+		final File srcDirFile = new File(srcDir);
+		if (srcDirFile.exists()) {
+			parameters.add("-i");
+			parameters.add(srcDir);
+			return this;
+		} else if (spoon.getSrcFolder() != null && spoon.getSrcFolder()
+				.exists()) {
+			parameters.add("-i");
+			parameters.add(spoon.getSrcFolder().getAbsolutePath());
+			return this;
+		}
+		throw new RuntimeException(
+				"No source directory for " + spoon.getProject().getName()
+						+ " project.");
 	}
 
 	@Override
 	public SpoonConfigurationBuilder addOutputFolder() {
+		// Create output folder if it doesn't exist.
+		if (!spoon.getOutFolder().exists()) {
+			if (spoon.getOutFolder().mkdirs()) {
+				throw new RuntimeException("Cannot create ouput directories.");
+			}
+		}
+
 		parameters.add("-o");
 		parameters.add(spoon.getOutFolder().getAbsolutePath());
 		return this;
