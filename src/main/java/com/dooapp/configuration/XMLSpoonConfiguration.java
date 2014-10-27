@@ -2,6 +2,7 @@ package com.dooapp.configuration;
 
 import com.dooapp.Spoon;
 import com.dooapp.SpoonModel;
+import com.dooapp.logging.ReportBuilder;
 import com.dooapp.util.TemplateLoader;
 
 import java.io.File;
@@ -18,8 +19,9 @@ class XMLSpoonConfiguration extends AbstractSpoonConfigurationBuilder {
 	 */
 	private SpoonModel model;
 
-	public XMLSpoonConfiguration(Spoon spoon, SpoonModel model) {
-		super(spoon);
+	public XMLSpoonConfiguration(Spoon spoon, ReportBuilder reportBuilder,
+			SpoonModel model) {
+		super(spoon, reportBuilder);
 		this.model = model;
 	}
 
@@ -27,8 +29,11 @@ class XMLSpoonConfiguration extends AbstractSpoonConfigurationBuilder {
 	public SpoonConfigurationBuilder addProcessors() {
 		if (model != null && model.getProcessors() != null && !model
 				.getProcessors().isEmpty()) {
+			String[] processors = model.getProcessors().toArray(
+					new String[model.getProcessors().size()]);
 			parameters.add("-p");
-			parameters.add(buildProcessors());
+			parameters.add(buildProcessors(processors));
+			reportBuilder.setProcessors(processors);
 		}
 		return this;
 	}
@@ -36,11 +41,8 @@ class XMLSpoonConfiguration extends AbstractSpoonConfigurationBuilder {
 	/**
 	 * Builds the path for the list of processors.
 	 */
-	private String buildProcessors() {
-		return implode(
-				model.getProcessors().toArray(
-						new String[model.getProcessors().size()]),
-				File.pathSeparator);
+	private String buildProcessors(String[] processors) {
+		return implode(processors, File.pathSeparator);
 	}
 
 	@Override

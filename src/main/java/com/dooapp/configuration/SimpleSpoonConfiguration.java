@@ -1,17 +1,18 @@
 package com.dooapp.configuration;
 
 import com.dooapp.Spoon;
+import com.dooapp.logging.ReportBuilder;
 
 import java.io.File;
 
 /**
  * Created by gerard on 15/10/2014.
  */
-public class SimpleSpoonConfiguration
-		extends AbstractSpoonConfigurationBuilder {
+class SimpleSpoonConfiguration extends AbstractSpoonConfigurationBuilder {
 
-	protected SimpleSpoonConfiguration(Spoon spoon) {
-		super(spoon);
+	protected SimpleSpoonConfiguration(Spoon spoon,
+			ReportBuilder reportBuilder) {
+		super(spoon, reportBuilder);
 	}
 
 	@Override
@@ -20,6 +21,7 @@ public class SimpleSpoonConfiguration
 		if (processors != null && processors.length != 0) {
 			parameters.add("-p");
 			parameters.add(implode(processors, File.pathSeparator));
+			reportBuilder.setProcessors(processors);
 		}
 		return this;
 	}
