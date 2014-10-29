@@ -6,6 +6,9 @@ import com.dooapp.logging.ReportBuilder;
 import com.dooapp.logging.ReportFactory;
 import com.dooapp.metrics.PerformanceDecorator;
 import com.dooapp.metrics.SpoonLauncherDecorator;
+import com.dooapp.util.ClasspathHacker;
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -17,11 +20,11 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import spoon.Launcher;
 
-import java.beans.IntrospectionException;
 import java.io.File;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -60,7 +63,7 @@ public class Spoon extends AbstractMojo {
 	 */
 	@Parameter(
 			property = "processors")
-	private String[] processors;
+	private List<Processor> processors;
 	/**
 	 * Project spooned with maven information.
 	 */
@@ -98,6 +101,9 @@ public class Spoon extends AbstractMojo {
 				return;
 			}
 
+			for (Processor processor : processors) {
+				ClasspathHacker.addFile(processor.getJarFile());
+			}
 			// Changes class loader.
 			if (project.getArtifacts() == null || project.getArtifacts()
 					.isEmpty()) {
@@ -105,11 +111,10 @@ public class Spoon extends AbstractMojo {
 			} else {
 				for (Artifact artifact : (Set<Artifact>) project
 						.getArtifacts()) {
-					getLog().debug("Add dependency to classpath : " + artifact);
-					getLog().debug(
+					getLog().info("Add dependency to classpath : " + artifact);
+					getLog().info(
 							"Add file to classpath : " + artifact.getFile());
-					addURLToSystemClassLoader(
-							artifact.getFile().toURI().toURL());
+					ClasspathHacker.addFile(artifact.getFile());
 				}
 			}
 
@@ -134,23 +139,6 @@ public class Spoon extends AbstractMojo {
 		}
 	}
 
-	public static void addURLToSystemClassLoader(URL url)
-			throws IntrospectionException {
-		URLClassLoader systemClassLoader = (URLClassLoader) ClassLoader
-				.getSystemClassLoader();
-		Class<URLClassLoader> classLoaderClass = URLClassLoader.class;
-		try {
-			Method method = classLoaderClass
-					.getDeclaredMethod("addURL", new Class[] { URL.class });
-			method.setAccessible(true);
-			method.invoke(systemClassLoader, new Object[] { url });
-		} catch (Throwable t) {
-			t.printStackTrace();
-			throw new IntrospectionException(
-					"Error when adding url to system ClassLoader ");
-		}
-	}
-
 	public File getSrcFolder() {
 		return srcFolder;
 	}
@@ -163,11 +151,20 @@ public class Spoon extends AbstractMojo {
 		return preserveFormatting;
 	}
 
-	public String[] getProcessors() {
-		return processors;
+	public List<String> getProcessorsPath() {
+		return Lists.transform(processors, processorModelToPath);
 	}
 
 	public MavenProject getProject() {
 		return project;
 	}
+
+	/**
+	 * Transforms list of ProcessorModel to a list of processors paths.
+	 */
+	private final Function<Processor, String> processorModelToPath = new Function<Processor, String>() {
+		public String apply(Processor i) {
+			return i.getPath();
+		}
+	};
 }
