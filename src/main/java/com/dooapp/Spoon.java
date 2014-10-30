@@ -76,6 +76,16 @@ public class Spoon extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		try {
+			final String resultFilename =
+					project.getBuild().getDirectory() + File.separator
+							+ "spoon-maven-plugin" + File.separator
+							+ "result-spoon.xml";
+			final File resultFile = new File(resultFilename);
+			if (resultFile.exists()) {
+				getLog().warn("Project already spooned.");
+				return;
+			}
+
 			// Builder for result file.
 			final ReportBuilder reportBuilder = ReportFactory.newReportBuilder(
 					this);
