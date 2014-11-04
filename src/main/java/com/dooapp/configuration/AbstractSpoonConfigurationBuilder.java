@@ -1,10 +1,11 @@
 package com.dooapp.configuration;
 
 import com.dooapp.Spoon;
-import com.dooapp.configuration.SpoonConfigurationBuilder;
+import com.dooapp.logging.ReportBuilder;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.project.MavenProject;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,9 +17,12 @@ abstract class AbstractSpoonConfigurationBuilder
 
 	protected final List<String> parameters = new LinkedList<String>();
 	protected final Spoon spoon;
+	protected final ReportBuilder reportBuilder;
 
-	protected AbstractSpoonConfigurationBuilder(Spoon spoon) {
+	protected AbstractSpoonConfigurationBuilder(Spoon spoon,
+			ReportBuilder reportBuilder) {
 		this.spoon = spoon;
+		this.reportBuilder = reportBuilder;
 		if (this.spoon.getLog().isInfoEnabled()) {
 			parameters.add("-v");
 		}
@@ -29,15 +33,36 @@ abstract class AbstractSpoonConfigurationBuilder
 
 	@Override
 	public SpoonConfigurationBuilder addInputFolder() {
-		parameters.add("-i");
-		parameters.add(spoon.getSrcFolder().getAbsolutePath());
-		return this;
+		final String srcDir = spoon.getProject().getBuild()
+				.getSourceDirectory();
+		final File srcDirFile = new File(srcDir);
+		if (srcDirFile.exists()) {
+			parameters.add("-i");
+			parameters.add(srcDir);
+			reportBuilder.setInput(srcDir);
+			return this;
+		} else if (spoon.getSrcFolder() != null && spoon.getSrcFolder()
+				.exists()) {
+			parameters.add("-i");
+			parameters.add(spoon.getSrcFolder().getAbsolutePath());
+			reportBuilder.setInput(spoon.getSrcFolder().getAbsolutePath());
+			return this;
+		}
+		throw new RuntimeException(
+				"No source directory for " + spoon.getProject().getName()
+						+ " project.");
 	}
 
 	@Override
 	public SpoonConfigurationBuilder addOutputFolder() {
+		// Create output folder if it doesn't exist.
+		if (!spoon.getOutFolder().exists()) {
+			spoon.getOutFolder().mkdirs();
+		}
+
 		parameters.add("-o");
 		parameters.add(spoon.getOutFolder().getAbsolutePath());
+		reportBuilder.setOutput(spoon.getOutFolder().getAbsolutePath());
 		return this;
 	}
 
@@ -72,6 +97,7 @@ abstract class AbstractSpoonConfigurationBuilder
 			spoon.getLog().info("Source classpath: " + classpath.toString());
 			parameters.add("--source-classpath");
 			parameters.add(classpath.toString());
+			reportBuilder.setSourceClasspath(classpath.toString());
 		}
 		return this;
 	}
@@ -80,7 +106,9 @@ abstract class AbstractSpoonConfigurationBuilder
 	public SpoonConfigurationBuilder addPreserveFormatting() {
 		if (spoon.isPreserveFormatting()) {
 			parameters.add("-f");
+			reportBuilder.setFragmentMode(true);
 		}
+		reportBuilder.setFragmentMode(false);
 		return this;
 	}
 

@@ -2,7 +2,10 @@ package com.dooapp;
 
 import com.dooapp.configuration.SpoonConfigurationBuilder;
 import com.dooapp.configuration.SpoonConfigurationFactory;
-import com.dooapp.logging.PerformanceDecorator;
+import com.dooapp.logging.ReportBuilder;
+import com.dooapp.logging.ReportFactory;
+import com.dooapp.metrics.PerformanceDecorator;
+import com.dooapp.metrics.SpoonLauncherDecorator;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -36,8 +39,7 @@ public class Spoon extends AbstractMojo {
 	 * Input directory for Spoon.
 	 */
 	@Parameter(
-			property = "folder.src",
-			defaultValue = "${basedir}/src/main/java")
+			property = "folder.src")
 	private File srcFolder;
 	/**
 	 * Output directory where Spoon must generate his output (spooned source code).
@@ -67,29 +69,34 @@ public class Spoon extends AbstractMojo {
 			required = true,
 			readonly = true)
 	private MavenProject project;
-	/**
-	 * Factory to get a spoon configuration to build parameters for spoon.
-	 */
-	private final SpoonConfigurationFactory factory = new SpoonConfigurationFactory();
 
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		try {
-			final SpoonConfigurationBuilder builder = factory.getConfig(this);
+			// Builder for result file.
+			final ReportBuilder reportBuilder = ReportFactory.newReportBuilder(
+					this);
+			// Builder for parameters of Spoon.
+			final SpoonConfigurationBuilder spoonBuilder = SpoonConfigurationFactory
+					.getConfig(this, reportBuilder);
 
-			// Create output folder if it doesn't exist.
-			if (!outFolder.exists()) {
-				outFolder.mkdirs();
-			}
+			// Save project name.
+			reportBuilder.setProjectName(project.getName());
+			reportBuilder.setModuleName(project.getName());
 
 			// Builds all parameters necessary.
-			builder.addInputFolder()
-					.addOutputFolder()
-					.addCompliance()
-					.addPreserveFormatting()
-					.addSourceClasspath()
-					.addProcessors()
-					.addTemplates();
+			try {
+				spoonBuilder.addInputFolder()
+						.addOutputFolder()
+						.addCompliance()
+						.addPreserveFormatting()
+						.addSourceClasspath()
+						.addProcessors()
+						.addTemplates();
+			} catch (RuntimeException e) {
+				getLog().warn(e.getMessage());
+				return;
+			}
 
 			// Changes class loader.
 			if (project.getArtifacts() == null || project.getArtifacts()
@@ -116,8 +123,11 @@ public class Spoon extends AbstractMojo {
 
 			// Initialize and launch launcher
 			Launcher spoonLauncher = new Launcher();
-			spoonLauncher.setArgs(builder.build());
-			new PerformanceDecorator(spoonLauncher).execute();
+			spoonLauncher.setArgs(spoonBuilder.build());
+			final SpoonLauncherDecorator performance = new PerformanceDecorator(
+					reportBuilder, spoonLauncher);
+			performance.execute();
+			reportBuilder.buildReport();
 		} catch (Exception e) {
 			getLog().warn(e.getMessage(), e);
 			throw new MojoExecutionException(e.getMessage(), e);

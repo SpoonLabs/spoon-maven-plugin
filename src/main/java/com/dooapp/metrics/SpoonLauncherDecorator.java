@@ -1,4 +1,4 @@
-package com.dooapp.logging;
+package com.dooapp.metrics;
 
 import org.apache.maven.plugin.MojoExecutionException;
 
