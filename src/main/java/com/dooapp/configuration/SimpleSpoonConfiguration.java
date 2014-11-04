@@ -18,9 +18,7 @@ class SimpleSpoonConfiguration extends AbstractSpoonConfigurationBuilder {
 
 	@Override
 	public SpoonConfigurationBuilder addProcessors() {
-		final List<String> listProcessors = spoon.getProcessorsPath();
-		String[] processors = listProcessors.toArray(
-				new String[listProcessors.size()]);
+		final String[] processors = spoon.getProcessorsPath();
 		if (processors != null && processors.length != 0) {
 			parameters.add("-p");
 			parameters.add(implode(processors, File.pathSeparator));

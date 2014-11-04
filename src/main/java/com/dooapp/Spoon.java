@@ -7,8 +7,6 @@ import com.dooapp.logging.ReportFactory;
 import com.dooapp.metrics.PerformanceDecorator;
 import com.dooapp.metrics.SpoonLauncherDecorator;
 import com.dooapp.util.ClasspathHacker;
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -23,8 +21,6 @@ import spoon.Launcher;
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -41,8 +37,7 @@ public class Spoon extends AbstractMojo {
 	/**
 	 * Input directory for Spoon.
 	 */
-	@Parameter(
-			property = "folder.src")
+	@Parameter(property = "folder.src")
 	private File srcFolder;
 	/**
 	 * Output directory where Spoon must generate his output (spooned source code).
@@ -61,9 +56,13 @@ public class Spoon extends AbstractMojo {
 	/**
 	 * List of processors.
 	 */
-	@Parameter(
-			property = "processors")
-	private List<Processor> processors;
+	@Parameter(property = "processors")
+	private String[] processors;
+	/**
+	 * List of jar necessary for processors.
+	 */
+	@Parameter(property = "jar.files")
+	private String[] jarFiles;
 	/**
 	 * Project spooned with maven information.
 	 */
@@ -111,8 +110,8 @@ public class Spoon extends AbstractMojo {
 				return;
 			}
 
-			for (Processor processor : processors) {
-				ClasspathHacker.addFile(processor.getJarFile());
+			for (String jarFile : jarFiles) {
+				ClasspathHacker.addFile(jarFile);
 			}
 			// Changes class loader.
 			if (project.getArtifacts() == null || project.getArtifacts()
@@ -161,20 +160,12 @@ public class Spoon extends AbstractMojo {
 		return preserveFormatting;
 	}
 
-	public List<String> getProcessorsPath() {
-		return Lists.transform(processors, processorModelToPath);
+	public String[] getProcessorsPath() {
+		return processors;
 	}
 
 	public MavenProject getProject() {
 		return project;
 	}
 
-	/**
-	 * Transforms list of ProcessorModel to a list of processors paths.
-	 */
-	private final Function<Processor, String> processorModelToPath = new Function<Processor, String>() {
-		public String apply(Processor i) {
-			return i.getPath();
-		}
-	};
 }
