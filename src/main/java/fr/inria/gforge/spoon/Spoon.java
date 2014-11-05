@@ -1,11 +1,12 @@
-package com.dooapp;
+package fr.inria.gforge.spoon;
 
-import com.dooapp.configuration.SpoonConfigurationBuilder;
-import com.dooapp.configuration.SpoonConfigurationFactory;
-import com.dooapp.logging.ReportBuilder;
-import com.dooapp.logging.ReportFactory;
-import com.dooapp.metrics.PerformanceDecorator;
-import com.dooapp.metrics.SpoonLauncherDecorator;
+import fr.inria.gforge.spoon.configuration.SpoonConfigurationBuilder;
+import fr.inria.gforge.spoon.configuration.SpoonConfigurationFactory;
+import fr.inria.gforge.spoon.logging.ReportBuilder;
+import fr.inria.gforge.spoon.logging.ReportFactory;
+import fr.inria.gforge.spoon.metrics.PerformanceDecorator;
+import fr.inria.gforge.spoon.metrics.SpoonLauncherDecorator;
+import fr.inria.gforge.spoon.util.ClasspathHacker;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -17,9 +18,7 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import spoon.Launcher;
 
-import java.beans.IntrospectionException;
 import java.io.File;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Set;
@@ -38,8 +37,7 @@ public class Spoon extends AbstractMojo {
 	/**
 	 * Input directory for Spoon.
 	 */
-	@Parameter(
-			property = "folder.src")
+	@Parameter(property = "folder.src")
 	private File srcFolder;
 	/**
 	 * Output directory where Spoon must generate his output (spooned source code).
@@ -58,9 +56,13 @@ public class Spoon extends AbstractMojo {
 	/**
 	 * List of processors.
 	 */
-	@Parameter(
-			property = "processors")
+	@Parameter(property = "processors")
 	private String[] processors;
+	/**
+	 * List of jar necessary for processors.
+	 */
+	@Parameter(property = "jar.files")
+	private String[] jarFiles;
 	/**
 	 * Project spooned with maven information.
 	 */
@@ -73,6 +75,16 @@ public class Spoon extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		try {
+			final String resultFilename =
+					project.getBuild().getDirectory() + File.separator
+							+ "spoon-maven-plugin" + File.separator
+							+ "result-spoon.xml";
+			final File resultFile = new File(resultFilename);
+			if (resultFile.exists()) {
+				getLog().warn("Project already spooned.");
+				return;
+			}
+
 			// Builder for result file.
 			final ReportBuilder reportBuilder = ReportFactory.newReportBuilder(
 					this);
@@ -98,6 +110,9 @@ public class Spoon extends AbstractMojo {
 				return;
 			}
 
+			for (String jarFile : jarFiles) {
+				ClasspathHacker.addFile(jarFile);
+			}
 			// Changes class loader.
 			if (project.getArtifacts() == null || project.getArtifacts()
 					.isEmpty()) {
@@ -105,11 +120,10 @@ public class Spoon extends AbstractMojo {
 			} else {
 				for (Artifact artifact : (Set<Artifact>) project
 						.getArtifacts()) {
-					getLog().debug("Add dependency to classpath : " + artifact);
-					getLog().debug(
+					getLog().info("Add dependency to classpath : " + artifact);
+					getLog().info(
 							"Add file to classpath : " + artifact.getFile());
-					addURLToSystemClassLoader(
-							artifact.getFile().toURI().toURL());
+					ClasspathHacker.addFile(artifact.getFile());
 				}
 			}
 
@@ -134,23 +148,6 @@ public class Spoon extends AbstractMojo {
 		}
 	}
 
-	public static void addURLToSystemClassLoader(URL url)
-			throws IntrospectionException {
-		URLClassLoader systemClassLoader = (URLClassLoader) ClassLoader
-				.getSystemClassLoader();
-		Class<URLClassLoader> classLoaderClass = URLClassLoader.class;
-		try {
-			Method method = classLoaderClass
-					.getDeclaredMethod("addURL", new Class[] { URL.class });
-			method.setAccessible(true);
-			method.invoke(systemClassLoader, new Object[] { url });
-		} catch (Throwable t) {
-			t.printStackTrace();
-			throw new IntrospectionException(
-					"Error when adding url to system ClassLoader ");
-		}
-	}
-
 	public File getSrcFolder() {
 		return srcFolder;
 	}
@@ -163,11 +160,12 @@ public class Spoon extends AbstractMojo {
 		return preserveFormatting;
 	}
 
-	public String[] getProcessors() {
+	public String[] getProcessorsPath() {
 		return processors;
 	}
 
 	public MavenProject getProject() {
 		return project;
 	}
+
 }

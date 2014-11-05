@@ -1,4 +1,4 @@
-package com.dooapp.configuration;
+package fr.inria.gforge.spoon.configuration;
 
 /**
  * Created by gerard on 15/10/2014.

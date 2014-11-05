@@ -1,7 +1,7 @@
-package com.dooapp.configuration;
+package fr.inria.gforge.spoon.configuration;
 
-import com.dooapp.Spoon;
-import com.dooapp.logging.ReportBuilder;
+import fr.inria.gforge.spoon.Spoon;
+import fr.inria.gforge.spoon.logging.ReportBuilder;
 
 import java.io.File;
 
@@ -17,7 +17,7 @@ class SimpleSpoonConfiguration extends AbstractSpoonConfigurationBuilder {
 
 	@Override
 	public SpoonConfigurationBuilder addProcessors() {
-		final String[] processors = spoon.getProcessors();
+		final String[] processors = spoon.getProcessorsPath();
 		if (processors != null && processors.length != 0) {
 			parameters.add("-p");
 			parameters.add(implode(processors, File.pathSeparator));

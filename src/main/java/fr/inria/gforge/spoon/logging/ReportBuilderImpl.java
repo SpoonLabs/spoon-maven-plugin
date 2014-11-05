@@ -1,7 +1,6 @@
-package com.dooapp.logging;
+package fr.inria.gforge.spoon.logging;
 
-import com.dooapp.Spoon;
-import org.apache.maven.project.MavenProject;
+import fr.inria.gforge.spoon.Spoon;
 
 import java.util.HashMap;
 import java.util.Map;

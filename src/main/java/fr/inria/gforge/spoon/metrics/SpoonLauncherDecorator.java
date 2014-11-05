@@ -1,4 +1,4 @@
-package com.dooapp.metrics;
+package fr.inria.gforge.spoon.metrics;
 
 import org.apache.maven.plugin.MojoExecutionException;
 

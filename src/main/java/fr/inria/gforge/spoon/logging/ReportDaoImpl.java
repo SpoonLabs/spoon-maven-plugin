@@ -1,6 +1,6 @@
-package com.dooapp.logging;
+package fr.inria.gforge.spoon.logging;
 
-import com.dooapp.Spoon;
+import fr.inria.gforge.spoon.Spoon;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -15,8 +15,8 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.util.Map;
 
-import static com.dooapp.logging.ReportBuilderImpl.ReportKey;
-import static com.dooapp.logging.ReportBuilderImpl.ReportKey.*;
+import static fr.inria.gforge.spoon.logging.ReportBuilderImpl.ReportKey;
+import static fr.inria.gforge.spoon.logging.ReportBuilderImpl.ReportKey.*;
 
 /**
  * Created by gerard on 27/10/2014.

@@ -1,7 +1,6 @@
-package com.dooapp.logging;
+package fr.inria.gforge.spoon.logging;
 
-import com.dooapp.Spoon;
-import org.apache.maven.project.MavenProject;
+import fr.inria.gforge.spoon.Spoon;
 
 /**
  * Created by gerard on 27/10/2014.
@@ -12,7 +11,7 @@ public final class ReportFactory {
 	}
 
 	/**
-	 * Get a {@link com.dooapp.logging.ReportBuilder} to build a report.
+	 * Get a {@link fr.inria.gforge.spoon.logging.ReportBuilder} to build a report.
 	 */
 	public static ReportBuilder newReportBuilder(Spoon spoon) {
 		return new ReportBuilderImpl(spoon);

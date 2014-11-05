@@ -1,11 +1,8 @@
-package com.dooapp.metrics;
+package fr.inria.gforge.spoon.metrics;
 
-import com.dooapp.Spoon;
-import com.dooapp.logging.ReportBuilder;
+import fr.inria.gforge.spoon.logging.ReportBuilder;
 import org.apache.maven.plugin.MojoExecutionException;
 import spoon.Launcher;
-
-import java.io.*;
 
 /**
  * Created by gerard on 20/10/2014.

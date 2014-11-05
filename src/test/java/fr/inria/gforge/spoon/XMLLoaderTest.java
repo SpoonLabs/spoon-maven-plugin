@@ -1,6 +1,6 @@
-package com.dooapp;
+package fr.inria.gforge.spoon;
 
-import com.dooapp.util.XMLLoader;
+import fr.inria.gforge.spoon.util.XMLLoader;
 import org.junit.Test;
 
 /**
