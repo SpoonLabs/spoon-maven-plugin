@@ -1,4 +1,4 @@
-package com.dooapp.logging;
+package fr.inria.gforge.spoon.logging;
 
 /**
  * Created by gerard on 27/10/2014.

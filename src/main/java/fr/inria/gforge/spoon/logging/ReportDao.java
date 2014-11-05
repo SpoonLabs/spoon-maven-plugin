@@ -1,4 +1,4 @@
-package com.dooapp.logging;
+package fr.inria.gforge.spoon.logging;
 
 import java.util.Map;
 

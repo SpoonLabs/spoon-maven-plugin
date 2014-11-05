@@ -1,9 +1,9 @@
-package com.dooapp.configuration;
+package fr.inria.gforge.spoon.configuration;
 
-import com.dooapp.Spoon;
-import com.dooapp.SpoonModel;
-import com.dooapp.logging.ReportBuilder;
-import com.dooapp.util.TemplateLoader;
+import fr.inria.gforge.spoon.Spoon;
+import fr.inria.gforge.spoon.SpoonModel;
+import fr.inria.gforge.spoon.logging.ReportBuilder;
+import fr.inria.gforge.spoon.util.TemplateLoader;
 
 import java.io.File;
 import java.io.IOException;
