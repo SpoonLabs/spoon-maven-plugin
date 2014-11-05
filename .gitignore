@@ -1,33 +1,15 @@
-target/
-target
-target/*
-target/**
-*.ipr
-*.iws
-.idea
-*.iml
-*.pydevproject
-.project
-.metadata
-bin/**
-tmp/**
-tmp/**/*
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
+# Eclipse
 .classpath
+.project
 .settings/
-.loadpath
-nbproject/
-nbactions.xml
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
 .DS_Store
-Icon?
 
-# Thumbnails
-._*
-
-# Files that might appear on external disk
-.Spotlight-V100
-.Trashes
+# Maven
+target/
