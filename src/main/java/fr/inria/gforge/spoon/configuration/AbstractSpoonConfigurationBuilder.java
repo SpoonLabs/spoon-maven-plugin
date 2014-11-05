@@ -1,7 +1,7 @@
-package com.dooapp.configuration;
+package fr.inria.gforge.spoon.configuration;
 
-import com.dooapp.Spoon;
-import com.dooapp.logging.ReportBuilder;
+import fr.inria.gforge.spoon.Spoon;
+import fr.inria.gforge.spoon.logging.ReportBuilder;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.project.MavenProject;
 

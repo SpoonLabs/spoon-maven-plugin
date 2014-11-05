@@ -1,4 +1,4 @@
-package com.dooapp;
+package fr.inria.gforge.spoon;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;

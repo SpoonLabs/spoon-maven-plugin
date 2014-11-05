@@ -1,6 +1,6 @@
-package com.dooapp.util;
+package fr.inria.gforge.spoon.util;
 
-import com.dooapp.SpoonModel;
+import fr.inria.gforge.spoon.SpoonModel;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;

@@ -1,8 +1,8 @@
-package com.dooapp.configuration;
+package fr.inria.gforge.spoon.configuration;
 
-import com.dooapp.Spoon;
-import com.dooapp.logging.ReportBuilder;
-import com.dooapp.util.XMLLoader;
+import fr.inria.gforge.spoon.Spoon;
+import fr.inria.gforge.spoon.logging.ReportBuilder;
+import fr.inria.gforge.spoon.util.XMLLoader;
 
 import java.io.InputStream;
 

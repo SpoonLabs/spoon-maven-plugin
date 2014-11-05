@@ -1,10 +1,9 @@
-package com.dooapp.configuration;
+package fr.inria.gforge.spoon.configuration;
 
-import com.dooapp.Spoon;
-import com.dooapp.logging.ReportBuilder;
+import fr.inria.gforge.spoon.Spoon;
+import fr.inria.gforge.spoon.logging.ReportBuilder;
 
 import java.io.File;
-import java.util.List;
 
 /**
  * Created by gerard on 15/10/2014.

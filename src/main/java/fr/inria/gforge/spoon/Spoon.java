@@ -1,12 +1,12 @@
-package com.dooapp;
+package fr.inria.gforge.spoon;
 
-import com.dooapp.configuration.SpoonConfigurationBuilder;
-import com.dooapp.configuration.SpoonConfigurationFactory;
-import com.dooapp.logging.ReportBuilder;
-import com.dooapp.logging.ReportFactory;
-import com.dooapp.metrics.PerformanceDecorator;
-import com.dooapp.metrics.SpoonLauncherDecorator;
-import com.dooapp.util.ClasspathHacker;
+import fr.inria.gforge.spoon.configuration.SpoonConfigurationBuilder;
+import fr.inria.gforge.spoon.configuration.SpoonConfigurationFactory;
+import fr.inria.gforge.spoon.logging.ReportBuilder;
+import fr.inria.gforge.spoon.logging.ReportFactory;
+import fr.inria.gforge.spoon.metrics.PerformanceDecorator;
+import fr.inria.gforge.spoon.metrics.SpoonLauncherDecorator;
+import fr.inria.gforge.spoon.util.ClasspathHacker;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;

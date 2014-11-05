@@ -1,4 +1,4 @@
-package com.dooapp.util;
+package fr.inria.gforge.spoon.util;
 
 import java.io.File;
 import java.io.IOException;
