@@ -68,10 +68,10 @@ In the next usage, we would like to launch the processor name `fr.inria.gforge.s
 ```
 <configuration>
     <processors>
-        <param>fr.inria.gforge.spoon.processors.CountStatementProcessor</param>
+        <processor>fr.inria.gforge.spoon.processors.CountStatementProcessor</processor>
     </processors>
     <jarFiles>
-        <param>/Users/you/.m2/repository/fr/inria/gforge/spoon/spoon-processors/1.0-SNAPSHOT/spoon-processors-1.0-SNAPSHOT.jar</param>
+        <jarFile>/Users/you/.m2/repository/fr/inria/gforge/spoon/spoon-processors/1.0-SNAPSHOT/spoon-processors-1.0-SNAPSHOT.jar</jarFile>
     </jarFiles>
 </configuration>
 ```
