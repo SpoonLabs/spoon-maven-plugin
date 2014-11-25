@@ -36,16 +36,15 @@ abstract class AbstractSpoonConfigurationBuilder
 		final String srcDir = spoon.getProject().getBuild()
 				.getSourceDirectory();
 		final File srcDirFile = new File(srcDir);
-		if (srcDirFile.exists()) {
-			parameters.add("-i");
-			parameters.add(srcDir);
-			reportBuilder.setInput(srcDir);
-			return this;
-		} else if (spoon.getSrcFolder() != null && spoon.getSrcFolder()
-				.exists()) {
+		if (spoon.getSrcFolder() != null && spoon.getSrcFolder().exists()) {
 			parameters.add("-i");
 			parameters.add(spoon.getSrcFolder().getAbsolutePath());
 			reportBuilder.setInput(spoon.getSrcFolder().getAbsolutePath());
+			return this;
+		} else if (srcDirFile.exists()) {
+			parameters.add("-i");
+			parameters.add(srcDir);
+			reportBuilder.setInput(srcDir);
 			return this;
 		}
 		throw new RuntimeException(
