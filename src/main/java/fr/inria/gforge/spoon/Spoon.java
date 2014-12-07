@@ -22,6 +22,7 @@ import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Set;
+import spoon.OutputType;
 
 /**
  * Created at 07/11/2013 11:39.<br>
@@ -63,6 +64,7 @@ public class Spoon extends AbstractMojo {
 	 */
 	@Parameter(property = "jar.files")
 	private String[] jarFiles;
+   
 	/**
 	 * Project spooned with maven information.
 	 */
@@ -72,6 +74,10 @@ public class Spoon extends AbstractMojo {
 			readonly = true)
 	private MavenProject project;
 
+	@Parameter(property = "output-type")
+    private OutputType outputType;
+     
+    
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		try {
@@ -167,5 +173,9 @@ public class Spoon extends AbstractMojo {
 	public MavenProject getProject() {
 		return project;
 	}
+
+    public OutputType getOutputType() {
+        return outputType;
+    }
 
 }
