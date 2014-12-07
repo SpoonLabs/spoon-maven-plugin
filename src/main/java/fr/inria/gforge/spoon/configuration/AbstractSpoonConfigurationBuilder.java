@@ -2,10 +2,11 @@ package fr.inria.gforge.spoon.configuration;
 
 import fr.inria.gforge.spoon.Spoon;
 import fr.inria.gforge.spoon.logging.ReportBuilder;
+import java.io.File;
+import java.util.Iterator;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.project.MavenProject;
 
-import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,22 +30,35 @@ abstract class AbstractSpoonConfigurationBuilder
 		if (this.spoon.getLog().isDebugEnabled()) {
 			parameters.add("--vvv");
 		}
+        
+        if (spoon.getOutputType() != null ) {
+            parameters.add("--output-type");
+            parameters.add(spoon.getOutputType().toString());
+        }
 	}
 
 	@Override
 	public SpoonConfigurationBuilder addInputFolder() {
-		final String srcDir = spoon.getProject().getBuild()
-				.getSourceDirectory();
-		final File srcDirFile = new File(srcDir);
 		if (spoon.getSrcFolder() != null && spoon.getSrcFolder().exists()) {
 			parameters.add("-i");
 			parameters.add(spoon.getSrcFolder().getAbsolutePath());
 			reportBuilder.setInput(spoon.getSrcFolder().getAbsolutePath());
 			return this;
-		} else if (srcDirFile.exists()) {
+		} else if (spoon.getProject().getCompileSourceRoots().isEmpty() == false) {
+            StringBuilder inputs = new StringBuilder();
+            
+            for (Iterator it = spoon.getProject().getCompileSourceRoots().iterator(); it.hasNext();) {
+                String file = (String)it.next();
+                
+                inputs.append(file);
+                if (it.hasNext()) {
+                    inputs.append(File.pathSeparatorChar);
+                }
+            }
+            
 			parameters.add("-i");
-			parameters.add(srcDir);
-			reportBuilder.setInput(srcDir);
+			parameters.add(inputs.toString());
+			reportBuilder.setInput(inputs.toString());
 			return this;
 		}
 		throw new RuntimeException(
