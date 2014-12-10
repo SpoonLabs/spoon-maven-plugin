@@ -1,4 +1,4 @@
-package fr.inria.gforge.spoon;
+package fr.inria.gforge.spoon.mojo;
 
 import spoon.processing.AbstractProcessor;
 import spoon.reflect.code.CtStatement;

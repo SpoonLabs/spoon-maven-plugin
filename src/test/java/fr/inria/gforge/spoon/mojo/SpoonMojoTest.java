@@ -1,4 +1,4 @@
-package fr.inria.gforge.spoon;
+package fr.inria.gforge.spoon.mojo;
 
 import org.apache.maven.plugin.testing.MojoRule;
 import org.apache.maven.plugin.testing.resources.TestResources;
@@ -18,15 +18,6 @@ public final class SpoonMojoTest {
 	@Test
 	public void testSpoonGoalGenerateResultFileForSimpleProject() throws Exception {
 		File basedir = resources.getBasedir("hello-world");
-		rule.executeMojo(basedir, "generate");
-
-		File resultFile = new File(basedir, "target/spoon-maven-plugin/result-spoon.xml");
-		assertThat(resultFile).exists();
-	}
-
-	@Test
-	public void testSpoonGoalGenerateResultFileForMultiModuleProject() throws Exception {
-		File basedir = resources.getBasedir("multi-module/module1");
 		rule.executeMojo(basedir, "generate");
 
 		File resultFile = new File(basedir, "target/spoon-maven-plugin/result-spoon.xml");
