@@ -111,6 +111,16 @@ abstract class AbstractSpoonConfigurationBuilder
 		return this;
 	}
 
+
+	@Override
+	public SpoonConfigurationBuilder addNoClasspath() {
+		if (spoon.isNoClasspath()) {
+			parameters.add("-x");
+		}
+		return this;
+	}
+
+
 	@Override
 	public String[] build() {
 		spoon.getLog().info("Running spoon with parameters : ");

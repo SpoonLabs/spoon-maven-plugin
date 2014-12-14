@@ -41,6 +41,11 @@ public interface SpoonConfigurationBuilder {
 	SpoonConfigurationBuilder addTemplates();
 
 	/**
+	 * Adds not assume a full classpath in parameters of spoon.
+	 */
+	SpoonConfigurationBuilder addNoClasspath();
+
+	/**
 	 * Builds parameters for spoon.
 	 */
 	String[] build();
