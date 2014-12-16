@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/SpoonLabs/spoon-maven-plugin.svg?branch=master)](https://travis-ci.org/SpoonLabs/spoon-maven-plugin)
+
 # Spoon maven plugin
 
 A maven plugin to run spoon on a target project.
