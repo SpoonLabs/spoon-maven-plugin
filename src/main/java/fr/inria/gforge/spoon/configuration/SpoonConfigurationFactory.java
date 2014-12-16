@@ -6,9 +6,6 @@ import fr.inria.gforge.spoon.util.XMLLoader;
 
 import java.io.InputStream;
 
-/**
- * Created by gerard on 15/10/2014.
- */
 public final class SpoonConfigurationFactory {
 	private static final String SPOON_CONFIGURATION_FILENAME = "spoon.xml";
 

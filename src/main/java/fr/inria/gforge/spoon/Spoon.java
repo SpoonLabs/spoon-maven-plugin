@@ -23,11 +23,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Set;
 
-/**
- * Created at 07/11/2013 11:39.<br>
- *
- * @author Christophe DUFOUR
- */
 @SuppressWarnings("UnusedDeclaration")
 @Mojo(
 		name = "generate",
@@ -67,11 +62,6 @@ public class Spoon extends AbstractMojo {
 	@Parameter(property = "processors")
 	private String[] processors;
 	/**
-	 * List of jar necessary for processors.
-	 */
-	@Parameter(property = "jar.files")
-	private String[] jarFiles;
-	/**
 	 * Project spooned with maven information.
 	 */
 	@Parameter(
@@ -94,11 +84,9 @@ public class Spoon extends AbstractMojo {
 			}
 
 			// Builder for result file.
-			final ReportBuilder reportBuilder = ReportFactory.newReportBuilder(
-					this);
+			final ReportBuilder reportBuilder = ReportFactory.newReportBuilder(this);
 			// Builder for parameters of Spoon.
-			final SpoonConfigurationBuilder spoonBuilder = SpoonConfigurationFactory
-					.getConfig(this, reportBuilder);
+			final SpoonConfigurationBuilder spoonBuilder = SpoonConfigurationFactory.getConfig(this, reportBuilder);
 
 			// Save project name.
 			reportBuilder.setProjectName(project.getName());
@@ -119,27 +107,20 @@ public class Spoon extends AbstractMojo {
 				return;
 			}
 
-			for (String jarFile : jarFiles) {
-				ClasspathHacker.addFile(jarFile);
-			}
 			// Changes class loader.
-			if (project.getArtifacts() == null || project.getArtifacts()
-					.isEmpty()) {
+			if (project.getArtifacts() == null || project.getArtifacts().isEmpty()) {
 				getLog().info("There is not artifact in this project");
 			} else {
-				for (Artifact artifact : (Set<Artifact>) project
-						.getArtifacts()) {
+				for (Artifact artifact : project.getArtifacts()) {
 					getLog().info("Add dependency to classpath : " + artifact);
-					getLog().info(
-							"Add file to classpath : " + artifact.getFile());
+					getLog().info("Add file to classpath : " + artifact.getFile());
 					ClasspathHacker.addFile(artifact.getFile());
 				}
 			}
 
 			// Displays class loader in log of the console.
 			getLog().info("Running spoon with classpath : ");
-			URL[] urlClassLoader = ((URLClassLoader) ClassLoader
-					.getSystemClassLoader()).getURLs();
+			URL[] urlClassLoader = ((URLClassLoader) ClassLoader.getSystemClassLoader()).getURLs();
 			for (URL currentURL : urlClassLoader) {
 				getLog().info("" + currentURL);
 			}
@@ -147,8 +128,7 @@ public class Spoon extends AbstractMojo {
 			// Initialize and launch launcher
 			Launcher spoonLauncher = new Launcher();
 			spoonLauncher.setArgs(spoonBuilder.build());
-			final SpoonLauncherDecorator performance = new PerformanceDecorator(
-					reportBuilder, spoonLauncher);
+			final SpoonLauncherDecorator performance = new PerformanceDecorator(reportBuilder, spoonLauncher);
 			performance.execute();
 			reportBuilder.buildReport();
 		} catch (Exception e) {

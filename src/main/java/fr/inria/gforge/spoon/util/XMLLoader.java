@@ -6,13 +6,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import java.io.InputStream;
 
-/**
- * TODO write documentation<br>
- * <br>
- * Created at 18/11/2013 17:33.<br>
- *
- * @author Christophe DUFOUR
- */
 public final class XMLLoader {
 	private XMLLoader() {
 	}

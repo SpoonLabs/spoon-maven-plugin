@@ -8,13 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 
-/**
- * TODO write documentation<br>
- * <br>
- * Created at 20/11/2013 11:05.<br>
- *
- * @author Christophe DUFOUR
- */
 public final class TemplateLoader {
 	private static File tmpFolder;
 

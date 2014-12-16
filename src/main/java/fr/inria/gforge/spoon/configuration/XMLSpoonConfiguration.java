@@ -9,9 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Created by gerard on 15/10/2014.
- */
 class XMLSpoonConfiguration extends AbstractSpoonConfigurationBuilder {
 	/**
 	 * Used when the plugin is launched with a xml file for the configuration,
