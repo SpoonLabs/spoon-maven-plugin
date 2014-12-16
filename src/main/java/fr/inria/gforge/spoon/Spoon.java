@@ -54,6 +54,13 @@ public class Spoon extends AbstractMojo {
 			defaultValue = "false")
 	private boolean preserveFormatting;
 	/**
+	 * Tells to spoon that it must not assume a full classpath.
+	 */
+	@Parameter(
+			property = "noClasspath",
+			defaultValue = "false")
+	private boolean noClasspath;
+	/**
 	 * List of processors.
 	 */
 	@Parameter(property = "processors")
@@ -102,6 +109,7 @@ public class Spoon extends AbstractMojo {
 						.addOutputFolder()
 						.addCompliance()
 						.addPreserveFormatting()
+						.addNoClasspath()
 						.addSourceClasspath()
 						.addProcessors()
 						.addTemplates();
@@ -160,6 +168,10 @@ public class Spoon extends AbstractMojo {
 		return preserveFormatting;
 	}
 
+	public boolean isNoClasspath() {
+		return noClasspath;
+	}
+
 	public String[] getProcessorsPath() {
 		return processors;
 	}
@@ -167,5 +179,4 @@ public class Spoon extends AbstractMojo {
 	public MavenProject getProject() {
 		return project;
 	}
-
 }
