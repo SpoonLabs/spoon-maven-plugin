@@ -4,9 +4,6 @@ import fr.inria.gforge.spoon.logging.ReportBuilder;
 import org.apache.maven.plugin.MojoExecutionException;
 import spoon.Launcher;
 
-/**
- * Created by gerard on 20/10/2014.
- */
 public class PerformanceDecorator implements SpoonLauncherDecorator {
 
 	private final Launcher launcher;

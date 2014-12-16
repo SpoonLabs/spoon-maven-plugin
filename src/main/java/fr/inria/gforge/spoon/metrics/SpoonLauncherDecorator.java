@@ -2,9 +2,6 @@ package fr.inria.gforge.spoon.metrics;
 
 import org.apache.maven.plugin.MojoExecutionException;
 
-/**
- * Created by gerard on 20/10/2014.
- */
 public interface SpoonLauncherDecorator {
 
 	/**

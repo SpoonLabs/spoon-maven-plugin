@@ -18,9 +18,6 @@ import java.util.Map;
 import static fr.inria.gforge.spoon.logging.ReportBuilderImpl.ReportKey;
 import static fr.inria.gforge.spoon.logging.ReportBuilderImpl.ReportKey.*;
 
-/**
- * Created by gerard on 27/10/2014.
- */
 class ReportDaoImpl implements ReportDao {
 	private final File resultFile;
 	private final Spoon spoon;

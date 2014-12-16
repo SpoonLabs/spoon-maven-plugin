@@ -5,9 +5,6 @@ import fr.inria.gforge.spoon.logging.ReportBuilder;
 
 import java.io.File;
 
-/**
- * Created by gerard on 15/10/2014.
- */
 class SimpleSpoonConfiguration extends AbstractSpoonConfigurationBuilder {
 
 	protected SimpleSpoonConfiguration(Spoon spoon,

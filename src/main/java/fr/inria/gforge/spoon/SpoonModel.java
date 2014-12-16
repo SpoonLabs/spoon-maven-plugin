@@ -8,10 +8,6 @@ import java.util.List;
 
 /**
  * Simple class to store data loaded from XML config file
- * <br>
- * Created at 18/11/2013 17:39.<br>
- *
- * @author Christophe DUFOUR
  */
 @XmlType(name = "spoonModel")
 @XmlRootElement(name = "spoonModel")

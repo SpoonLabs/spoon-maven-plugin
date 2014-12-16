@@ -5,9 +5,6 @@ import fr.inria.gforge.spoon.Spoon;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by gerard on 27/10/2014.
- */
 class ReportBuilderImpl implements ReportBuilder {
 
 	enum ReportKey {

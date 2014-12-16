@@ -6,9 +6,6 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-/**
- * Created by gerard on 28/10/2014.
- */
 public final class ClasspathHacker {
 	private ClasspathHacker() {
 	}

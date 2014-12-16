@@ -23,11 +23,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Set;
 
-/**
- * Created at 07/11/2013 11:39.<br>
- *
- * @author Christophe DUFOUR
- */
 @SuppressWarnings("UnusedDeclaration")
 @Mojo(
 		name = "generate",

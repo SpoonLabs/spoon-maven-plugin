@@ -9,9 +9,6 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by gerard on 15/10/2014.
- */
 abstract class AbstractSpoonConfigurationBuilder
 		implements SpoonConfigurationBuilder {
 
