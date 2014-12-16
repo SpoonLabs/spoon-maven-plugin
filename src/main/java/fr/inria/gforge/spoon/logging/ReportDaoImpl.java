@@ -62,10 +62,8 @@ class ReportDaoImpl implements ReportDao {
 
 		addElement(doc, root, data, INPUT, (String) data.get(INPUT));
 		addElement(doc, root, data, OUTPUT, (String) data.get(OUTPUT));
-		addElement(doc, root, data, SOURCE_CLASSPATH,
-				(String) data.get(SOURCE_CLASSPATH));
-		addElement(doc, root, data, PERFORMANCE,
-				Long.toString((long) data.get(PERFORMANCE)));
+		addElement(doc, root, data, SOURCE_CLASSPATH, (String) data.get(SOURCE_CLASSPATH));
+		addElement(doc, root, data, PERFORMANCE, Long.toString((Long) data.get(PERFORMANCE)));
 
 		// write the content into xml file
 		TransformerFactory transfFactory = TransformerFactory.newInstance();
