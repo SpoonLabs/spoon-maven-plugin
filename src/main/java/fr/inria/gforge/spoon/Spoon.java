@@ -28,6 +28,7 @@ import java.util.Set;
  *
  * @author Christophe DUFOUR
  */
+@SuppressWarnings("UnusedDeclaration")
 @Mojo(
 		name = "generate",
 		defaultPhase = LifecyclePhase.GENERATE_SOURCES,

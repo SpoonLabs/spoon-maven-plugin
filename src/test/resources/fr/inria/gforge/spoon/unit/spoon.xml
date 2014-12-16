@@ -1,0 +1,31 @@
+<spoonModel>
+    <processors>
+        <processor>com.dooapp.processor.wrapper.GenerateMissingWrapperClassProcessor</processor>
+        <processor>com.dooapp.processor.wrapper.AddSuperClassOnBeanProcessor</processor>
+        <processor>com.dooapp.processor.wrapper.AddSuperClassOnWrapperProcessor</processor>
+        <processor>com.dooapp.processor.property.GenerateWrapperMethodsProcessor</processor>
+        <processor>com.dooapp.processor.property.GenerateCreateFieldPropertyContent</processor>
+        <processor>com.dooapp.processor.collection.GenerateWrapperCollectionMethodsProcessor</processor>
+        <processor>com.dooapp.processor.builder.GenerateMissingBuilderClassProcessor</processor>
+        <processor>com.dooapp.processor.builder.AddSuperClassOnBuilderProcessor</processor>
+        <processor>com.dooapp.processor.builder.GenerateMethodsProcessor</processor>
+    </processors>
+    <templates>
+        <template>com.dooapp.template.WrapperConstructorTemplate</template>
+        <template>com.dooapp.template.property.ReadTemplate</template>
+        <template>com.dooapp.template.property.WriteTemplate</template>
+        <template>com.dooapp.template.CreateWrapperTemplate</template>
+        <template>com.dooapp.template.property.SimpleListenerTemplate</template>
+        <template>com.dooapp.template.property.WrapperListenerTemplate</template>
+        <template>com.dooapp.template.collection.CollectionTemplate</template>
+        <template>com.dooapp.template.collection.SimpleCreateMethodTemplate</template>
+        <template>com.dooapp.template.collection.SimpleListenerTemplate</template>
+        <template>com.dooapp.template.collection.WrapperCreateMethodTemplate</template>
+        <template>com.dooapp.template.collection.WrapperListenerTemplate</template>
+        <template>com.dooapp.template.builder.BuilderConstructorTemplate</template>
+        <template>com.dooapp.template.builder.BuilderMethodsTemplate</template>
+        <template>com.dooapp.template.builder.BuildTemplate</template>
+        <template>com.dooapp.template.builder.HandleDefaultTemplate</template>
+        <template>com.dooapp.template.builder.DefaultConstantTemplate</template>
+    </templates>
+</spoonModel>
