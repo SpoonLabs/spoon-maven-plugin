@@ -1,6 +1,5 @@
 package fr.inria.gforge.spoon.logging;
 
-import fr.inria.gforge.spoon.Spoon;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -20,15 +19,9 @@ import static fr.inria.gforge.spoon.logging.ReportBuilderImpl.ReportKey.*;
 
 class ReportDaoImpl implements ReportDao {
 	private final File resultFile;
-	private final Spoon spoon;
 
-	ReportDaoImpl(Spoon spoon) {
-		final String resultFilename =
-				spoon.getProject().getBuild().getDirectory()
-						+ File.separator + "spoon-maven-plugin" + File.separator
-						+ "result-spoon.xml";
-		this.resultFile = new File(resultFilename);
-		this.spoon = spoon;
+	ReportDaoImpl(File resultFile) {
+		this.resultFile = resultFile;
 	}
 
 	@Override
@@ -39,9 +32,6 @@ class ReportDaoImpl implements ReportDao {
 				resultFile.createNewFile();
 			}
 			report(reportsData);
-			spoon.getLog().info(
-					"Spoon report directory: " + resultFile.getParentFile()
-							.getAbsolutePath());
 		} catch (Exception e) {
 			throw new RuntimeException("Error to save result of the plugin", e);
 		}

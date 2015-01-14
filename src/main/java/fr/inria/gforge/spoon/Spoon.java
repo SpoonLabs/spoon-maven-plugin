@@ -7,6 +7,7 @@ import fr.inria.gforge.spoon.logging.ReportFactory;
 import fr.inria.gforge.spoon.metrics.PerformanceDecorator;
 import fr.inria.gforge.spoon.metrics.SpoonLauncherDecorator;
 import fr.inria.gforge.spoon.util.ClasspathHacker;
+import fr.inria.gforge.spoon.util.LogWrapper;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -19,9 +20,9 @@ import org.apache.maven.project.MavenProject;
 import spoon.Launcher;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Set;
 
 @SuppressWarnings("UnusedDeclaration")
 @Mojo(
@@ -62,6 +63,13 @@ public class Spoon extends AbstractMojo {
 	@Parameter(property = "processors")
 	private String[] processors;
 	/**
+	 * Active debug mode to see logs.
+	 */
+	@Parameter(
+			property = "Debug mode",
+			defaultValue = "false")
+	private boolean debug;
+	/**
 	 * Project spooned with maven information.
 	 */
 	@Parameter(
@@ -73,22 +81,17 @@ public class Spoon extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		try {
-			final String resultFilename =
-					project.getBuild().getDirectory() + File.separator
-							+ "spoon-maven-plugin" + File.separator
-							+ "result-spoon.xml";
-			final File resultFile = new File(resultFilename);
-			if (resultFile.exists()) {
-				getLog().warn("Project already spooned.");
+			// Initializes builders for report and config of spoon.
+			ReportBuilder reportBuilder;
+			try {
+				reportBuilder = ReportFactory.newReportBuilder(this);
+			} catch (RuntimeException e) {
+				LogWrapper.warn(this, e.getMessage(), e);
 				return;
 			}
-
-			// Builder for result file.
-			final ReportBuilder reportBuilder = ReportFactory.newReportBuilder(this);
-			// Builder for parameters of Spoon.
 			final SpoonConfigurationBuilder spoonBuilder = SpoonConfigurationFactory.getConfig(this, reportBuilder);
 
-			// Save project name.
+			// Saves project name.
 			reportBuilder.setProjectName(project.getName());
 			reportBuilder.setModuleName(project.getName());
 
@@ -103,37 +106,39 @@ public class Spoon extends AbstractMojo {
 						.addProcessors()
 						.addTemplates();
 			} catch (RuntimeException e) {
-				getLog().warn(e.getMessage());
+				LogWrapper.warn(this, e.getMessage(), e);
 				return;
 			}
+			addArtifactsInClasspathOfTargetClassLoader();
 
-			// Changes class loader.
-			if (project.getArtifacts() == null || project.getArtifacts().isEmpty()) {
-				getLog().info("There is not artifact in this project");
-			} else {
-				for (Artifact artifact : project.getArtifacts()) {
-					getLog().info("Add dependency to classpath : " + artifact);
-					getLog().info("Add file to classpath : " + artifact.getFile());
-					ClasspathHacker.addFile(artifact.getFile());
-				}
-			}
-
-			// Displays class loader in log of the console.
-			getLog().info("Running spoon with classpath : ");
-			URL[] urlClassLoader = ((URLClassLoader) ClassLoader.getSystemClassLoader()).getURLs();
-			for (URL currentURL : urlClassLoader) {
-				getLog().info("" + currentURL);
-			}
-
-			// Initialize and launch launcher
-			Launcher spoonLauncher = new Launcher();
+			// Initializes and launch launcher of spoon.
+			final Launcher spoonLauncher = new Launcher();
 			spoonLauncher.setArgs(spoonBuilder.build());
 			final SpoonLauncherDecorator performance = new PerformanceDecorator(reportBuilder, spoonLauncher);
 			performance.execute();
 			reportBuilder.buildReport();
 		} catch (Exception e) {
-			getLog().warn(e.getMessage(), e);
+			LogWrapper.error(this, e.getMessage(), e);
 			throw new MojoExecutionException(e.getMessage(), e);
+		}
+	}
+
+	private void addArtifactsInClasspathOfTargetClassLoader() throws IOException {
+		// Changes classpath of the target class loader.
+		if (project.getArtifacts() == null || project.getArtifacts().isEmpty()) {
+			LogWrapper.info(this, "There is not artifact in this project.");
+		} else {
+			for (Artifact artifact : project.getArtifacts()) {
+				LogWrapper.debug(this, artifact.toString());
+				ClasspathHacker.addFile(artifact.getFile());
+			}
+		}
+
+		// Displays final classpath of the target classloader.
+		LogWrapper.info(this, "Running spoon with classpath:");
+		final URL[] urlClassLoader = ((URLClassLoader) ClassLoader.getSystemClassLoader()).getURLs();
+		for (URL currentURL : urlClassLoader) {
+			LogWrapper.info(this, currentURL.toString());
 		}
 	}
 
@@ -155,6 +160,10 @@ public class Spoon extends AbstractMojo {
 
 	public String[] getProcessorsPath() {
 		return processors;
+	}
+
+	public boolean isDebug() {
+		return debug;
 	}
 
 	public MavenProject getProject() {
