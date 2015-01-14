@@ -2,6 +2,7 @@ package fr.inria.gforge.spoon.logging;
 
 import fr.inria.gforge.spoon.Spoon;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,8 +15,8 @@ class ReportBuilderImpl implements ReportBuilder {
 	private final Map<ReportKey, Object> reportsData = new HashMap<ReportKey, Object>();
 	private final ReportDao reportDao;
 
-	ReportBuilderImpl(Spoon spoon) {
-		reportDao = new ReportDaoImpl(spoon);
+	ReportBuilderImpl(File resultFile) {
+		reportDao = new ReportDaoImpl(resultFile);
 	}
 
 	@Override

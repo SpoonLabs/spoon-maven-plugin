@@ -2,6 +2,7 @@ package fr.inria.gforge.spoon.configuration;
 
 import fr.inria.gforge.spoon.Spoon;
 import fr.inria.gforge.spoon.logging.ReportBuilder;
+import fr.inria.gforge.spoon.util.LogWrapper;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.project.MavenProject;
 
@@ -44,9 +45,7 @@ abstract class AbstractSpoonConfigurationBuilder
 			reportBuilder.setInput(srcDir);
 			return this;
 		}
-		throw new RuntimeException(
-				"No source directory for " + spoon.getProject().getName()
-						+ " project.");
+		throw new RuntimeException(String.format("No source directory for %s project.", spoon.getProject().getName()));
 	}
 
 	@Override
@@ -73,24 +72,19 @@ abstract class AbstractSpoonConfigurationBuilder
 	@Override
 	public SpoonConfigurationBuilder addSourceClasspath() {
 		final MavenProject project = spoon.getProject();
-		List compileClasspath = null;
+		List<String> compileClasspath;
 		try {
 			compileClasspath = project.getCompileClasspathElements();
 		} catch (DependencyResolutionRequiredException e) {
-			final String errorMessage = "Cannot get compile classpath elements.";
-			spoon.getLog().warn(errorMessage);
-			throw new RuntimeException(errorMessage,
-					e);
+			throw new RuntimeException("Cannot get compile classpath elements.", e);
 		}
 		if (compileClasspath.size() > 1) {
 			final StringBuilder classpath = new StringBuilder();
+			// Start at one because we don't would like the first compile classpath.
 			for (int i = 1; i < compileClasspath.size(); i++) {
-				Object dependency = compileClasspath.get(i);
-				spoon.getLog().info("current dependency: " + dependency);
-				classpath.append(dependency + System.getProperty(
-						"path.separator"));
+				classpath.append(compileClasspath.get(i)).append(System.getProperty("path.separator"));
 			}
-			spoon.getLog().info("Source classpath: " + classpath.toString());
+			LogWrapper.debug(spoon, String.format("Source classpath: %s", classpath.toString()));
 			parameters.add("--source-classpath");
 			parameters.add(classpath.toString());
 			reportBuilder.setSourceClasspath(classpath.toString());
@@ -120,8 +114,8 @@ abstract class AbstractSpoonConfigurationBuilder
 
 	@Override
 	public String[] build() {
-		spoon.getLog().info("Running spoon with parameters : ");
-		spoon.getLog().info(parameters.toString());
+		LogWrapper.info(spoon, "Running spoon with parameters:");
+		LogWrapper.info(spoon, parameters.toString());
 		return parameters.toArray(new String[parameters.size()]);
 	}
 
@@ -129,13 +123,13 @@ abstract class AbstractSpoonConfigurationBuilder
 	 * Concatenates a tab in a string with a path separator given.
 	 */
 	protected String implode(String[] tabToConcatenate, String pathSeparator) {
-		final StringBuffer buffer = new StringBuffer();
+		final StringBuilder builder = new StringBuilder();
 		for (int i = 0; i < tabToConcatenate.length; i++) {
-			buffer.append(tabToConcatenate[i]);
+			builder.append(tabToConcatenate[i]);
 			if (i < tabToConcatenate.length - 1) {
-				buffer.append(pathSeparator);
+				builder.append(pathSeparator);
 			}
 		}
-		return buffer.toString();
+		return builder.toString();
 	}
 }
