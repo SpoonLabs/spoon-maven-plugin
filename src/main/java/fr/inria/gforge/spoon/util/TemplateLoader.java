@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 
 public final class TemplateLoader {
 	private static File tmpFolder;
@@ -16,10 +15,9 @@ public final class TemplateLoader {
 
 	private static File getTmpFolder() {
 		if (tmpFolder == null) {
-			try {
-				tmpFolder = Files.createTempDirectory("Spoon").toFile();
-			} catch (IOException e) {
-				e.printStackTrace();
+			tmpFolder = new File("Spoon");
+			if (!tmpFolder.exists()) {
+				tmpFolder.mkdir();
 			}
 		}
 		return tmpFolder;
