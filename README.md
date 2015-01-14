@@ -72,12 +72,41 @@ In the next usage, we would like to launch the processor name `fr.inria.gforge.s
     </processors>
 </configuration>
 <dependencies>
-  <dependency>
-    <groupId>fr.inria.gforge.spoon</groupId>
-    <artifactId>spoon-processors</artifactId>
-    <version>1.0-SNAPSHOT</version>
-  </dependency>
+    <dependency>
+        <groupId>fr.inria.gforge.spoon</groupId>
+        <artifactId>spoon-processors</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </dependency>
 </dependencies>
+```
+
+## Custom version for Spoon
+
+Spoon maven plugin defines a default value for spoon's version but you can override it to another one.
+
+For example, if you would like the version 2.4 of spoon and not the version 3.0, you must add the dependency below.
+
+```
+<plugin>
+    <groupId>fr.inria.gforge.spoon</groupId>
+    <artifactId>spoon-maven-plugin</artifactId>
+    <version>${plugin.spoon.version}</version>
+    <executions>
+        <execution>
+            <phase>generate-sources</phase>
+            <goals>
+                <goal>generate</goal>
+            </goals>
+        </execution>
+    </executions>
+    <dependencies>
+        <dependency>
+            <groupId>fr.inria.gforge.spoon</groupId>
+            <artifactId>spoon-core</artifactId>
+            <version>2.4</version>
+        </dependency>
+    </dependencies>
+</plugin>
 ```
 
 ## Reports
