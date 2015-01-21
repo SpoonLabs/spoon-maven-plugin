@@ -57,6 +57,10 @@ abstract class AbstractSpoonConfigurationBuilder
 
 		parameters.add("-o");
 		parameters.add(spoon.getOutFolder().getAbsolutePath());
+		if (!spoon.isCompileOriginalSources()) {
+			spoon.getProject().getCompileSourceRoots().clear();
+			spoon.getProject().addCompileSourceRoot(spoon.getOutFolder().getAbsolutePath());
+		}
 		reportBuilder.setOutput(spoon.getOutFolder().getAbsolutePath());
 		return this;
 	}

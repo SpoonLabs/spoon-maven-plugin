@@ -70,6 +70,13 @@ public class Spoon extends AbstractMojo {
 			defaultValue = "false")
 	private boolean debug;
 	/**
+	 * Active the compilation of original sources.
+	 */
+	@Parameter(
+			property = "Compile original sources and not source spooned",
+			defaultValue = "false")
+	private boolean compileOriginalSources;
+	/**
 	 * Project spooned with maven information.
 	 */
 	@Parameter(
@@ -164,6 +171,10 @@ public class Spoon extends AbstractMojo {
 
 	public boolean isDebug() {
 		return debug;
+	}
+
+	public boolean isCompileOriginalSources() {
+		return compileOriginalSources;
 	}
 
 	public MavenProject getProject() {
