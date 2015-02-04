@@ -23,7 +23,7 @@
 
     <!-- Compilation -->
     <java.version>1.6</java.version>
-    <spoon.version>4.0-SNAPSHOT</spoon.version>
+    <spoon.version>3.0</spoon.version>
     <spoon.version.release>3.0</spoon.version.release>
     <commons-io.version>2.4</commons-io.version>
     <jaxb-api.version>2.2.11</jaxb-api.version>
