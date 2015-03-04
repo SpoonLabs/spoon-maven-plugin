@@ -77,6 +77,13 @@ public class Spoon extends AbstractMojo {
 			defaultValue = "false")
 	private boolean compileOriginalSources;
 	/**
+	 * Specify the java version for spoon.
+	 */
+	@Parameter(
+			property = "Java version for spoon",
+			defaultValue = "7")
+	private int compliance;
+	/**
 	 * Project spooned with maven information.
 	 */
 	@Parameter(
@@ -175,6 +182,10 @@ public class Spoon extends AbstractMojo {
 
 	public boolean isCompileOriginalSources() {
 		return compileOriginalSources;
+	}
+
+	public int getCompliance() {
+		return compliance;
 	}
 
 	public MavenProject getProject() {

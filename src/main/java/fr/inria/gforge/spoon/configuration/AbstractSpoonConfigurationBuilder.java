@@ -68,8 +68,7 @@ abstract class AbstractSpoonConfigurationBuilder
 	@Override
 	public SpoonConfigurationBuilder addCompliance() {
 		parameters.add("--compliance");
-		//TODO load it from the project compilation level
-		parameters.add("7");
+		parameters.add("" + spoon.getCompliance());
 		return this;
 	}
 
