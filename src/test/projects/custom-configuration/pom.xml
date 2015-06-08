@@ -14,7 +14,6 @@
         <configuration>
           <srcFolder>src/internal/fr/inria/gforge/spoon</srcFolder>
           <outFolder>target/generate-source-with-spoon</outFolder>
-          <preserveFormatting>true</preserveFormatting>
         </configuration>
       </plugin>
     </plugins>

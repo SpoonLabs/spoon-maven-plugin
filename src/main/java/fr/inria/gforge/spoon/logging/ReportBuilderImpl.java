@@ -26,12 +26,6 @@ class ReportBuilderImpl implements ReportBuilder {
 	}
 
 	@Override
-	public ReportBuilder setFragmentMode(boolean fragmentMode) {
-		reportsData.put(ReportKey.FRAGMENT_MODE, fragmentMode);
-		return this;
-	}
-
-	@Override
 	public ReportBuilder setProcessors(String[] processors) {
 		reportsData.put(ReportKey.PROCESSORS, processors);
 		return this;
