@@ -96,17 +96,6 @@ abstract class AbstractSpoonConfigurationBuilder
 	}
 
 	@Override
-	public SpoonConfigurationBuilder addPreserveFormatting() {
-		if (spoon.isPreserveFormatting()) {
-			parameters.add("-f");
-			reportBuilder.setFragmentMode(true);
-		}
-		reportBuilder.setFragmentMode(false);
-		return this;
-	}
-
-
-	@Override
 	public SpoonConfigurationBuilder addNoClasspath() {
 		if (spoon.isNoClasspath()) {
 			parameters.add("-x");

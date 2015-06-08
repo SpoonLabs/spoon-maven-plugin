@@ -8,11 +8,6 @@ public interface ReportBuilder {
 	ReportBuilder setProjectName(String name);
 
 	/**
-	 * Set mode of fragment.
-	 */
-	ReportBuilder setFragmentMode(boolean fragmentMode);
-
-	/**
 	 * Sets processors.
 	 */
 	ReportBuilder setProcessors(String[] processors);

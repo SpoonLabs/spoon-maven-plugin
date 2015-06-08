@@ -18,11 +18,6 @@ public interface SpoonConfigurationBuilder {
 	SpoonConfigurationBuilder addCompliance();
 
 	/**
-	 * Adds preserve formatting information in parameters of spoon.
-	 */
-	SpoonConfigurationBuilder addPreserveFormatting();
-
-	/**
 	 * Adds source classpath in parameters of spoon.
 	 */
 	SpoonConfigurationBuilder addSourceClasspath();
