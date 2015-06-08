@@ -74,7 +74,7 @@ public class Spoon extends AbstractMojo {
 	 */
 	@Parameter(
 			property = "Java version for spoon",
-			defaultValue = "7")
+			defaultValue = "8")
 	private int compliance;
 	/**
 	 * Project spooned with maven information.
