@@ -109,7 +109,7 @@ Stable version available on Maven Central:
 <dependency>
   <groupId>fr.inria.gforge.spoon</groupId>
   <artifactId>spoon-maven-plugin</artifactId>
-  <version>2.0</version>
+  <version>2.1</version>
 </dependency>
 ```
 
