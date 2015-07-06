@@ -38,6 +38,16 @@ public interface SpoonConfigurationBuilder {
 	SpoonConfigurationBuilder addNoClasspath();
 
 	/**
+	 * Adds not assume a build only outdated files in parameters of spoon.
+	 */
+	SpoonConfigurationBuilder addBuildOnlyOutdatedFiles();
+
+	/**
+	 * Adds no copy resources in parameters of spoon
+	 */
+	SpoonConfigurationBuilder addNoCopyResources();
+
+	/**
 	 * Builds parameters for spoon.
 	 */
 	String[] build();

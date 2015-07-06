@@ -103,6 +103,21 @@ abstract class AbstractSpoonConfigurationBuilder
 		return this;
 	}
 
+	@Override
+	public SpoonConfigurationBuilder addBuildOnlyOutdatedFiles() {
+		if (spoon.isBuildOnlyOutdatedFiles()) {
+			parameters.add("--buildOnlyOutdatedFiles");
+		}
+		return this;
+	}
+
+	@Override
+	public SpoonConfigurationBuilder addNoCopyResources() {
+		if (spoon.isNoCopyResources()) {
+			parameters.add("--no-copy-resources");
+		}
+		return this;
+	}
 
 	@Override
 	public String[] build() {
