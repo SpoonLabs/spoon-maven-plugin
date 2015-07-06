@@ -85,7 +85,7 @@ abstract class AbstractSpoonConfigurationBuilder
 			final StringBuilder classpath = new StringBuilder();
 			// Start at one because we don't would like the first compile classpath.
 			for (int i = 1; i < compileClasspath.size(); i++) {
-				classpath.append(compileClasspath.get(i)).append(System.getProperty("path.separator"));
+				classpath.append(compileClasspath.get(i)).append(File.pathSeparatorChar);
 			}
 			LogWrapper.debug(spoon, String.format("Source classpath: %s", classpath.toString()));
 			parameters.add("--source-classpath");
