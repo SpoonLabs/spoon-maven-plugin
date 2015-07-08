@@ -51,6 +51,20 @@ public class Spoon extends AbstractMojo {
 			defaultValue = "false")
 	private boolean noClasspath;
 	/**
+	 * Tells to spoon that it must not assume a full classpath.
+	 */
+	@Parameter(
+			property = "buildOnlyOutdatedFiles",
+			defaultValue = "false")
+	private boolean buildOnlyOutdatedFiles;
+	/**
+	 * Tells to spoon that it must not assume a full classpath.
+	 */
+	@Parameter(
+			property = "noCopyResources",
+			defaultValue = "false")
+	private boolean noCopyResources;
+	/**
 	 * List of processors.
 	 */
 	@Parameter(property = "processors")
@@ -108,6 +122,8 @@ public class Spoon extends AbstractMojo {
 						.addOutputFolder()
 						.addCompliance()
 						.addNoClasspath()
+						.addBuildOnlyOutdatedFiles()
+						.addNoCopyResources()
 						.addSourceClasspath()
 						.addProcessors()
 						.addTemplates();
@@ -158,6 +174,14 @@ public class Spoon extends AbstractMojo {
 
 	public boolean isNoClasspath() {
 		return noClasspath;
+	}
+
+	public boolean isBuildOnlyOutdatedFiles() {
+		return buildOnlyOutdatedFiles;
+	}
+
+	public boolean isNoCopyResources() {
+		return noCopyResources;
 	}
 
 	public String[] getProcessorsPath() {
