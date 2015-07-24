@@ -1,14 +1,32 @@
 <spoonModel>
     <processors>
-        <processor>com.dooapp.processor.wrapper.GenerateMissingWrapperClassProcessor</processor>
-        <processor>com.dooapp.processor.wrapper.AddSuperClassOnBeanProcessor</processor>
-        <processor>com.dooapp.processor.wrapper.AddSuperClassOnWrapperProcessor</processor>
-        <processor>com.dooapp.processor.property.GenerateWrapperMethodsProcessor</processor>
-        <processor>com.dooapp.processor.property.GenerateCreateFieldPropertyContent</processor>
-        <processor>com.dooapp.processor.collection.GenerateWrapperCollectionMethodsProcessor</processor>
-        <processor>com.dooapp.processor.builder.GenerateMissingBuilderClassProcessor</processor>
-        <processor>com.dooapp.processor.builder.AddSuperClassOnBuilderProcessor</processor>
-        <processor>com.dooapp.processor.builder.GenerateMethodsProcessor</processor>
+        <processor>
+            <name>com.dooapp.processor.wrapper.GenerateMissingWrapperClassProcessor</name>
+        </processor>
+        <processor>
+            <name>com.dooapp.processor.wrapper.AddSuperClassOnBeanProcessor</name>
+        </processor>
+        <processor>
+            <name>com.dooapp.processor.wrapper.AddSuperClassOnWrapperProcessor</name>
+        </processor>
+        <processor>
+            <name>com.dooapp.processor.property.GenerateWrapperMethodsProcessor</name>
+        </processor>
+        <processor>
+            <name>com.dooapp.processor.property.GenerateCreateFieldPropertyContent</name>
+        </processor>
+        <processor>
+            <name>com.dooapp.processor.collection.GenerateWrapperCollectionMethodsProcessor</name>
+        </processor>
+        <processor>
+            <name>com.dooapp.processor.builder.GenerateMissingBuilderClassProcessor</name>
+        </processor>
+        <processor>
+            <name>com.dooapp.processor.builder.AddSuperClassOnBuilderProcessor</name>
+        </processor>
+        <processor>
+            <name>com.dooapp.processor.builder.GenerateMethodsProcessor</name>
+        </processor>
     </processors>
     <templates>
         <template>com.dooapp.template.WrapperConstructorTemplate</template>

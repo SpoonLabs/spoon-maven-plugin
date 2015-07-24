@@ -2,7 +2,9 @@ package fr.inria.gforge.spoon.configuration;
 
 import fr.inria.gforge.spoon.Spoon;
 import fr.inria.gforge.spoon.SpoonModel;
+import fr.inria.gforge.spoon.properties.PropertiesBuilder;
 import fr.inria.gforge.spoon.logging.ReportBuilder;
+import fr.inria.gforge.spoon.object.Processor;
 import fr.inria.gforge.spoon.util.LogWrapper;
 import fr.inria.gforge.spoon.util.TemplateLoader;
 
@@ -17,9 +19,9 @@ class XMLSpoonConfiguration extends AbstractSpoonConfigurationBuilder {
 	 */
 	private SpoonModel model;
 
-	public XMLSpoonConfiguration(Spoon spoon, ReportBuilder reportBuilder,
+	public XMLSpoonConfiguration(Spoon spoon, ReportBuilder reportBuilder, PropertiesBuilder propertiesBuilder,
 			SpoonModel model) {
-		super(spoon, reportBuilder);
+		super(spoon, reportBuilder, propertiesBuilder);
 		this.model = model;
 	}
 
@@ -27,8 +29,13 @@ class XMLSpoonConfiguration extends AbstractSpoonConfigurationBuilder {
 	public SpoonConfigurationBuilder addProcessors() {
 		if (model != null && model.getProcessors() != null && !model
 				.getProcessors().isEmpty()) {
-			String[] processors = model.getProcessors().toArray(
-					new String[model.getProcessors().size()]);
+			Processor[] processors = new Processor[model.getProcessors().size()];
+			int i = 0;
+			for (SpoonModel.Processor processor : model.getProcessors()) {
+				Processor newProcessor = new Processor();
+				newProcessor.setName(processor.getName());
+				processors[i++] = newProcessor;
+			}
 			parameters.add("-p");
 			parameters.add(buildProcessors(processors));
 			reportBuilder.setProcessors(processors);
@@ -39,8 +46,12 @@ class XMLSpoonConfiguration extends AbstractSpoonConfigurationBuilder {
 	/**
 	 * Builds the path for the list of processors.
 	 */
-	private String buildProcessors(String[] processors) {
-		return implode(processors, File.pathSeparator);
+	private String buildProcessors(Processor[] processors) {
+		String[] processorNames = new String[processors.length];
+		for(int i = 0; i < processors.length; i++) {
+			processorNames[i] = processors[i].getName();
+		}
+		return implode(processorNames, File.pathSeparator);
 	}
 
 	@Override

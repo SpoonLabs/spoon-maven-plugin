@@ -13,7 +13,7 @@ import java.util.List;
 @XmlRootElement(name = "spoonModel")
 public class SpoonModel {
 	private List<String> templates;
-	private List<String> processors;
+	private List<Processor> processors;
 	private String fileGenerator;
 
 	public String getFileGenerator() {
@@ -25,13 +25,13 @@ public class SpoonModel {
 		this.fileGenerator = fileGenerator;
 	}
 
-	public List<String> getProcessors() {
+	public List<Processor> getProcessors() {
 		return processors;
 	}
 
 	@XmlElementWrapper(name = "processors")
 	@XmlElement(name = "processor")
-	public void setProcessors(List<String> processors) {
+	public void setProcessors(List<Processor> processors) {
 		this.processors = processors;
 	}
 
@@ -43,5 +43,19 @@ public class SpoonModel {
 	@XmlElement(name = "template")
 	public void setTemplates(List<String> templates) {
 		this.templates = templates;
+	}
+
+	@XmlType(name = "processor")
+	public static class Processor {
+		private String name;
+
+		public String getName() {
+			return name;
+		}
+
+		@XmlElement(name = "name")
+		public void setName(String name) {
+			this.name = name;
+		}
 	}
 }

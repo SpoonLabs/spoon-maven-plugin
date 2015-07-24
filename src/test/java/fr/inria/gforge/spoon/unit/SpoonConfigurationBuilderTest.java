@@ -5,6 +5,8 @@ import fr.inria.gforge.spoon.configuration.SpoonConfigurationBuilder;
 import fr.inria.gforge.spoon.configuration.SpoonConfigurationFactory;
 import fr.inria.gforge.spoon.logging.ReportBuilder;
 import fr.inria.gforge.spoon.logging.ReportFactory;
+import fr.inria.gforge.spoon.properties.PropertiesBuilder;
+import fr.inria.gforge.spoon.properties.PropertiesFactory;
 import org.apache.maven.plugin.testing.MojoRule;
 import org.apache.maven.plugin.testing.resources.TestResources;
 import org.junit.Rule;
@@ -83,6 +85,7 @@ public final class SpoonConfigurationBuilderTest {
 	private SpoonConfigurationBuilder getSpoonConfigurationBuilder(File basedir) throws Exception {
 		final Spoon spoon = (Spoon) rule.lookupConfiguredMojo(basedir, "generate");
 		final ReportBuilder reportBuilder = ReportFactory.newReportBuilder(spoon);
-		return SpoonConfigurationFactory.getConfig(spoon, reportBuilder);
+		final PropertiesBuilder propertiesBuilder = PropertiesFactory.newPropertiesBuilder(spoon);
+		return SpoonConfigurationFactory.getConfig(spoon, reportBuilder, propertiesBuilder);
 	}
 }

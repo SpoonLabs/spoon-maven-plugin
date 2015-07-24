@@ -1,6 +1,7 @@
 package fr.inria.gforge.spoon.configuration;
 
 import fr.inria.gforge.spoon.Spoon;
+import fr.inria.gforge.spoon.properties.PropertiesBuilder;
 import fr.inria.gforge.spoon.logging.ReportBuilder;
 import fr.inria.gforge.spoon.util.LogWrapper;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
@@ -16,11 +17,13 @@ abstract class AbstractSpoonConfigurationBuilder
 	protected final List<String> parameters = new LinkedList<String>();
 	protected final Spoon spoon;
 	protected final ReportBuilder reportBuilder;
+	protected final PropertiesBuilder propertiesBuilder;
 
 	protected AbstractSpoonConfigurationBuilder(Spoon spoon,
-			ReportBuilder reportBuilder) {
+			ReportBuilder reportBuilder, PropertiesBuilder propertiesBuilder) {
 		this.spoon = spoon;
 		this.reportBuilder = reportBuilder;
+		this.propertiesBuilder = propertiesBuilder;
 		if (this.spoon.getLog().isInfoEnabled()) {
 			parameters.add("-v");
 		}
@@ -103,6 +106,12 @@ abstract class AbstractSpoonConfigurationBuilder
 		return this;
 	}
 
+	@Override
+	public SpoonConfigurationBuilder addProcessorsProperties() {
+		parameters.add("--properties");
+		parameters.add(propertiesBuilder.getOutputDirectory());
+		return this;
+	}
 
 	@Override
 	public String[] build() {

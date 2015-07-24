@@ -1,11 +1,14 @@
 package fr.inria.gforge.spoon;
 
+import fr.inria.gforge.spoon.properties.PropertiesBuilder;
+import fr.inria.gforge.spoon.properties.PropertiesFactory;
 import fr.inria.gforge.spoon.configuration.SpoonConfigurationBuilder;
 import fr.inria.gforge.spoon.configuration.SpoonConfigurationFactory;
 import fr.inria.gforge.spoon.logging.ReportBuilder;
 import fr.inria.gforge.spoon.logging.ReportFactory;
 import fr.inria.gforge.spoon.metrics.PerformanceDecorator;
 import fr.inria.gforge.spoon.metrics.SpoonLauncherDecorator;
+import fr.inria.gforge.spoon.object.Processor;
 import fr.inria.gforge.spoon.util.ClasspathHacker;
 import fr.inria.gforge.spoon.util.LogWrapper;
 import org.apache.maven.artifact.Artifact;
@@ -23,6 +26,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.Map;
 
 @SuppressWarnings("UnusedDeclaration")
 @Mojo(
@@ -54,7 +58,12 @@ public class Spoon extends AbstractMojo {
 	 * List of processors.
 	 */
 	@Parameter(property = "processors")
-	private String[] processors;
+	private Processor[] processors;
+	/**
+	 * List of common properties.
+	 */
+	@Parameter(property = "properties")
+	private Map<String, String> properties;
 	/**
 	 * Active debug mode to see logs.
 	 */
@@ -96,11 +105,22 @@ public class Spoon extends AbstractMojo {
 				LogWrapper.warn(this, e.getMessage(), e);
 				return;
 			}
-			final SpoonConfigurationBuilder spoonBuilder = SpoonConfigurationFactory.getConfig(this, reportBuilder);
+			PropertiesBuilder propertiesBuilder;
+			try {
+				propertiesBuilder = PropertiesFactory.newPropertiesBuilder(this);
+			} catch (RuntimeException e) {
+				LogWrapper.warn(this, e.getMessage(), e);
+				return;
+			}
+			final SpoonConfigurationBuilder spoonBuilder = SpoonConfigurationFactory.getConfig(this, reportBuilder, propertiesBuilder);
 
 			// Saves project name.
 			reportBuilder.setProjectName(project.getName());
 			reportBuilder.setModuleName(project.getName());
+
+			propertiesBuilder.setProcessors(processors);
+			propertiesBuilder.setProperties(properties);
+			propertiesBuilder.buildProperties();
 
 			// Builds all parameters necessary.
 			try {
@@ -110,6 +130,7 @@ public class Spoon extends AbstractMojo {
 						.addNoClasspath()
 						.addSourceClasspath()
 						.addProcessors()
+						.addProcessorsProperties()
 						.addTemplates();
 			} catch (RuntimeException e) {
 				LogWrapper.warn(this, e.getMessage(), e);
@@ -160,8 +181,12 @@ public class Spoon extends AbstractMojo {
 		return noClasspath;
 	}
 
-	public String[] getProcessorsPath() {
+	public Processor[] getProcessorsPath() {
 		return processors;
+	}
+
+	public Map<String, String> getProperties() {
+		return properties;
 	}
 
 	public boolean isDebug() {

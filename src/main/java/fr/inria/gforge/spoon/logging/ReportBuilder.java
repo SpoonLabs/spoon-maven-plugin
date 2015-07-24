@@ -1,5 +1,7 @@
 package fr.inria.gforge.spoon.logging;
 
+import fr.inria.gforge.spoon.object.Processor;
+
 public interface ReportBuilder {
 
 	/**
@@ -10,7 +12,7 @@ public interface ReportBuilder {
 	/**
 	 * Sets processors.
 	 */
-	ReportBuilder setProcessors(String[] processors);
+	ReportBuilder setProcessors(Processor[] processors);
 
 	/**
 	 * Sets name of the module.

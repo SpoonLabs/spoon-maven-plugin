@@ -38,6 +38,11 @@ public interface SpoonConfigurationBuilder {
 	SpoonConfigurationBuilder addNoClasspath();
 
 	/**
+	 * Add processors properties
+	 */
+	SpoonConfigurationBuilder addProcessorsProperties();
+
+	/**
 	 * Builds parameters for spoon.
 	 */
 	String[] build();

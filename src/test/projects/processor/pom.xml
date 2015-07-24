@@ -13,7 +13,9 @@
         <artifactId>spoon-maven-plugin</artifactId>
         <configuration>
           <processors>
-            <processor>fr.inria.gforge.spoon.mojo.CountStatementProcessor</processor>
+            <processor>
+              <name>fr.inria.gforge.spoon.mojo.CountStatementProcessor</name>
+            </processor>
           </processors>
         </configuration>
       </plugin>

@@ -1,5 +1,6 @@
 package fr.inria.gforge.spoon.logging;
 
+import fr.inria.gforge.spoon.object.Processor;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -85,11 +86,11 @@ class ReportDaoImpl implements ReportDao {
 			root.appendChild(processors);
 
 			// Adds all processors in child of "processors" tag.
-			String[] tabProcessors = (String[]) reportsData
+			Processor[] tabProcessors = (Processor[]) reportsData
 					.get(ReportKey.PROCESSORS);
-			for (String processor : tabProcessors) {
+			for (Processor processor : tabProcessors) {
 				Element current = document.createElement("processor");
-				current.appendChild(document.createTextNode(processor));
+				current.appendChild(document.createTextNode(processor.getName()));
 				processors.appendChild(current);
 			}
 			return processors;

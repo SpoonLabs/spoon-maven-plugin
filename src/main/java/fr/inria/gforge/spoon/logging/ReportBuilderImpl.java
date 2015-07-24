@@ -1,6 +1,6 @@
 package fr.inria.gforge.spoon.logging;
 
-import fr.inria.gforge.spoon.Spoon;
+import fr.inria.gforge.spoon.object.Processor;
 
 import java.io.File;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ class ReportBuilderImpl implements ReportBuilder {
 	}
 
 	@Override
-	public ReportBuilder setProcessors(String[] processors) {
+	public ReportBuilder setProcessors(Processor[] processors) {
 		reportsData.put(ReportKey.PROCESSORS, processors);
 		return this;
 	}
