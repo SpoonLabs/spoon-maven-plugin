@@ -63,4 +63,17 @@ public final class SpoonMojoTest {
 		File generateFiles = new File(basedir, "target/generate-source-with-spoon");
 		assertThat(generateFiles).exists();
 	}
+
+	@Test
+	public void testSpoonGoalWithSeveralInputs() throws Exception {
+		File basedir = resources.getBasedir("hello-world-inputs");
+		rule.executeMojo(basedir, "generate");
+
+		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
+		assertThat(dirOutputResults).exists();
+
+		final File[] files = dirOutputResults.listFiles();
+		assertThat(files.length).isEqualTo(1);
+		assertThat(files[0].getName()).startsWith("result-spoon");
+	}
 }

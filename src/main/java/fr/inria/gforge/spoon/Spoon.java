@@ -37,6 +37,11 @@ public class Spoon extends AbstractMojo {
 	@Parameter(property = "folder.src")
 	private File srcFolder;
 	/**
+	 * Input directories for Spoo,.
+	 */
+	@Parameter(property = "folder.src")
+	private File[] srcFolders;
+	/**
 	 * Output directory where Spoon must generate his output (spooned source code).
 	 */
 	@Parameter(
@@ -166,6 +171,10 @@ public class Spoon extends AbstractMojo {
 
 	public File getSrcFolder() {
 		return srcFolder;
+	}
+
+	public File[] getSrcFolders() {
+		return srcFolders;
 	}
 
 	public File getOutFolder() {

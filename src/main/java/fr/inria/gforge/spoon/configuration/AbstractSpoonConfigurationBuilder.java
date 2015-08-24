@@ -31,8 +31,24 @@ abstract class AbstractSpoonConfigurationBuilder
 
 	@Override
 	public SpoonConfigurationBuilder addInputFolder() {
-		final String srcDir = spoon.getProject().getBuild()
-				.getSourceDirectory();
+		if (spoon.getSrcFolders().length > 0) {
+			parameters.add("-i");
+			String inputs = "";
+			for (int i = 0; i < spoon.getSrcFolders().length; i++) {
+				final File input = spoon.getSrcFolders()[i];
+				if (!input.exists()) {
+					throw new RuntimeException(input.getName() + " don't exist.");
+				}
+				inputs += input.getAbsolutePath();
+				if (i != spoon.getSrcFolders().length - 1) {
+					inputs += File.pathSeparatorChar;
+				}
+			}
+			parameters.add(inputs);
+			reportBuilder.setInput(inputs);
+			return this;
+		}
+		final String srcDir = spoon.getProject().getBuild().getSourceDirectory();
 		final File srcDirFile = new File(srcDir);
 		if (spoon.getSrcFolder() != null && spoon.getSrcFolder().exists()) {
 			parameters.add("-i");
