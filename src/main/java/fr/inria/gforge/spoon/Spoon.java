@@ -18,6 +18,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import spoon.Launcher;
+import spoon.SpoonException;
 
 import java.io.File;
 import java.io.IOException;
@@ -146,7 +147,9 @@ public class Spoon extends AbstractMojo {
 			reportBuilder.buildReport();
 		} catch (Exception e) {
 			LogWrapper.error(this, e.getMessage(), e);
-			throw new MojoExecutionException(e.getMessage(), e);
+			if (!(e instanceof SpoonException) || !isNoClasspath()) {
+				throw new MojoExecutionException(e.getMessage(), e);
+			}
 		}
 	}
 
