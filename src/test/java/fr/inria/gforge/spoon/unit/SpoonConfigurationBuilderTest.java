@@ -26,10 +26,11 @@ public final class SpoonConfigurationBuilderTest {
 		final SpoonConfigurationBuilder configurationBuilder = getSpoonConfigurationBuilder(basedir);
 
 		final String[] config = configurationBuilder.addInputFolder().build();
-		assertThat(config.length).isEqualTo(3);
-		assertThat(config[0]).isEqualTo("-v");
-		assertThat(config[1]).isEqualTo("-i");
-		assertThat(config[2]).isEqualTo(basedir + File.separator + "src" + File.separator + "main" + File.separator + "java");
+		assertThat(config.length).isEqualTo(4);
+		assertThat(config[0]).isEqualTo("--level");
+		assertThat(config[1]).isEqualTo("INFO");
+		assertThat(config[2]).isEqualTo("-i");
+		assertThat(config[3]).isEqualTo(basedir + File.separator + "src" + File.separator + "main" + File.separator + "java");
 	}
 
 	@Test
@@ -38,10 +39,12 @@ public final class SpoonConfigurationBuilderTest {
 		final SpoonConfigurationBuilder configurationBuilder = getSpoonConfigurationBuilder(basedir);
 
 		final String[] config = configurationBuilder.addInputFolder().build();
-		assertThat(config.length).isEqualTo(3);
-		assertThat(config[0]).isEqualTo("-v");
-		assertThat(config[1]).isEqualTo("-i");
-		assertThat(config[2]).isEqualTo(basedir + File.separator + "src" + File.separator + "internal" + File.separator + "fr" + File.separator + "inria" + File.separator + "gforge" + File.separator + "spoon");
+		assertThat(config.length).isEqualTo(4);
+		assertThat(config[0]).isEqualTo("--level");
+		assertThat(config[1]).isEqualTo("INFO");
+		assertThat(config[2]).isEqualTo("-i");
+		assertThat(config[3]).isEqualTo(
+				basedir + File.separator + "src" + File.separator + "internal" + File.separator + "fr" + File.separator + "inria" + File.separator + "gforge" + File.separator + "spoon");
 	}
 
 	@Test
@@ -50,10 +53,11 @@ public final class SpoonConfigurationBuilderTest {
 		final SpoonConfigurationBuilder configurationBuilder = getSpoonConfigurationBuilder(basedir);
 
 		final String[] config = configurationBuilder.addOutputFolder().build();
-		assertThat(config.length).isEqualTo(3);
-		assertThat(config[0]).isEqualTo("-v");
-		assertThat(config[1]).isEqualTo("-o");
-		assertThat(config[2]).isEqualTo(basedir + File.separator + "target" + File.separator + "generated-sources" + File.separator + "spoon");
+		assertThat(config.length).isEqualTo(4);
+		assertThat(config[0]).isEqualTo("--level");
+		assertThat(config[1]).isEqualTo("INFO");
+		assertThat(config[2]).isEqualTo("-o");
+		assertThat(config[3]).isEqualTo(basedir + File.separator + "target" + File.separator + "generated-sources" + File.separator + "spoon");
 	}
 
 	@Test
@@ -62,10 +66,11 @@ public final class SpoonConfigurationBuilderTest {
 		final SpoonConfigurationBuilder configurationBuilder = getSpoonConfigurationBuilder(basedir);
 
 		final String[] config = configurationBuilder.addOutputFolder().build();
-		assertThat(config.length).isEqualTo(3);
-		assertThat(config[0]).isEqualTo("-v");
-		assertThat(config[1]).isEqualTo("-o");
-		assertThat(config[2]).isEqualTo(basedir + File.separator + "target" + File.separator + "generate-source-with-spoon");
+		assertThat(config.length).isEqualTo(4);
+		assertThat(config[0]).isEqualTo("--level");
+		assertThat(config[1]).isEqualTo("INFO");
+		assertThat(config[2]).isEqualTo("-o");
+		assertThat(config[3]).isEqualTo(basedir + File.separator + "target" + File.separator + "generate-source-with-spoon");
 	}
 
 	@Test
@@ -74,10 +79,11 @@ public final class SpoonConfigurationBuilderTest {
 		final SpoonConfigurationBuilder configurationBuilder = getSpoonConfigurationBuilder(basedir);
 
 		final String[] config = configurationBuilder.addProcessors().build();
-		assertThat(config.length).isEqualTo(3);
-		assertThat(config[0]).isEqualTo("-v");
-		assertThat(config[1]).isEqualTo("-p");
-		assertThat(config[2]).isEqualTo("fr.inria.gforge.spoon.mojo.CountStatementProcessor");
+		assertThat(config.length).isEqualTo(4);
+		assertThat(config[0]).isEqualTo("--level");
+		assertThat(config[1]).isEqualTo("INFO");
+		assertThat(config[2]).isEqualTo("-p");
+		assertThat(config[3]).isEqualTo("fr.inria.gforge.spoon.mojo.CountStatementProcessor");
 	}
 
 	private SpoonConfigurationBuilder getSpoonConfigurationBuilder(File basedir) throws Exception {

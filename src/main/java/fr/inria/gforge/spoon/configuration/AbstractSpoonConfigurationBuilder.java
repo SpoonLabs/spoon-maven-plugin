@@ -22,10 +22,12 @@ abstract class AbstractSpoonConfigurationBuilder
 		this.spoon = spoon;
 		this.reportBuilder = reportBuilder;
 		if (this.spoon.getLog().isInfoEnabled()) {
-			parameters.add("-v");
+			parameters.add("--level");
+			parameters.add("INFO");
 		}
 		if (this.spoon.getLog().isDebugEnabled()) {
-			parameters.add("--vvv");
+			parameters.add("--level");
+			parameters.add("DEBUG");
 		}
 	}
 
