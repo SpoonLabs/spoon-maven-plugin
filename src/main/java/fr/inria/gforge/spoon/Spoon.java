@@ -18,6 +18,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import spoon.Launcher;
+import spoon.SpoonException;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,6 +37,11 @@ public class Spoon extends AbstractMojo {
 	 */
 	@Parameter(property = "folder.src")
 	private File srcFolder;
+	/**
+	 * Input directories for Spoo,.
+	 */
+	@Parameter(property = "folder.src")
+	private File[] srcFolders;
 	/**
 	 * Output directory where Spoon must generate his output (spooned source code).
 	 */
@@ -141,7 +147,9 @@ public class Spoon extends AbstractMojo {
 			reportBuilder.buildReport();
 		} catch (Exception e) {
 			LogWrapper.error(this, e.getMessage(), e);
-			throw new MojoExecutionException(e.getMessage(), e);
+			if (!(e instanceof SpoonException) || !isNoClasspath()) {
+				throw new MojoExecutionException(e.getMessage(), e);
+			}
 		}
 	}
 
@@ -166,6 +174,10 @@ public class Spoon extends AbstractMojo {
 
 	public File getSrcFolder() {
 		return srcFolder;
+	}
+
+	public File[] getSrcFolders() {
+		return srcFolders;
 	}
 
 	public File getOutFolder() {
