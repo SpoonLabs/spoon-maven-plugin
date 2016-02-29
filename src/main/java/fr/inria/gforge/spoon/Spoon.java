@@ -57,6 +57,13 @@ public class Spoon extends AbstractMojo {
 			defaultValue = "false")
 	private boolean noClasspath;
 	/**
+	 * Tells to spoon we shouldn't rewrite source code in fully qualified mode.
+	 */
+	@Parameter(
+			property = "withImports",
+			defaultValue = "false")
+	private boolean withImports;
+	/**
 	 * Tells to spoon that it must not assume a full classpath.
 	 */
 	@Parameter(
@@ -128,6 +135,7 @@ public class Spoon extends AbstractMojo {
 						.addOutputFolder()
 						.addCompliance()
 						.addNoClasspath()
+						.addWithImports()
 						.addBuildOnlyOutdatedFiles()
 						.addNoCopyResources()
 						.addSourceClasspath()
@@ -186,6 +194,10 @@ public class Spoon extends AbstractMojo {
 
 	public boolean isNoClasspath() {
 		return noClasspath;
+	}
+
+	public boolean isWithImports() {
+		return withImports;
 	}
 
 	public boolean isBuildOnlyOutdatedFiles() {

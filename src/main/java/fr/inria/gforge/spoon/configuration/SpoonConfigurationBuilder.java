@@ -38,6 +38,11 @@ public interface SpoonConfigurationBuilder {
 	SpoonConfigurationBuilder addNoClasspath();
 
 	/**
+	 * Shouldn't rewrite source code in fully qualified mode.
+	 */
+	SpoonConfigurationBuilder addWithImports();
+
+	/**
 	 * Adds not assume a build only outdated files in parameters of spoon.
 	 */
 	SpoonConfigurationBuilder addBuildOnlyOutdatedFiles();

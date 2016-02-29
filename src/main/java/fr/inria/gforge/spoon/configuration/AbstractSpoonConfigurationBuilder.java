@@ -122,6 +122,14 @@ abstract class AbstractSpoonConfigurationBuilder
 	}
 
 	@Override
+	public SpoonConfigurationBuilder addWithImports() {
+		if (spoon.isWithImports()) {
+			parameters.add("--with-imports");
+		}
+		return this;
+	}
+
+	@Override
 	public SpoonConfigurationBuilder addBuildOnlyOutdatedFiles() {
 		if (spoon.isBuildOnlyOutdatedFiles()) {
 			parameters.add("--buildOnlyOutdatedFiles");

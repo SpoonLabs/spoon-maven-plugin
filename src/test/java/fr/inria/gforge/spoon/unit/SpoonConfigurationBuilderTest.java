@@ -86,6 +86,18 @@ public final class SpoonConfigurationBuilderTest {
 		assertThat(config[3]).isEqualTo("fr.inria.gforge.spoon.mojo.CountStatementProcessor");
 	}
 
+	@Test
+	public void testConfigurationWithImports() throws Exception {
+		final File basedir = resources.getBasedir("hello-world-with-imports");
+		final SpoonConfigurationBuilder configurationBuilder = getSpoonConfigurationBuilder(basedir);
+
+		final String[] config = configurationBuilder.addWithImports().build();
+		assertThat(config.length).isEqualTo(3);
+		assertThat(config[0]).isEqualTo("--level");
+		assertThat(config[1]).isEqualTo("INFO");
+		assertThat(config[2]).isEqualTo("--with-imports");
+	}
+
 	private SpoonConfigurationBuilder getSpoonConfigurationBuilder(File basedir) throws Exception {
 		final Spoon spoon = (Spoon) rule.lookupConfiguredMojo(basedir, "generate");
 		final ReportBuilder reportBuilder = ReportFactory.newReportBuilder(spoon);
