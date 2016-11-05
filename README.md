@@ -4,6 +4,28 @@
 
 A maven plugin to run source code transformations using spoon on a project built with Maven.
 
+
+## Download
+
+Stable version available on Maven Central:
+
+```xml
+<dependency>
+  <groupId>fr.inria.gforge.spoon</groupId>
+  <artifactId>spoon-maven-plugin</artifactId>
+  <version>2.4</version>
+</dependency>
+<pluginRepositories>
+    <!-- required for JDT dependency -->
+    <pluginRepository>
+      <id>gforge.inria.fr-releases</id>
+      <name>Maven Repository for Spoon releases</name>
+      <url>http://spoon.gforge.inria.fr/repositories/releases/</url>
+    </pluginRepository>
+</pluginRepositories>
+
+```
+
 ## Basic usage
 
 To use spoon-maven-plugin, you need to declare it on the `build` tag in the `pom.xml` file of your project and specify an execution during the `generate-source` phase of the maven lifecycle.
@@ -14,7 +36,7 @@ The usage below is the minimum to execute the plugin and run spoon on your proje
 <plugin>
   <groupId>fr.inria.gforge.spoon</groupId>
   <artifactId>spoon-maven-plugin</artifactId>
-  <version>${plugin.spoon.version}</version>
+  <version>2.4</version>
   <executions>
     <execution>
       <phase>generate-sources</phase>
@@ -74,7 +96,6 @@ For example, if you would like the version 2.4 of spoon and not the version 3.0,
 <plugin>
   <groupId>fr.inria.gforge.spoon</groupId>
   <artifactId>spoon-maven-plugin</artifactId>
-  <version>${plugin.spoon.version}</version>
   <executions>
     <execution>
       <phase>generate-sources</phase>
@@ -100,33 +121,3 @@ The plugin creates some reports about its context and the execution of spoon on 
 - If you have a simple project, you can retrieve the report at this location: `target/spoon-maven-plugin/result-spoon.xml`.
 - If you have a multi-module project, you can retrieve on each sub module at the some location: `target/spoon-maven-plugin/result-spoon.xml`.
 - If you have a multi-module project but you didn't declared your plugin at the root `pom.xml` file, you can retrieve the report on each sub module from your declaration.
-
-## Download
-
-Stable version available on Maven Central:
-
-```xml
-<dependency>
-  <groupId>fr.inria.gforge.spoon</groupId>
-  <artifactId>spoon-maven-plugin</artifactId>
-  <version>2.1</version>
-</dependency>
-```
-
-Snapshot version:
-
-```xml
-<pluginRepositories>
-  <pluginRepository>
-    <id>sonatype</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-  </pluginRepository>
-</pluginRepositories>
-<dependencies>
-	<dependency>
-	  <groupId>fr.inria.gforge.spoon</groupId>
-	  <artifactId>spoon-maven-plugin</artifactId>
-	  <version>3.0-SNAPSHOT</version>
-	</dependency>
-</dependencies>
-```
