@@ -4,6 +4,7 @@
 
 A maven plugin to run source code transformations using spoon on a project built with Maven.
 
+To report an issue, please use the main Spoon issue tracker: <https://github.com/INRIA/spoon/issues>.
 
 ## Download
 
