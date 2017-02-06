@@ -56,7 +56,7 @@ class ReportDaoImpl implements ReportDao {
 		TransformerFactory transfFactory = TransformerFactory.newInstance();
 		Transformer transformer = transfFactory.newTransformer();
 		DOMSource source = new DOMSource(doc);
-		StreamResult result = new StreamResult(resultFile);
+		StreamResult result = new StreamResult(resultFile.getAbsolutePath());
 		transformer.transform(source, result);
 	}
 
