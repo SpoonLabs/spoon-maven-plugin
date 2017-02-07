@@ -14,7 +14,7 @@ Stable version available on Maven Central:
 <dependency>
   <groupId>fr.inria.gforge.spoon</groupId>
   <artifactId>spoon-maven-plugin</artifactId>
-  <version>2.4</version>
+  <version>2.4.1</version>
 </dependency>
 <pluginRepositories>
     <!-- required for JDT dependency -->
@@ -37,7 +37,7 @@ The usage below is the minimum to execute the plugin and run spoon on your proje
 <plugin>
   <groupId>fr.inria.gforge.spoon</groupId>
   <artifactId>spoon-maven-plugin</artifactId>
-  <version>2.4</version>
+  <version>2.4.1</version>
   <executions>
     <execution>
       <phase>generate-sources</phase>
