@@ -82,6 +82,15 @@ abstract class AbstractSpoonConfigurationBuilder
 		reportBuilder.setOutput(spoon.getOutFolder().getAbsolutePath());
 		return this;
 	}
+	
+	@Override
+	public SpoonConfigurationBuilder addEnableComments() {
+		if (spoon.isEnableComments()){
+			parameters.add("--enable-comments");
+		}
+		return this;
+	}
+
 
 	@Override
 	public SpoonConfigurationBuilder addCompliance() {

@@ -31,6 +31,15 @@ import java.net.URLClassLoader;
 		defaultPhase = LifecyclePhase.GENERATE_SOURCES,
 		requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
 public class Spoon extends AbstractMojo {
+	
+	
+	/**
+	 * Tells to spoon that it should copy comments
+	 */
+	@Parameter(
+			property = "enableComments",
+			defaultValue = "false")
+	private boolean enableComments;
 
 	/**
 	 * Input directory for Spoon.
@@ -139,6 +148,7 @@ public class Spoon extends AbstractMojo {
 						.addBuildOnlyOutdatedFiles()
 						.addNoCopyResources()
 						.addSourceClasspath()
+						.addEnableComments()
 						.addProcessors()
 						.addTemplates();
 			} catch (RuntimeException e) {
@@ -226,5 +236,13 @@ public class Spoon extends AbstractMojo {
 
 	public MavenProject getProject() {
 		return project;
+	}
+
+	public void setEnableComments(boolean enableComments) {
+		this.enableComments = enableComments;
+	}
+
+	public boolean isEnableComments() {
+		return enableComments;
 	}
 }
