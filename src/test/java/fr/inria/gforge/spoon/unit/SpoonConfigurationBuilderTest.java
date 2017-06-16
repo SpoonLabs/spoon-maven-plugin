@@ -19,6 +19,31 @@ public final class SpoonConfigurationBuilderTest {
 	public MojoRule rule = new MojoRule();
 	@Rule
 	public TestResources resources = new TestResources();
+	
+	
+	@Test
+	public void testConfigurationOfTheEnableComments() throws Exception {
+		final File basedir = resources.getBasedir("hello-world-with-comments-enabled");
+		final SpoonConfigurationBuilder configurationBuilder = getSpoonConfigurationBuilder(basedir);
+
+		final String[] config = configurationBuilder.addEnableComments().build();
+		assertThat(config.length).isEqualTo(3);
+		assertThat(config[0]).isEqualTo("--level");
+		assertThat(config[1]).isEqualTo("INFO");
+		assertThat(config[2]).isEqualTo("--enable-comments");
+	}
+	
+	
+	@Test
+	public void testConfigurationOfTheEnableCommentsKeepsDefaults() throws Exception {
+		final File basedir = resources.getBasedir("hello-world");
+		final SpoonConfigurationBuilder configurationBuilder = getSpoonConfigurationBuilder(basedir);
+
+		final String[] config = configurationBuilder.addEnableComments().build();
+		assertThat(config.length).isEqualTo(2);
+		assertThat(config[0]).isEqualTo("--level");
+		assertThat(config[1]).isEqualTo("INFO");
+	}
 
 	@Test
 	public void testConfigurationOfTheDefaultInputFolder() throws Exception {
@@ -72,6 +97,20 @@ public final class SpoonConfigurationBuilderTest {
 		assertThat(config[2]).isEqualTo("-o");
 		assertThat(config[3]).isEqualTo(basedir + File.separator + "target" + File.separator + "generate-source-with-spoon");
 	}
+	
+	@Test
+	public void testConfigurationWithEnableComments() throws Exception {
+		final File basedir = resources.getBasedir("processor");
+		final SpoonConfigurationBuilder configurationBuilder = getSpoonConfigurationBuilder(basedir);
+
+		final String[] config = configurationBuilder.addProcessors().build();
+		assertThat(config.length).isEqualTo(4);
+		assertThat(config[0]).isEqualTo("--level");
+		assertThat(config[1]).isEqualTo("INFO");
+		assertThat(config[2]).isEqualTo("-p");
+		assertThat(config[3]).isEqualTo("fr.inria.gforge.spoon.mojo.CountStatementProcessor");
+	}
+
 
 	@Test
 	public void testConfigurationWithProcessors() throws Exception {
