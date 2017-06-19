@@ -1,6 +1,13 @@
 package fr.inria.gforge.spoon.configuration;
 
 public interface SpoonConfigurationBuilder {
+	
+	
+	/**
+	 * Enables Comment generation
+	 */
+
+	SpoonConfigurationBuilder addEnableComments();
 
 	/**
 	 * Adds input folder in parameters of spoon.
