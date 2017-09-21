@@ -79,6 +79,72 @@ In the example below, we add processor `fr.inria.gforge.spoon.processors.CountSt
 </dependencies>
 ```
 
+## How to pass properties to a processor? 
+
+Spoon allow to pass custom properties to the processor you want to use. 
+
+For passing properties, one must:
+
+1. Define a processor with annotated fields
+2. Add a configuration for passing the value to those fields
+
+For example you can create a Processor to change the name of a specific class like below. Note the usage of `Property` annotation for the fields.
+
+```java
+package my.app.pkg;
+
+import spoon.processing.AbstractProcessor;
+import spoon.processing.Property;
+import spoon.reflect.declaration.CtClass;
+
+public class ProcessorWithProperty extends AbstractProcessor<CtClass> {
+
+    @Property
+    String oldClassName;
+
+    @Property
+    String newClassName;
+
+    @Override
+    public void process(CtClass element) {
+        if (element.getSimpleName().equals(this.oldClassName)) {
+            element.setSimpleName(this.newClassName);
+        }
+    }
+}
+```
+
+Then you can use the following configuration to use your processor:
+
+```xml
+<plugin>
+    <groupId>fr.inria.gforge.spoon</groupId>
+    <artifactId>spoon-maven-plugin</artifactId>
+    <configuration>
+      <processors>
+        <processor>my.app.pkg.ProcessorWithProperty</processor>
+      </processors>
+      <processorProperties>
+        <processorProperty>
+          <name>my.app.pkg.ProcessorWithProperty</name>
+          <properties>
+            <property>
+              <name>oldClassName</name>
+              <value>App</value>
+            </property>
+            <property>
+              <name>newClassName</name>
+              <value>NewName</value>
+            </property>
+          </properties>
+        </processorProperty>
+      </processorProperties>
+    </configuration>
+</plugin>
+```
+
+Only primitive types can be used for the properties. Please note that you have to specify for which processor the properties should be used.
+
 ## How to change source and output folder?
 
 You can specify at spoon its input and output directories with, respectively, `srcFolder` and `outFolder` tags.
