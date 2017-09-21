@@ -133,7 +133,7 @@ It's possible to skip the plugin execution using `skip` property as in :
   <artifactId>spoon-maven-plugin</artifactId>
   <configuration>
     <skip>true</skip>
-  </configuration
+  </configuration>
 </plugin>
 ```
 
