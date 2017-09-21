@@ -76,4 +76,25 @@ public final class SpoonMojoTest {
 		assertThat(files.length).isEqualTo(1);
 		assertThat(files[0].getName()).startsWith("result-spoon");
 	}
+
+	@Test
+	public void testSpoonGoalWithProperties() throws Exception {
+		File basedir = resources.getBasedir("hello-world-with-properties");
+		rule.executeMojo(basedir, "generate");
+
+		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
+		assertThat(dirOutputResults).exists();
+
+
+		final File[] files = dirOutputResults.listFiles();
+		assertThat(files.length).isEqualTo(1);
+		assertThat(files[0].getName()).startsWith("result-spoon");
+
+		final File contentSource = new File(basedir, "target/generated-sources/spoon/fr/inria/gforge/spoon");
+		assertThat(contentSource).exists();
+
+		final File[] sourceFiles = contentSource.listFiles();
+		assertThat(sourceFiles.length).isEqualTo(1);
+		assertThat(sourceFiles[0].getName()).isEqualTo("NewName.java");
+	}
 }

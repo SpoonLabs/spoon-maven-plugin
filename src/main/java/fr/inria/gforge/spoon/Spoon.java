@@ -19,11 +19,14 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import spoon.Launcher;
 import spoon.SpoonException;
+import spoon.compiler.Environment;
+import spoon.processing.ProcessorPropertiesImpl;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.Properties;
 
 @SuppressWarnings("UnusedDeclaration")
 @Mojo(
@@ -112,6 +115,10 @@ public class Spoon extends AbstractMojo {
 			property = "Java version for spoon",
 			defaultValue = "8")
 	private int compliance;
+
+	@Parameter
+	private ProcessorProperties[] processorProperties;
+
 	/**
 	 * Project spooned with maven information.
 	 */
@@ -160,6 +167,11 @@ public class Spoon extends AbstractMojo {
 			// Initializes and launch launcher of spoon.
 			final Launcher spoonLauncher = new Launcher();
 			spoonLauncher.setArgs(spoonBuilder.build());
+
+			if (processorProperties != null) {
+				this.initSpoonProperties(spoonLauncher);
+			}
+
 			final SpoonLauncherDecorator performance = new PerformanceDecorator(reportBuilder, spoonLauncher);
 			performance.execute();
 			reportBuilder.buildReport();
@@ -168,6 +180,25 @@ public class Spoon extends AbstractMojo {
 			if (!(e instanceof SpoonException) || !isNoClasspath()) {
 				throw new MojoExecutionException(e.getMessage(), e);
 			}
+		}
+	}
+
+	private void initSpoonProperties(Launcher launcher) {
+		Environment environment = launcher.getEnvironment();
+
+		for (ProcessorProperties processorProperties : this.getProcessorProperties()) {
+			spoon.processing.ProcessorProperties properties = new ProcessorPropertiesImpl();
+
+			Properties xmlProperties = processorProperties.getProperties();
+
+			for (Object key : xmlProperties.keySet()) {
+				String sKey = (String) key;
+				Object value = xmlProperties.get(key);
+
+				properties.set(sKey, value);
+			}
+
+			environment.setProcessorProperties(processorProperties.getName(), properties);
 		}
 	}
 
@@ -244,5 +275,9 @@ public class Spoon extends AbstractMojo {
 
 	public boolean isEnableComments() {
 		return enableComments;
+	}
+
+	public ProcessorProperties[] getProcessorProperties() {
+		return processorProperties;
 	}
 }
