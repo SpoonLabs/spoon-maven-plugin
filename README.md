@@ -81,14 +81,14 @@ In the example below, we add processor `fr.inria.gforge.spoon.processors.CountSt
 
 ## How to pass properties to a processor? 
 
-Spoon allow to pass custom properties to the processor you want to use. 
+Spoon allow to pass custom properties to the processor you want to use, directly in the `pom.xml`. 
 
 For passing properties, one must:
 
-1. Define a processor with annotated fields
-2. Add a configuration for passing the value to those fields
+1. Add annotated fields to the processor being configured from the POM
+2. Add WML configuration for passing the values to those fields
 
-For example you can create a Processor to change the name of a specific class like below. Note the usage of `Property` annotation for the fields.
+For example, let us consider the following Processor that changes the name of a specific class. The usage of `Property` annotation for the fields (eg `@Property String oldClassName`) means that this field will be set through the POM.
 
 ```java
 package my.app.pkg;
@@ -114,7 +114,7 @@ public class ProcessorWithProperty extends AbstractProcessor<CtClass> {
 }
 ```
 
-Then you can use the following configuration to use your processor:
+Then the following configuration sets the processor's fields:
 
 ```xml
 <plugin>
@@ -142,8 +142,8 @@ Then you can use the following configuration to use your processor:
     </configuration>
 </plugin>
 ```
-Please note that you have to specify for which processor the properties should be used with the `name` attribute.
-Primitive types are supported as well as list and maps containing string and integers. List are created by separating values with comma:
+Please note that you have to specify for which processor the properties should be used with the `name` attribute (here `my.app.pkg.ProcessorWithProperty`).
+As values, primitive types are supported as well as list and maps containing string and integers. List are created by separating values with comma:
 
 ```xml
 <value>one,two,three,"value containing a, comma"</value>
