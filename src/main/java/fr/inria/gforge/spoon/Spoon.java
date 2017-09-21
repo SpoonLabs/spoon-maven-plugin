@@ -17,6 +17,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
+import org.codehaus.plexus.util.StringUtils;
 import spoon.Launcher;
 import spoon.SpoonException;
 import spoon.compiler.Environment;
@@ -26,7 +27,12 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 @SuppressWarnings("UnusedDeclaration")
 @Mojo(
@@ -198,7 +204,7 @@ public class Spoon extends AbstractMojo {
 		}
 	}
 
-	private void initSpoonProperties(Launcher launcher) {
+	private void initSpoonProperties(Launcher launcher) throws MojoExecutionException {
 		Environment environment = launcher.getEnvironment();
 
 		for (ProcessorProperties processorProperties : this.getProcessorProperties()) {
@@ -208,9 +214,67 @@ public class Spoon extends AbstractMojo {
 
 			for (Object key : xmlProperties.keySet()) {
 				String sKey = (String) key;
-				Object value = xmlProperties.get(key);
+				String value = (String) xmlProperties.get(key);
 
-				properties.set(sKey, value);
+				// split in order to capture list or maps
+				// code inspired by: https://stackoverflow.com/a/1757107/750142
+				String[] tokens = value.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+
+				Object content;
+				if (tokens.length == 1) {
+					content = tokens[0].replace("\"", "");
+				} else {
+					String firstContent = tokens[0];
+
+					String regExSepMap = "^.[^\"]=.*$";
+					boolean isMap = Pattern.matches(regExSepMap, firstContent);
+
+					if (isMap) {
+						Map tempContent = new HashMap();
+						for (int i = 0; i < tokens.length; i++) {
+							int equalsIndex = tokens[i].indexOf("=");
+							if (equalsIndex == -1) {
+								throw new MojoExecutionException("Error when parsing the following map property content: "+tokens[i]+". Please read the documentation.");
+							}
+
+							String mapKey = tokens[i].substring(0, equalsIndex);
+							String mapValue = tokens[i].substring(equalsIndex+1);
+
+							if (StringUtils.isNumeric(mapValue)) {
+								try {
+									int mapIntvalue = Integer.parseInt(mapValue);
+									tempContent.put(mapKey, mapIntvalue);
+								} catch (NumberFormatException e) {
+									throw new MojoExecutionException("Error while reading numeric value: "+mapValue);
+								}
+							} else {
+								mapValue = mapValue.replace("\"", "");
+								tempContent.put(mapKey, mapValue);
+							}
+						}
+
+						content = tempContent;
+					} else {
+						List tempContent = new ArrayList();
+						for (int i = 0; i < tokens.length; i++) {
+							if (StringUtils.isNumeric(tokens[i])) {
+								try {
+									int intValue = Integer.parseInt(tokens[i]);
+									tempContent.add(intValue);
+								} catch (NumberFormatException e) {
+									throw new MojoExecutionException("Error while reading numeric value: "+tokens[i]);
+								}
+							} else {
+								String listValue = tokens[i].replace("\"", "");
+								tempContent.add(listValue);
+							}
+						}
+
+						content = tempContent;
+					}
+				}
+
+				properties.set(sKey, content);
 			}
 
 			environment.setProcessorProperties(processorProperties.getName(), properties);

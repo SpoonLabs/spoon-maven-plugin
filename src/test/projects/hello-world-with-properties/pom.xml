@@ -12,6 +12,7 @@
         <groupId>fr.inria.gforge.spoon</groupId>
         <artifactId>spoon-maven-plugin</artifactId>
         <configuration>
+          <enableComments>true</enableComments>
           <processors>
             <processor>fr.inria.gforge.spoon.mojo.ProcessorWithProperty</processor>
           </processors>
@@ -21,11 +22,23 @@
               <properties>
                 <property>
                   <name>oldClassName</name>
-                  <value>App</value>
+                  <value>"App"</value>
                 </property>
                 <property>
                   <name>newClassName</name>
                   <value>NewName</value>
+                </property>
+                <property>
+                  <name>comments</name>
+                  <value>hello,"hello, world"</value>
+                </property>
+                <property>
+                  <name>other</name>
+                  <value>0,2,4</value>
+                </property>
+                <property>
+                  <name>mapTest</name>
+                  <value>un=1,deux=two,trois="3,1"</value>
                 </property>
               </properties>
             </processorProperty>

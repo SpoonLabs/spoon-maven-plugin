@@ -142,8 +142,18 @@ Then you can use the following configuration to use your processor:
     </configuration>
 </plugin>
 ```
+Please note that you have to specify for which processor the properties should be used with the `name` attribute.
+Primitive types are supported as well as list and maps containing string and integers. List are created by separating values with comma:
 
-Only primitive types can be used for the properties. Please note that you have to specify for which processor the properties should be used.
+```xml
+<value>one,two,three,"value containing a, comma"</value>
+```
+
+Maps are created like this:
+
+```xml
+<value>one=1,two=2,three="a value with a,comma"</value>
+```
 
 ## How to change source and output folder?
 
