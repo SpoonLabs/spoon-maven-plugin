@@ -3,11 +3,13 @@ package fr.inria.gforge.spoon.mojo;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.maven.plugin.testing.MojoRule;
 import org.apache.maven.plugin.testing.resources.TestResources;
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.nio.file.Files;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,6 +22,32 @@ public final class SpoonMojoTest {
 	@Test
 	public void testSpoonGoalGenerateResultFileForSimpleProject() throws Exception {
 		File basedir = resources.getBasedir("hello-world");
+		rule.executeMojo(basedir, "generate");
+
+		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
+		assertThat(dirOutputResults).exists();
+
+		final File[] files = dirOutputResults.listFiles();
+		assertThat(files.length).isEqualTo(1);
+		assertThat(files[0].getName()).startsWith("result-spoon");
+	}
+
+	@Test
+	public void testSpoonGoalGenerateResultFileForProjectWithComments() throws Exception {
+		File basedir = resources.getBasedir("hello-world-with-comments-enabled");
+		rule.executeMojo(basedir, "generate");
+
+		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
+		assertThat(dirOutputResults).exists();
+
+		final File[] files = dirOutputResults.listFiles();
+		assertThat(files.length).isEqualTo(1);
+		assertThat(files[0].getName()).startsWith("result-spoon");
+	}
+
+	@Test
+	public void testSpoonGoalGenerateResultFileForSimpleCommentedProject() throws Exception {
+		File basedir = resources.getBasedir("hello-world-commented");
 		rule.executeMojo(basedir, "generate");
 
 		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
