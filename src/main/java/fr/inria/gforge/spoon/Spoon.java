@@ -119,6 +119,17 @@ public class Spoon extends AbstractMojo {
 	@Parameter
 	private ProcessorProperties[] processorProperties;
 
+
+    /**
+     * Skip execution.
+     * 
+     * @since 2.6
+     */
+    @Parameter(
+            property = "spoon.skip",
+            defaultValue = "false")
+    private boolean skip;
+
 	/**
 	 * Project spooned with maven information.
 	 */
@@ -130,6 +141,10 @@ public class Spoon extends AbstractMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
+	    if (this.skip) {
+	        return ;
+	    }
+
 		try {
 			// Initializes builders for report and config of spoon.
 			ReportBuilder reportBuilder;

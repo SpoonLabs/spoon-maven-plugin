@@ -188,3 +188,19 @@ The plugin creates some reports about its context and the execution of spoon on 
 - If you have a simple project, you can retrieve the report at this location: `target/spoon-maven-plugin/result-spoon.xml`.
 - If you have a multi-module project, you can retrieve on each sub module at the some location: `target/spoon-maven-plugin/result-spoon.xml`.
 - If you have a multi-module project but you didn't declared your plugin at the root `pom.xml` file, you can retrieve the report on each sub module from your declaration.
+
+## Skipping
+
+It's possible to skip the plugin execution using `skip` property as in :
+
+```xml
+<plugin>
+  <groupId>fr.inria.gforge.spoon</groupId>
+  <artifactId>spoon-maven-plugin</artifactId>
+  <configuration>
+    <skip>true</skip>
+  </configuration
+</plugin>
+```
+
+or from command line using `-Dspoon.skip=true`.
