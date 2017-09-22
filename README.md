@@ -1,8 +1,10 @@
 [![Build Status](https://travis-ci.org/SpoonLabs/spoon-maven-plugin.svg?branch=master)](https://travis-ci.org/SpoonLabs/spoon-maven-plugin)
 
-# Spoon maven plugin
+# Spoon-maven-plugin
 
-A maven plugin to run source code transformations using spoon on a project built with Maven.
+Spoon-maven-plugin is a maven plugin for performing code anaysis or transformation during build. It can be used for instance:
+* to implement architectural checks, design pattern check and make the build fail if required
+* execute pre-compilation source code transformations, for instance to automatically add logging, error-handling code, dependency injection, etc.
 
 To report an issue, please use the main Spoon issue tracker: <https://github.com/INRIA/spoon/issues>.
 
