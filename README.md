@@ -81,6 +81,82 @@ In the example below, we add processor `fr.inria.gforge.spoon.processors.CountSt
 </dependencies>
 ```
 
+## How to pass properties to a processor? 
+
+Spoon allow to pass custom properties to the processor you want to use, directly in the `pom.xml`. 
+
+For passing properties, one must:
+
+1. Add annotated fields to the processor being configured from the POM
+2. Add WML configuration for passing the values to those fields
+
+For example, let us consider the following Processor that changes the name of a specific class. The usage of `Property` annotation for the fields (eg `@Property String oldClassName`) means that this field will be set through the POM.
+
+```java
+package my.app.pkg;
+
+import spoon.processing.AbstractProcessor;
+import spoon.processing.Property;
+import spoon.reflect.declaration.CtClass;
+
+public class ProcessorWithProperty extends AbstractProcessor<CtClass> {
+
+    @Property
+    String oldClassName;
+
+    @Property
+    String newClassName;
+
+    @Override
+    public void process(CtClass element) {
+        if (element.getSimpleName().equals(this.oldClassName)) {
+            element.setSimpleName(this.newClassName);
+        }
+    }
+}
+```
+
+Then the following configuration sets the processor's fields:
+
+```xml
+<plugin>
+    <groupId>fr.inria.gforge.spoon</groupId>
+    <artifactId>spoon-maven-plugin</artifactId>
+    <configuration>
+      <processors>
+        <processor>my.app.pkg.ProcessorWithProperty</processor>
+      </processors>
+      <processorProperties>
+        <processorProperty>
+          <name>my.app.pkg.ProcessorWithProperty</name>
+          <properties>
+            <property>
+              <name>oldClassName</name>
+              <value>App</value>
+            </property>
+            <property>
+              <name>newClassName</name>
+              <value>NewName</value>
+            </property>
+          </properties>
+        </processorProperty>
+      </processorProperties>
+    </configuration>
+</plugin>
+```
+Please note that you have to specify for which processor the properties should be used with the `name` attribute (here `my.app.pkg.ProcessorWithProperty`).
+As values, primitive types are supported as well as list and maps containing string and integers. List are created by separating values with comma:
+
+```xml
+<value>one,two,three,"value containing a, comma"</value>
+```
+
+Maps are created like this:
+
+```xml
+<value>one=1,two=2,three="a value with a,comma"</value>
+```
+
 ## How to change source and output folder?
 
 You can specify at spoon its input and output directories with, respectively, `srcFolder` and `outFolder` tags.
