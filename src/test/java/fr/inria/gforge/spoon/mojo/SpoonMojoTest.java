@@ -6,6 +6,7 @@ import org.apache.maven.plugin.testing.MojoRule;
 import org.apache.maven.plugin.testing.resources.TestResources;
 import org.junit.Rule;
 import org.junit.Test;
+import spoon.SpoonException;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -125,10 +126,14 @@ public final class SpoonMojoTest {
 		assertThat(sourceFiles[0].getName()).isEqualTo("NewName.java");
 	}
 
-	@Test(expected = MojoExecutionException.class)
+	@Test
 	public void testSpoonThrowException() throws Exception {
 		File basedir = resources.getBasedir("hello-world-exception");
-		rule.executeMojo(basedir, "generate");
+		try {
+			rule.executeMojo(basedir, "generate");
+		} catch (MojoExecutionException e) {
+			assertThat(e.getCause().getCause()).isInstanceOf(SpoonException.class);
+		}
 
 		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
 		assertThat(dirOutputResults).doesNotExist();
