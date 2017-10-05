@@ -1,15 +1,15 @@
 package fr.inria.gforge.spoon.mojo;
 
 import org.apache.commons.io.filefilter.WildcardFileFilter;
+import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.testing.MojoRule;
 import org.apache.maven.plugin.testing.resources.TestResources;
-import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
+import spoon.SpoonException;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.nio.file.Files;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -124,5 +124,18 @@ public final class SpoonMojoTest {
 		final File[] sourceFiles = contentSource.listFiles();
 		assertThat(sourceFiles.length).isEqualTo(1);
 		assertThat(sourceFiles[0].getName()).isEqualTo("NewName.java");
+	}
+
+	@Test
+	public void testSpoonThrowException() throws Exception {
+		File basedir = resources.getBasedir("hello-world-exception");
+		try {
+			rule.executeMojo(basedir, "generate");
+		} catch (MojoExecutionException e) {
+			assertThat(e.getCause().getCause()).isInstanceOf(SpoonException.class);
+		}
+
+		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
+		assertThat(dirOutputResults).doesNotExist();
 	}
 }

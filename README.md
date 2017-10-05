@@ -193,6 +193,10 @@ For example, if you would like the version 2.4 of spoon and not the version 3.0,
 </plugin>
 ```
 
+## How to make the build fail?
+
+If you want to use a custom Processor for assessing properties (checkstyle-like, architectural rule checking, pattern checking, etc) and make the build fail if those properties are not verified, throw a `SpoonException` in the method `process()` of the processor. 
+
 ## Reports
 
 The plugin creates some reports about its context and the execution of spoon on your project. These reports are available according to your definition of the plugin.

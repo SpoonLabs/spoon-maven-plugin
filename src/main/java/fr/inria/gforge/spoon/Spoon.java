@@ -198,9 +198,7 @@ public class Spoon extends AbstractMojo {
 			reportBuilder.buildReport();
 		} catch (Exception e) {
 			LogWrapper.error(this, e.getMessage(), e);
-			if (!(e instanceof SpoonException) || !isNoClasspath()) {
-				throw new MojoExecutionException(e.getMessage(), e);
-			}
+			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
 
