@@ -193,6 +193,10 @@ For example, if you would like the version 2.4 of spoon and not the version 3.0,
 </plugin>
 ```
 
+## How to make a goal fail?
+
+If you want to use a custom Processor for assessing properties and fail a build if those properties are not verified, you can easily make a build failing by throwing a `SpoonException` in the method `process()`. 
+
 ## Reports
 
 The plugin creates some reports about its context and the execution of spoon on your project. These reports are available according to your definition of the plugin.
