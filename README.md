@@ -8,26 +8,6 @@ Spoon-maven-plugin is a maven plugin for performing code anaysis or transformati
 
 To report an issue, please use the main Spoon issue tracker: <https://github.com/INRIA/spoon/issues>.
 
-## Download
-
-Stable version available on Maven Central:
-
-```xml
-<dependency>
-  <groupId>fr.inria.gforge.spoon</groupId>
-  <artifactId>spoon-maven-plugin</artifactId>
-  <version>2.4.1</version>
-</dependency>
-<pluginRepositories>
-    <!-- required for JDT dependency -->
-    <pluginRepository>
-      <id>gforge.inria.fr-releases</id>
-      <name>Maven Repository for Spoon releases</name>
-      <url>http://spoon.gforge.inria.fr/repositories/releases/</url>
-    </pluginRepository>
-</pluginRepositories>
-
-```
 
 ## Basic usage
 
@@ -39,7 +19,7 @@ The usage below is the minimum to execute the plugin and run spoon on your proje
 <plugin>
   <groupId>fr.inria.gforge.spoon</groupId>
   <artifactId>spoon-maven-plugin</artifactId>
-  <version>2.4.1</version>
+  <version>LATEST</version>
   <executions>
     <execution>
       <phase>generate-sources</phase>
@@ -220,3 +200,16 @@ It's possible to skip the plugin execution using `skip` property as in :
 ```
 
 or from command line using `-Dspoon.skip=true`.
+
+## 
+
+## Command-line usgae
+
+If you add the following to your `~/.m2/settings.xml`
+
+```xml
+<pluginGroups>
+    <pluginGroup>fr.inria.gforge.spoon</pluginGroup>
+</pluginGroups>
+```
+Then, the plugin is automatically discovered ([through prefix resolution](https://maven.apache.org/guides/introduction/introduction-to-plugin-prefix-mapping.html)), and you can simply run `mvn spoon:generate`.
