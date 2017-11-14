@@ -4,4 +4,4 @@ git:
 language: java 
 
 jdk:
-  - openjdk7
+  - openjdk8
