@@ -22,7 +22,7 @@ public class CountStatementProcessor extends AbstractProcessor<CtStatement> {
 		PrintWriter writer = null;
 		try {
 			// Creates output file for performance.
-			final String project = "target" + File.separator + "ut" + File.separator + "SpoonMojoTest_testSpoonGoalWithAProcessor_processor";
+			final String project = "target" + File.separator + "test-projects" + File.separator + "SpoonMojoTest_testSpoonGoalWithAProcessor_processor";
 			final String performancePath = project + File.separator + "target" + File.separator + "spoon-maven-plugin" + File.separator + "spoon-nb-statement.txt";
 			final File performanceFile = new File(performancePath);
 

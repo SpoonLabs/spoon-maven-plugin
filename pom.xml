@@ -20,18 +20,18 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- Compilation -->
-    <java.version>1.6</java.version>
-    <spoon.version>5.9.0</spoon.version>
-    <commons-io.version>2.4</commons-io.version>
+    <java.version>1.8</java.version>
+    <spoon.version>6.0.0</spoon.version>
+    <commons-io.version>2.6</commons-io.version>
     <jaxb-api.version>2.2.11</jaxb-api.version>
-    <maven-plugin-annotations.version>3.3</maven-plugin-annotations.version>
+    <maven-plugin-annotations.version>3.5</maven-plugin-annotations.version>
     <maven-project.version>2.2.1</maven-project.version>
-    <maven-plugin-api>3.2.2</maven-plugin-api>
+    <maven-plugin-api>3.5.2</maven-plugin-api>
 
     <!-- Test Dependencies -->
-    <junit.version>4.11</junit.version>
-    <maven-plugin-testing-harness.version>3.2.0</maven-plugin-testing-harness.version>
-    <assertj-core.version>1.6.1</assertj-core.version>
+    <junit.version>4.12</junit.version>
+    <maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
+    <assertj-core.version>3.8.0</assertj-core.version>
 
     <!-- javadoc options -->
     <additionalparam>-Xdoclint:none</additionalparam>
@@ -92,7 +92,7 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-core</artifactId>
-      <version>3.2.2</version>
+      <version>3.5.2</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
@@ -156,7 +156,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
-        <version>3.2</version>
+        <version>3.5</version>
         <configuration>
           <goalPrefix>spoon</goalPrefix>
         </configuration>
@@ -181,7 +181,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
+        <version>3.7.0</version>
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
