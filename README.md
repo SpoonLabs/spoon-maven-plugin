@@ -138,7 +138,7 @@ As en examples, list are created as JSON lists:
 Maps and objects are created like this:
 
 ```xml
-<value>{"one":1,"two":2,"three":"a value with a,comma"</value>
+<value>{"one":1,"two":2,"three":"a value with a,comma"}</value>
 ```
 
 ## How to change source and output folder?
