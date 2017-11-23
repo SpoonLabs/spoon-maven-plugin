@@ -22,7 +22,7 @@
               <properties>
                 <property>
                   <name>oldClassName</name>
-                  <value>"App"</value>
+                  <value>App</value>
                 </property>
                 <property>
                   <name>newClassName</name>
@@ -30,15 +30,15 @@
                 </property>
                 <property>
                   <name>comments</name>
-                  <value>hello,"hello, world"</value>
+                  <value>["hello","hello, world"]</value>
                 </property>
                 <property>
                   <name>other</name>
-                  <value>0,2,4</value>
+                  <value>[0,2,4]</value>
                 </property>
                 <property>
                   <name>mapTest</name>
-                  <value>un=1,deux=two,trois="3,1"</value>
+                  <value>{"un":1,"deux":"two","trois":"3,1"}</value>
                 </property>
               </properties>
             </processorProperty>

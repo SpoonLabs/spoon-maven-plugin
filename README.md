@@ -68,7 +68,8 @@ Spoon allow to pass custom properties to the processor you want to use, directly
 For passing properties, one must:
 
 1. Add annotated fields to the processor being configured from the POM
-2. Add WML configuration for passing the values to those fields
+2. Add XML configuration for passing the values to those fields
+3. Use JSON format to specify the value of the fields
 
 For example, let us consider the following Processor that changes the name of a specific class. The usage of `Property` annotation for the fields (eg `@Property String oldClassName`) means that this field will be set through the POM.
 
@@ -125,16 +126,19 @@ Then the following configuration sets the processor's fields:
 </plugin>
 ```
 Please note that you have to specify for which processor the properties should be used with the `name` attribute (here `my.app.pkg.ProcessorWithProperty`).
-As values, primitive types are supported as well as list and maps containing string and integers. List are created by separating values with comma:
+Values must use JSON formatting.
+Primitive types are supported as well as list, maps and custom types.
+Value types are automatically inferred from their field type and JSON values are deserialized using Jackson library.
+As en examples, list are created as JSON lists:
 
 ```xml
-<value>one,two,three,"value containing a, comma"</value>
+<value>["one","two","three","value containing a, comma"]</value>
 ```
 
-Maps are created like this:
+Maps and objects are created like this:
 
 ```xml
-<value>one=1,two=2,three="a value with a,comma"</value>
+<value>{"one":1,"two":2,"three":"a value with a,comma"}</value>
 ```
 
 ## How to change source and output folder?
