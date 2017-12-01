@@ -1,6 +1,6 @@
 package fr.inria.gforge.spoon.configuration;
 
-import fr.inria.gforge.spoon.Spoon;
+import fr.inria.gforge.spoon.SpoonMojoGenerate;
 import fr.inria.gforge.spoon.logging.ReportBuilder;
 import fr.inria.gforge.spoon.util.LogWrapper;
 import fr.inria.gforge.spoon.util.XMLLoader;
@@ -13,8 +13,8 @@ public final class SpoonConfigurationFactory {
 	private SpoonConfigurationFactory() {
 	}
 
-	public static SpoonConfigurationBuilder getConfig(Spoon spoon, ReportBuilder reportBuilder) throws Exception {
-		final InputStream in = Spoon.class.getClassLoader().getResourceAsStream(SPOON_CONFIGURATION_FILENAME);
+	public static SpoonConfigurationBuilder getConfig(SpoonMojoGenerate spoon, ReportBuilder reportBuilder) throws Exception {
+		final InputStream in = SpoonMojoGenerate.class.getClassLoader().getResourceAsStream(SPOON_CONFIGURATION_FILENAME);
 		if (in != null) {
 			// Spoon configuration file is in the classpath.
 			LogWrapper.info(spoon, "Generate spoon with a spoon.xml file.");

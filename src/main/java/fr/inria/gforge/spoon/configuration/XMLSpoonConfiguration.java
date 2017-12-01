@@ -1,6 +1,6 @@
 package fr.inria.gforge.spoon.configuration;
 
-import fr.inria.gforge.spoon.Spoon;
+import fr.inria.gforge.spoon.SpoonMojoGenerate;
 import fr.inria.gforge.spoon.SpoonModel;
 import fr.inria.gforge.spoon.logging.ReportBuilder;
 import fr.inria.gforge.spoon.util.LogWrapper;
@@ -17,8 +17,8 @@ class XMLSpoonConfiguration extends AbstractSpoonConfigurationBuilder {
 	 */
 	private SpoonModel model;
 
-	public XMLSpoonConfiguration(Spoon spoon, ReportBuilder reportBuilder,
-			SpoonModel model) {
+	public XMLSpoonConfiguration(SpoonMojoGenerate spoon, ReportBuilder reportBuilder,
+								 SpoonModel model) {
 		super(spoon, reportBuilder);
 		this.model = model;
 	}
@@ -73,7 +73,7 @@ class XMLSpoonConfiguration extends AbstractSpoonConfigurationBuilder {
 	 */
 	private String loadTemplateFile(String templateName) {
 		String name = templateName.replace('.', '/') + ".java";
-		InputStream in = Spoon.class.getClassLoader().getResourceAsStream(name);
+		InputStream in = SpoonMojoGenerate.class.getClassLoader().getResourceAsStream(name);
 		String packageName = templateName.substring(0, templateName.lastIndexOf('.'));
 		String fileName = templateName.substring(templateName.lastIndexOf('.') + 1) + ".java";
 		try {
