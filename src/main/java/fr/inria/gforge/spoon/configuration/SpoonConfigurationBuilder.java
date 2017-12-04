@@ -60,6 +60,11 @@ public interface SpoonConfigurationBuilder {
 	SpoonConfigurationBuilder addNoCopyResources();
 
 	/**
+	 * Adds the output type
+	 */
+	SpoonConfigurationBuilder addOutputType();
+
+	/**
 	 * Builds parameters for spoon.
 	 */
 	String[] build();

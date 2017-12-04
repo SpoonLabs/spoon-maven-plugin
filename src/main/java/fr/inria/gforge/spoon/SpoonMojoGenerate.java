@@ -39,7 +39,7 @@ import java.util.regex.Pattern;
 		name = "generate",
 		defaultPhase = LifecyclePhase.GENERATE_SOURCES,
 		requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
-public class Spoon extends AbstractMojo {
+public class SpoonMojoGenerate extends AbstractMojo {
 	
 	
 	/**
@@ -122,6 +122,12 @@ public class Spoon extends AbstractMojo {
 			defaultValue = "8")
 	private int compliance;
 
+	@Parameter(
+			property = "Output type",
+			defaultValue = "classes"
+	)
+	private String outputType;
+
 	@Parameter
 	private ProcessorProperties[] processorProperties;
 
@@ -145,6 +151,51 @@ public class Spoon extends AbstractMojo {
 			readonly = true)
 	private MavenProject project;
 
+	protected ReportBuilder reportBuilder;
+	protected Launcher spoonLauncher;
+
+	protected String[] buildArguments(SpoonConfigurationBuilder spoonConfigurationBuilder) {
+		spoonConfigurationBuilder.addInputFolder()
+					.addOutputFolder()
+					.addCompliance()
+					.addNoClasspath()
+					.addWithImports()
+					.addBuildOnlyOutdatedFiles()
+					.addNoCopyResources()
+					.addSourceClasspath()
+					.addEnableComments()
+					.addProcessors()
+					.addTemplates()
+					.addOutputType();
+
+		return spoonConfigurationBuilder.build();
+	}
+
+	protected void initMojo() throws Exception {
+		// Initializes builders for report and config of spoon.
+		try {
+			this.reportBuilder = ReportFactory.newReportBuilder(this);
+		} catch (RuntimeException e) {
+			LogWrapper.warn(this, e.getMessage(), e);
+			return;
+		}
+		final SpoonConfigurationBuilder spoonBuilder = SpoonConfigurationFactory.getConfig(this, this.reportBuilder);
+
+		// Saves project name.
+		this.reportBuilder.setProjectName(project.getName());
+		this.reportBuilder.setModuleName(project.getName());
+
+		addArtifactsInClasspathOfTargetClassLoader();
+
+		// Initializes and launch launcher of spoon.
+		this.spoonLauncher = new Launcher();
+		this.spoonLauncher.setArgs(this.buildArguments(spoonBuilder));
+
+		if (processorProperties != null) {
+			this.initSpoonProperties(spoonLauncher);
+		}
+	}
+
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 	    if (this.skip) {
@@ -152,48 +203,8 @@ public class Spoon extends AbstractMojo {
 	    }
 
 		try {
-			// Initializes builders for report and config of spoon.
-			ReportBuilder reportBuilder;
-			try {
-				reportBuilder = ReportFactory.newReportBuilder(this);
-			} catch (RuntimeException e) {
-				LogWrapper.warn(this, e.getMessage(), e);
-				return;
-			}
-			final SpoonConfigurationBuilder spoonBuilder = SpoonConfigurationFactory.getConfig(this, reportBuilder);
-
-			// Saves project name.
-			reportBuilder.setProjectName(project.getName());
-			reportBuilder.setModuleName(project.getName());
-
-			// Builds all parameters necessary.
-			try {
-				spoonBuilder.addInputFolder()
-						.addOutputFolder()
-						.addCompliance()
-						.addNoClasspath()
-						.addWithImports()
-						.addBuildOnlyOutdatedFiles()
-						.addNoCopyResources()
-						.addSourceClasspath()
-						.addEnableComments()
-						.addProcessors()
-						.addTemplates();
-			} catch (RuntimeException e) {
-				LogWrapper.warn(this, e.getMessage(), e);
-				return;
-			}
-			addArtifactsInClasspathOfTargetClassLoader();
-
-			// Initializes and launch launcher of spoon.
-			final Launcher spoonLauncher = new Launcher();
-			spoonLauncher.setArgs(spoonBuilder.build());
-
-			if (processorProperties != null) {
-				this.initSpoonProperties(spoonLauncher);
-			}
-
-			final SpoonLauncherDecorator performance = new PerformanceDecorator(reportBuilder, spoonLauncher);
+			this.initMojo();
+			final SpoonLauncherDecorator performance = new PerformanceDecorator(this.reportBuilder, this.spoonLauncher);
 			performance.execute();
 			reportBuilder.buildReport();
 		} catch (Exception e) {
@@ -298,5 +309,9 @@ public class Spoon extends AbstractMojo {
 
 	public ProcessorProperties[] getProcessorProperties() {
 		return processorProperties;
+	}
+
+	public String getOutputType() {
+		return outputType;
 	}
 }

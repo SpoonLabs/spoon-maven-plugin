@@ -138,4 +138,16 @@ public final class SpoonMojoTest {
 		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
 		assertThat(dirOutputResults).doesNotExist();
 	}
+
+	@Test
+	public void testSpoonCheckGoal() throws Exception {
+		File basedir = resources.getBasedir("hello-world");
+		rule.executeMojo(basedir, "check");
+
+		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
+		assertThat(dirOutputResults).exists();
+
+		final File contentSource = new File(basedir, "target/generated-sources/spoon/fr/inria/gforge/spoon");
+		assertThat(contentSource).doesNotExist();
+	}
 }

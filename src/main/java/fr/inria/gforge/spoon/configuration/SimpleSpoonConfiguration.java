@@ -1,13 +1,13 @@
 package fr.inria.gforge.spoon.configuration;
 
-import fr.inria.gforge.spoon.Spoon;
+import fr.inria.gforge.spoon.SpoonMojoGenerate;
 import fr.inria.gforge.spoon.logging.ReportBuilder;
 
 import java.io.File;
 
 class SimpleSpoonConfiguration extends AbstractSpoonConfigurationBuilder {
 
-	protected SimpleSpoonConfiguration(Spoon spoon,
+	protected SimpleSpoonConfiguration(SpoonMojoGenerate spoon,
 			ReportBuilder reportBuilder) {
 		super(spoon, reportBuilder);
 	}

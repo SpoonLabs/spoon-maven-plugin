@@ -2,12 +2,22 @@
 
 # Spoon-maven-plugin
 
-Spoon-maven-plugin is a maven plugin for performing code anaysis or transformation during build. It can be used for instance:
+Spoon-maven-plugin is a maven plugin for performing code analysis or transformation during build. 
+
+It can be used for instance:
 * to implement architectural checks, design pattern check and make the build fail if required
 * execute pre-compilation source code transformations, for instance to automatically add logging, error-handling code, dependency injection, etc.
 
 To report an issue, please use the main Spoon issue tracker: <https://github.com/INRIA/spoon/issues>.
 
+## Goals
+
+The plugin provided two goals:
+* `generate` to execute source-code transformation
+* `check` to execute source-code analysis
+
+Please note that the two goals take exactly the same arguments and configuration.
+The only change is that `generate` will create java source files in the `target` directory, where `check` will only fail the build in case of analysis error.
 
 ## Basic usage
 

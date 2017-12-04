@@ -1,6 +1,6 @@
 package fr.inria.gforge.spoon.configuration;
 
-import fr.inria.gforge.spoon.Spoon;
+import fr.inria.gforge.spoon.SpoonMojoGenerate;
 import fr.inria.gforge.spoon.logging.ReportBuilder;
 import fr.inria.gforge.spoon.util.LogWrapper;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
@@ -14,10 +14,10 @@ abstract class AbstractSpoonConfigurationBuilder
 		implements SpoonConfigurationBuilder {
 
 	protected final List<String> parameters = new LinkedList<String>();
-	protected final Spoon spoon;
+	protected final SpoonMojoGenerate spoon;
 	protected final ReportBuilder reportBuilder;
 
-	protected AbstractSpoonConfigurationBuilder(Spoon spoon,
+	protected AbstractSpoonConfigurationBuilder(SpoonMojoGenerate spoon,
 			ReportBuilder reportBuilder) {
 		this.spoon = spoon;
 		this.reportBuilder = reportBuilder;
@@ -151,6 +151,13 @@ abstract class AbstractSpoonConfigurationBuilder
 		if (spoon.isNoCopyResources()) {
 			parameters.add("--no-copy-resources");
 		}
+		return this;
+	}
+
+	@Override
+	public SpoonConfigurationBuilder addOutputType() {
+		parameters.add("--output-type");
+		parameters.add(spoon.getOutputType());
 		return this;
 	}
 

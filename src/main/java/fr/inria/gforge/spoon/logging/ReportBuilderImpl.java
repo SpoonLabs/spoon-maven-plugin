@@ -1,7 +1,5 @@
 package fr.inria.gforge.spoon.logging;
 
-import fr.inria.gforge.spoon.Spoon;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;

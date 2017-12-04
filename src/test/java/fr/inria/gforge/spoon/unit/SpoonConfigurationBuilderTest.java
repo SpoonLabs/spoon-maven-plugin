@@ -1,6 +1,6 @@
 package fr.inria.gforge.spoon.unit;
 
-import fr.inria.gforge.spoon.Spoon;
+import fr.inria.gforge.spoon.SpoonMojoGenerate;
 import fr.inria.gforge.spoon.configuration.SpoonConfigurationBuilder;
 import fr.inria.gforge.spoon.configuration.SpoonConfigurationFactory;
 import fr.inria.gforge.spoon.logging.ReportBuilder;
@@ -138,7 +138,7 @@ public final class SpoonConfigurationBuilderTest {
 	}
 
 	private SpoonConfigurationBuilder getSpoonConfigurationBuilder(File basedir) throws Exception {
-		final Spoon spoon = (Spoon) rule.lookupConfiguredMojo(basedir, "generate");
+		final SpoonMojoGenerate spoon = (SpoonMojoGenerate) rule.lookupConfiguredMojo(basedir, "generate");
 		final ReportBuilder reportBuilder = ReportFactory.newReportBuilder(spoon);
 		return SpoonConfigurationFactory.getConfig(spoon, reportBuilder);
 	}
