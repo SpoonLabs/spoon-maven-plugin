@@ -26,7 +26,7 @@
     <jaxb-api.version>2.2.11</jaxb-api.version>
     <maven-plugin-annotations.version>3.5</maven-plugin-annotations.version>
     <maven-project.version>2.2.1</maven-project.version>
-    <maven-plugin-api>3.5.2</maven-plugin-api>
+    <maven-plugin-api>3.3.9</maven-plugin-api>
 
     <!-- Test Dependencies -->
     <junit.version>4.12</junit.version>
@@ -92,7 +92,7 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-core</artifactId>
-      <version>3.5.2</version>
+      <version>3.3.9</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
