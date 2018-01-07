@@ -9,9 +9,12 @@ import fr.inria.gforge.spoon.metrics.SpoonLauncherDecorator;
 import fr.inria.gforge.spoon.util.ClasspathHacker;
 import fr.inria.gforge.spoon.util.LogWrapper;
 import org.apache.maven.artifact.Artifact;
+import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugin.PluginManager;
+import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -40,8 +43,6 @@ import java.util.regex.Pattern;
 		defaultPhase = LifecyclePhase.GENERATE_SOURCES,
 		requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
 public class SpoonMojoGenerate extends AbstractMojo {
-	
-	
 	/**
 	 * Tells to spoon that it should copy comments
 	 */
@@ -201,6 +202,10 @@ public class SpoonMojoGenerate extends AbstractMojo {
 	    if (this.skip) {
 	        return ;
 	    }
+
+		if (project.getPackaging().equals("pom")) {
+			return ;
+		}
 
 		try {
 			this.initMojo();

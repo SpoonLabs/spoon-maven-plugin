@@ -1,9 +1,12 @@
 package fr.inria.gforge.spoon.mojo;
 
 import org.apache.commons.io.filefilter.WildcardFileFilter;
+import org.apache.maven.plugin.Mojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.testing.MojoRule;
 import org.apache.maven.plugin.testing.resources.TestResources;
+import org.codehaus.plexus.configuration.PlexusConfiguration;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import spoon.SpoonException;
@@ -148,6 +151,54 @@ public final class SpoonMojoTest {
 		assertThat(dirOutputResults).exists();
 
 		final File contentSource = new File(basedir, "target/generated-sources/spoon/fr/inria/gforge/spoon");
+		assertThat(contentSource).doesNotExist();
+	}
+
+	@Ignore
+	@Test
+	public void testSpoonGoalGenerateResultFileForMultimoduleProject() throws Exception {
+		File basedir = resources.getBasedir("multi-module");
+		rule.executeMojo(basedir, "generate");
+
+		File dirOutputResults = new File(basedir, "module1/target/spoon-maven-plugin");
+		assertThat(dirOutputResults).exists();
+
+		File[] files = dirOutputResults.listFiles();
+		assertThat(files.length).isEqualTo(1);
+		assertThat(files[0].getName()).startsWith("result-spoon");
+
+		dirOutputResults = new File(basedir, "module2/target/spoon-maven-plugin");
+		assertThat(dirOutputResults).exists();
+
+		files = dirOutputResults.listFiles();
+		assertThat(files.length).isEqualTo(1);
+		assertThat(files[0].getName()).startsWith("result-spoon");
+	}
+
+	@Ignore
+	@Test
+	public void testSpoonCheckGoalForMultimoduleProject() throws Exception {
+		File basedir = resources.getBasedir("multi-module");
+		rule.executeMojo(basedir, "check");
+
+		File dirOutputResults = new File(basedir, "module1/target/spoon-maven-plugin");
+		assertThat(dirOutputResults).exists();
+
+		File[] files = dirOutputResults.listFiles();
+		assertThat(files.length).isEqualTo(1);
+		assertThat(files[0].getName()).startsWith("result-spoon");
+
+		File contentSource = new File(basedir, "module1/target/generated-sources/spoon/fr/inria/gforge/spoon");
+		assertThat(contentSource).doesNotExist();
+
+		dirOutputResults = new File(basedir, "module2/target/spoon-maven-plugin");
+		assertThat(dirOutputResults).exists();
+
+		files = dirOutputResults.listFiles();
+		assertThat(files.length).isEqualTo(1);
+		assertThat(files[0].getName()).startsWith("result-spoon");
+
+		contentSource = new File(basedir, "module2/target/generated-sources/spoon/fr/inria/gforge/spoon");
 		assertThat(contentSource).doesNotExist();
 	}
 }
