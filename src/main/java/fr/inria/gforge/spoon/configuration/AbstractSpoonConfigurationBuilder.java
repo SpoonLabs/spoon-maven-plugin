@@ -21,14 +21,14 @@ abstract class AbstractSpoonConfigurationBuilder
 			ReportBuilder reportBuilder) {
 		this.spoon = spoon;
 		this.reportBuilder = reportBuilder;
-		if (this.spoon.getLog().isInfoEnabled()) {
-			parameters.add("--level");
-			parameters.add("INFO");
-		}
 		if (this.spoon.getLog().isDebugEnabled()) {
 			parameters.add("--level");
 			parameters.add("DEBUG");
+		} else if (this.spoon.getLog().isInfoEnabled()) {
+			parameters.add("--level");
+			parameters.add("INFO");
 		}
+
 	}
 
 	@Override
