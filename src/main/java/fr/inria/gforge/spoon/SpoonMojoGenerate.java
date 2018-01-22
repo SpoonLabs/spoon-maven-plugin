@@ -101,6 +101,7 @@ public class SpoonMojoGenerate extends AbstractMojo {
 	 */
 	@Parameter(property = "processors")
 	private String[] processors;
+
 	/**
 	 * Active debug mode to see logs.
 	 */
