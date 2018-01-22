@@ -9,20 +9,15 @@ import fr.inria.gforge.spoon.metrics.SpoonLauncherDecorator;
 import fr.inria.gforge.spoon.util.ClasspathHacker;
 import fr.inria.gforge.spoon.util.LogWrapper;
 import org.apache.maven.artifact.Artifact;
-import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugin.PluginManager;
-import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
-import org.codehaus.plexus.util.StringUtils;
 import spoon.Launcher;
-import spoon.SpoonException;
 import spoon.compiler.Environment;
 import spoon.processing.ProcessorPropertiesImpl;
 
@@ -30,12 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
-import java.util.regex.Pattern;
 
 @SuppressWarnings("UnusedDeclaration")
 @Mojo(
