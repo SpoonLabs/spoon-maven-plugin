@@ -1,3 +1,4 @@
+[![Maven Central](https://img.shields.io/maven-central/v/fr.inria.gforge.spoon/spoon-maven-plugin.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22fr.inria.gforge.spoon%22%20AND%20a%3A%22spoon-maven-plugin%22)
 [![Build Status](https://travis-ci.org/SpoonLabs/spoon-maven-plugin.svg?branch=master)](https://travis-ci.org/SpoonLabs/spoon-maven-plugin)
 
 # Spoon-maven-plugin
