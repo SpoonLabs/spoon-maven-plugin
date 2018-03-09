@@ -140,14 +140,14 @@ public final class SpoonMojoTest {
 		assertThat(dirOutputResults).doesNotExist();
 	}
 
-//	@Test
-//	public void testSpoonNoSources() throws Exception {
-//		File basedir = resources.getBasedir("hello-world-no-sources");
-//		rule.executeMojo(basedir, "generate");
-//
-//		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
-//		assertThat(dirOutputResults).doesNotExist();
-//	}
+	@Test
+	public void testSpoonNoSources() throws Exception {
+		File basedir = resources.getBasedir("hello-world-no-sources");
+		rule.executeMojo(basedir, "generate");
+
+		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
+		assertThat(dirOutputResults).doesNotExist();
+	}
 
 	@Test
 	public void testSpoonCheckGoal() throws Exception {
