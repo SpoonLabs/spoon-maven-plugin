@@ -12,7 +12,7 @@ public interface SpoonConfigurationBuilder {
 	/**
 	 * Adds input folder in parameters of spoon.
 	 */
-	SpoonConfigurationBuilder addInputFolder();
+	SpoonConfigurationBuilder addInputFolder() throws SpoonMavenPluginException;
 
 	/**
 	 * Adds output folder in parameters of spoon.
@@ -27,7 +27,7 @@ public interface SpoonConfigurationBuilder {
 	/**
 	 * Adds source classpath in parameters of spoon.
 	 */
-	SpoonConfigurationBuilder addSourceClasspath();
+	SpoonConfigurationBuilder addSourceClasspath() throws SpoonMavenPluginException;
 
 	/**
 	 * Adds processors in parameters of spoon.
