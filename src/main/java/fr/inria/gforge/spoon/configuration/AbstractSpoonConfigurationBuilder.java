@@ -32,14 +32,14 @@ abstract class AbstractSpoonConfigurationBuilder
 	}
 
 	@Override
-	public SpoonConfigurationBuilder addInputFolder() {
+	public SpoonConfigurationBuilder addInputFolder() throws SpoonMavenPluginException {
 		if (spoon.getSrcFolders().length > 0) {
 			parameters.add("-i");
 			String inputs = "";
 			for (int i = 0; i < spoon.getSrcFolders().length; i++) {
 				final File input = spoon.getSrcFolders()[i];
 				if (!input.exists()) {
-					throw new RuntimeException(input.getName() + " don't exist.");
+					throw new SpoonMavenPluginException(input.getName() + " don't exist.");
 				}
 				inputs += input.getAbsolutePath();
 				if (i != spoon.getSrcFolders().length - 1) {
@@ -63,7 +63,7 @@ abstract class AbstractSpoonConfigurationBuilder
 			reportBuilder.setInput(srcDir);
 			return this;
 		}
-		throw new RuntimeException(String.format("No source directory for %s project.", spoon.getProject().getName()));
+		throw new SpoonMavenPluginException(String.format("No source directory for %s project.", spoon.getProject().getName()));
 	}
 
 	@Override
@@ -100,13 +100,13 @@ abstract class AbstractSpoonConfigurationBuilder
 	}
 
 	@Override
-	public SpoonConfigurationBuilder addSourceClasspath() {
+	public SpoonConfigurationBuilder addSourceClasspath() throws SpoonMavenPluginException {
 		final MavenProject project = spoon.getProject();
 		List<String> compileClasspath;
 		try {
 			compileClasspath = project.getCompileClasspathElements();
 		} catch (DependencyResolutionRequiredException e) {
-			throw new RuntimeException("Cannot get compile classpath elements.", e);
+			throw new SpoonMavenPluginException("Cannot get compile classpath elements.", e);
 		}
 		if (compileClasspath.size() > 1) {
 			final StringBuilder classpath = new StringBuilder();

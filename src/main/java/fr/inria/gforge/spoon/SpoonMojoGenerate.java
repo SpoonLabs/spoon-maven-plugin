@@ -2,6 +2,7 @@ package fr.inria.gforge.spoon;
 
 import fr.inria.gforge.spoon.configuration.SpoonConfigurationBuilder;
 import fr.inria.gforge.spoon.configuration.SpoonConfigurationFactory;
+import fr.inria.gforge.spoon.configuration.SpoonMavenPluginException;
 import fr.inria.gforge.spoon.logging.ReportBuilder;
 import fr.inria.gforge.spoon.logging.ReportFactory;
 import fr.inria.gforge.spoon.metrics.PerformanceDecorator;
@@ -146,7 +147,7 @@ public class SpoonMojoGenerate extends AbstractMojo {
 	protected ReportBuilder reportBuilder;
 	protected Launcher spoonLauncher;
 
-	protected String[] buildArguments(SpoonConfigurationBuilder spoonConfigurationBuilder) {
+	protected String[] buildArguments(SpoonConfigurationBuilder spoonConfigurationBuilder) throws SpoonMavenPluginException {
 		spoonConfigurationBuilder.addInputFolder()
 					.addOutputFolder()
 					.addCompliance()
@@ -181,6 +182,7 @@ public class SpoonMojoGenerate extends AbstractMojo {
 
 		// Initializes and launch launcher of spoon.
 		this.spoonLauncher = new Launcher();
+
 		this.spoonLauncher.setArgs(this.buildArguments(spoonBuilder));
 
 		if (processorProperties != null) {
@@ -203,6 +205,8 @@ public class SpoonMojoGenerate extends AbstractMojo {
 			final SpoonLauncherDecorator performance = new PerformanceDecorator(this.reportBuilder, this.spoonLauncher);
 			performance.execute();
 			reportBuilder.buildReport();
+		} catch (SpoonMavenPluginException e) {
+	    	LogWrapper.warn(this, e.getMessage()+"\n This project will be ignored.", e);
 		} catch (Exception e) {
 			LogWrapper.error(this, e.getMessage(), e);
 			throw new MojoExecutionException(e.getMessage(), e);
