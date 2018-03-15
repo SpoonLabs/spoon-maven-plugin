@@ -121,6 +121,12 @@ public class SpoonMojoGenerate extends AbstractMojo {
 	)
 	private String outputType;
 
+	@Parameter(
+			property = "Take the generated sources as source input for Spoon (not taking into account if srcFolders is provided)",
+			defaultValue = "false"
+	)
+	private boolean withGeneratedSources;
+
 	@Parameter
 	private ProcessorProperties[] processorProperties;
 
@@ -313,5 +319,9 @@ public class SpoonMojoGenerate extends AbstractMojo {
 
 	public String getOutputType() {
 		return outputType;
+	}
+
+	public boolean getWithGeneratedSources() {
+		return withGeneratedSources;
 	}
 }

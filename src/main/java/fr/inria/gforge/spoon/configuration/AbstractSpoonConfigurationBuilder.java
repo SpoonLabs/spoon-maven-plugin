@@ -7,6 +7,8 @@ import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.project.MavenProject;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,37 +35,45 @@ abstract class AbstractSpoonConfigurationBuilder
 
 	@Override
 	public SpoonConfigurationBuilder addInputFolder() throws SpoonMavenPluginException {
+		final List<File> srcDir = new ArrayList<>();
+
 		if (spoon.getSrcFolders().length > 0) {
-			parameters.add("-i");
-			String inputs = "";
-			for (int i = 0; i < spoon.getSrcFolders().length; i++) {
-				final File input = spoon.getSrcFolders()[i];
-				if (!input.exists()) {
-					throw new SpoonMavenPluginException(input.getName() + " don't exist.");
+			srcDir.addAll(Arrays.asList(spoon.getSrcFolders()));
+		} else if (spoon.getSrcFolder() != null) {
+			srcDir.add(spoon.getSrcFolder());
+		} else {
+			if (spoon.getWithGeneratedSources()) {
+				System.out.println("Option generated sources : ok"); // FIXME: to be deleted
+				for (String s : spoon.getProject().getCompileSourceRoots()) {
+					srcDir.add(new File(s));
 				}
-				inputs += input.getAbsolutePath();
-				if (i != spoon.getSrcFolders().length - 1) {
-					inputs += File.pathSeparatorChar;
-				}
+			} else {
+				srcDir.add(new File(spoon.getProject().getBuild().getSourceDirectory()));
 			}
-			parameters.add(inputs);
-			reportBuilder.setInput(inputs);
-			return this;
 		}
-		final String srcDir = spoon.getProject().getBuild().getSourceDirectory();
-		final File srcDirFile = new File(srcDir);
-		if (spoon.getSrcFolder() != null && spoon.getSrcFolder().exists()) {
-			parameters.add("-i");
-			parameters.add(spoon.getSrcFolder().getAbsolutePath());
-			reportBuilder.setInput(spoon.getSrcFolder().getAbsolutePath());
-			return this;
-		} else if (srcDirFile.exists()) {
-			parameters.add("-i");
-			parameters.add(srcDir);
-			reportBuilder.setInput(srcDir);
-			return this;
+
+		if (srcDir.isEmpty()) {
+			throw new SpoonMavenPluginException(String.format("No source directory for %s project.", spoon.getProject().getName()));
 		}
-		throw new SpoonMavenPluginException(String.format("No source directory for %s project.", spoon.getProject().getName()));
+
+		String inputs = "";
+		for (int i = 0; i < srcDir.size(); i++) {
+			File file = srcDir.get(i);
+			if (!file.exists()) {
+				throw new SpoonMavenPluginException(file.getName() + " don't exist.");
+			}
+			inputs += file.getAbsolutePath();
+			if (i != srcDir.size() - 1) {
+				inputs += File.pathSeparatorChar;
+			}
+		}
+
+		// FIXME: need to be deleted before release
+		System.out.println("Inputs: "+inputs);
+		parameters.add("-i");
+		parameters.add(inputs);
+		reportBuilder.setInput(inputs);
+		return this;
 	}
 
 	@Override

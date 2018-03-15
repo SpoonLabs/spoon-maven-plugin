@@ -89,9 +89,9 @@
             <plugin>
                 <groupId>fr.inria.gforge.spoon</groupId>
                 <artifactId>spoon-maven-plugin</artifactId>
-                <!--configuration>
+                <configuration>
                     <withGeneratedSources>true</withGeneratedSources>
-                </configuration-->
+                </configuration>
             </plugin>
         </plugins>
     </build>
