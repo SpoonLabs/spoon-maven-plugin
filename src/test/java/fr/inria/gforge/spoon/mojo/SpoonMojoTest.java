@@ -208,4 +208,17 @@ public final class SpoonMojoTest {
 		contentSource = new File(basedir, "module2/target/generated-sources/spoon/fr/inria/gforge/spoon");
 		assertThat(contentSource).doesNotExist();
 	}
+
+	@Test
+	public void testSpoonGoalGenerateResultFileForProjectWithGeneratedSources() throws Exception {
+		File basedir = resources.getBasedir("antlr-example");
+		rule.executeMojo(basedir, "generate");
+
+		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
+		assertThat(dirOutputResults).exists();
+
+		final File[] files = dirOutputResults.listFiles();
+		assertThat(files.length).isEqualTo(1);
+		assertThat(files[0].getName()).startsWith("result-spoon");
+	}
 }
