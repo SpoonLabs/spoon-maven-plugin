@@ -43,7 +43,6 @@ abstract class AbstractSpoonConfigurationBuilder
 			srcDir.add(spoon.getSrcFolder());
 		} else {
 			if (spoon.getWithGeneratedSources()) {
-				System.out.println("Option generated sources : ok"); // FIXME: to be deleted
 				for (String s : spoon.getProject().getCompileSourceRoots()) {
 					srcDir.add(new File(s));
 				}
@@ -68,8 +67,6 @@ abstract class AbstractSpoonConfigurationBuilder
 			}
 		}
 
-		// FIXME: need to be deleted before release
-		System.out.println("Inputs: "+inputs);
 		parameters.add("-i");
 		parameters.add(inputs);
 		reportBuilder.setInput(inputs);
