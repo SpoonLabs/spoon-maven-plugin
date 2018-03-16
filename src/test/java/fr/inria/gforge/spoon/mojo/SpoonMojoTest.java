@@ -1,6 +1,7 @@
 package fr.inria.gforge.spoon.mojo;
 
 import org.apache.commons.io.filefilter.WildcardFileFilter;
+import org.apache.maven.plugin.Mojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.testing.MojoRule;
 import org.apache.maven.plugin.testing.resources.TestResources;
@@ -207,5 +208,25 @@ public final class SpoonMojoTest {
 
 		contentSource = new File(basedir, "module2/target/generated-sources/spoon/fr/inria/gforge/spoon");
 		assertThat(contentSource).doesNotExist();
+	}
+
+	/**
+	 * The current implementation of this test does not work, but calling a "mvn compile" in the targeted project does work
+	 * So please test it in doing so.
+	 * @throws Exception
+	 */
+	@Ignore
+	@Test
+	public void testSpoonGoalGenerateResultFileForProjectWithGeneratedSources() throws Exception {
+		File basedir = resources.getBasedir("antlr-example");
+
+		rule.executeMojo(basedir, "generate");
+
+		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
+		assertThat(dirOutputResults).exists();
+
+		final File[] files = dirOutputResults.listFiles();
+		assertThat(files.length).isEqualTo(1);
+		assertThat(files[0].getName()).startsWith("result-spoon");
 	}
 }
