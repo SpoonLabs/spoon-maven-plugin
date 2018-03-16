@@ -13,6 +13,7 @@
         <artifactId>spoon-maven-plugin</artifactId>
         <configuration>
           <skipSpoonErrors>true</skipSpoonErrors>
+          <srcFolder>./foo</srcFolder>
         </configuration>
       </plugin>
     </plugins>

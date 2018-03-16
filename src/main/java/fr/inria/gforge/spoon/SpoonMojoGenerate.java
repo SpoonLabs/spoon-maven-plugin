@@ -127,6 +127,12 @@ public class SpoonMojoGenerate extends AbstractMojo {
 	)
 	private boolean skipGeneratedSources;
 
+	@Parameter(
+			property = "Prevent the build from crashing in case of Spoon error: a warning will only be triggered",
+			defaultValue = "false"
+	)
+	private boolean skipSpoonErrors;
+
 	@Parameter
 	private ProcessorProperties[] processorProperties;
 
@@ -212,7 +218,11 @@ public class SpoonMojoGenerate extends AbstractMojo {
 			performance.execute();
 			reportBuilder.buildReport();
 		} catch (SpoonMavenPluginException e) {
-	    	LogWrapper.warn(this, e.getMessage()+"\n This project will be ignored.", e);
+	    	if (this.getSkipSpoonErrors()) {
+				LogWrapper.warn(this, e.getMessage()+"\n This project will be ignored.", e);
+			} else {
+				throw new MojoExecutionException(e.getMessage(), e);
+			}
 		} catch (Exception e) {
 			LogWrapper.error(this, e.getMessage(), e);
 			throw new MojoExecutionException(e.getMessage(), e);
@@ -323,5 +333,9 @@ public class SpoonMojoGenerate extends AbstractMojo {
 
 	public boolean getSkipGeneratedSources() {
 		return skipGeneratedSources;
+	}
+
+	public boolean getSkipSpoonErrors() {
+		return skipSpoonErrors;
 	}
 }
