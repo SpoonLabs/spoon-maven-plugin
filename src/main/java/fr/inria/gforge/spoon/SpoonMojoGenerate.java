@@ -123,7 +123,7 @@ public class SpoonMojoGenerate extends AbstractMojo {
 
 	@Parameter(
 			property = "Take the generated sources as source input for Spoon (not taking into account if srcFolders is provided)",
-			defaultValue = "false"
+			defaultValue = "true"
 	)
 	private boolean withGeneratedSources;
 
