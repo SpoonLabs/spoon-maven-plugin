@@ -42,7 +42,7 @@ abstract class AbstractSpoonConfigurationBuilder
 		} else if (spoon.getSrcFolder() != null) {
 			srcDir.add(spoon.getSrcFolder());
 		} else {
-			if (spoon.getWithGeneratedSources()) {
+			if (!spoon.getSkipGeneratedSources()) {
 				for (String s : spoon.getProject().getCompileSourceRoots()) {
 					srcDir.add(new File(s));
 				}

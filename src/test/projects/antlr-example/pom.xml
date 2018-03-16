@@ -32,7 +32,6 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <phase>validate</phase>
                         <goals>
                             <goal>antlr4</goal>
                         </goals>
@@ -42,17 +41,6 @@
             <plugin>
                 <groupId>fr.inria.gforge.spoon</groupId>
                 <artifactId>spoon-maven-plugin</artifactId>
-                <configuration>
-                    <withGeneratedSources>true</withGeneratedSources>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
