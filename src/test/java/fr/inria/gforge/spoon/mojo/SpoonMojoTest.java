@@ -1,6 +1,7 @@
 package fr.inria.gforge.spoon.mojo;
 
 import org.apache.commons.io.filefilter.WildcardFileFilter;
+import org.apache.maven.plugin.Mojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.testing.MojoRule;
 import org.apache.maven.plugin.testing.resources.TestResources;
@@ -212,6 +213,7 @@ public final class SpoonMojoTest {
 	@Test
 	public void testSpoonGoalGenerateResultFileForProjectWithGeneratedSources() throws Exception {
 		File basedir = resources.getBasedir("antlr-example");
+
 		rule.executeMojo(basedir, "generate");
 
 		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
