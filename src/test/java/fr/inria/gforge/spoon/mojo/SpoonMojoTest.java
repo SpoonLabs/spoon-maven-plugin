@@ -1,5 +1,6 @@
 package fr.inria.gforge.spoon.mojo;
 
+import fr.inria.gforge.spoon.configuration.SpoonMavenPluginException;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.maven.plugin.Mojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -136,6 +137,28 @@ public final class SpoonMojoTest {
 		} catch (MojoExecutionException e) {
 			assertThat(e.getCause().getCause()).isInstanceOf(SpoonException.class);
 		}
+
+		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
+		assertThat(dirOutputResults).doesNotExist();
+	}
+
+	@Test
+	public void testSpoonConfigThrowException() throws Exception {
+		File basedir = resources.getBasedir("hello-world-config-exception");
+		try {
+			rule.executeMojo(basedir, "generate");
+		} catch (MojoExecutionException e) {
+			assertThat(e.getCause()).isInstanceOf(SpoonMavenPluginException.class);
+		}
+
+		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
+		assertThat(dirOutputResults).doesNotExist();
+	}
+
+	@Test
+	public void testSpoonConfigCatchException() throws Exception {
+		File basedir = resources.getBasedir("hello-world-config-exception-ignored");
+		rule.executeMojo(basedir, "generate");
 
 		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
 		assertThat(dirOutputResults).doesNotExist();
