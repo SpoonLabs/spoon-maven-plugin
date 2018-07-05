@@ -11,7 +11,7 @@
   <groupId>fr.inria.gforge.spoon</groupId>
   <artifactId>spoon-maven-plugin</artifactId>
   <packaging>maven-plugin</packaging>
-  <version>2.9-SNAPSHOT</version>
+  <version>3.1-SNAPSHOT</version>
   <name>Spoon maven plugin</name>
   <description>A maven plugin to run spoon on a target project.</description>
   <url>https://github.com/SpoonLabs/spoon-maven-plugin</url>
@@ -36,6 +36,15 @@
     <!-- javadoc options -->
     <additionalparam>-Xdoclint:none</additionalparam>
   </properties>
+
+  <repositories>
+    <repository>
+      <id>maven.inria.fr-snapshot</id>
+      <name>Maven Repository for Spoon Snapshot</name>
+      <url>http://maven.inria.fr/artifactory/spoon-public-snapshot/</url>
+      <snapshots />
+    </repository>
+  </repositories>
 
   <scm>
     <url>https://github.com/SpoonLabs/spoon-maven-plugin</url>
