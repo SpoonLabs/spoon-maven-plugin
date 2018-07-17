@@ -21,7 +21,7 @@
 
     <!-- Compilation -->
     <java.version>1.8</java.version>
-    <spoon.version>6.1.0</spoon.version>
+    <spoon.version>7.0.0</spoon.version>
     <commons-io.version>2.6</commons-io.version>
     <jaxb-api.version>2.2.11</jaxb-api.version>
     <maven-plugin-annotations.version>3.5</maven-plugin-annotations.version>
@@ -39,7 +39,7 @@
 
   <repositories>
     <repository>
-      <id>gforge.inria.fr-snapshot</id>
+      <id>maven.inria.fr-snapshot</id>
       <name>Maven Repository for Spoon Snapshot</name>
       <url>http://maven.inria.fr/artifactory/spoon-public-snapshot/</url>
       <snapshots />
