@@ -23,14 +23,14 @@ public final class SpoonConfigurationBuilderTest {
 	
 	@Test
 	public void testConfigurationOfTheEnableComments() throws Exception {
-		final File basedir = resources.getBasedir("hello-world-with-comments-enabled");
+		final File basedir = resources.getBasedir("hello-world-with-comments-disabled");
 		final SpoonConfigurationBuilder configurationBuilder = getSpoonConfigurationBuilder(basedir);
 
 		final String[] config = configurationBuilder.addEnableComments().build();
 		assertThat(config.length).isEqualTo(3);
 		assertThat(config[0]).isEqualTo("--level");
 		assertThat(config[1]).isEqualTo("INFO");
-		assertThat(config[2]).isEqualTo("--enable-comments");
+		assertThat(config[2]).isEqualTo("--disable-comments");
 	}
 	
 	

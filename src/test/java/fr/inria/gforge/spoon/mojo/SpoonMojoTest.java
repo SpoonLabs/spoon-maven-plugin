@@ -36,8 +36,8 @@ public final class SpoonMojoTest {
 	}
 
 	@Test
-	public void testSpoonGoalGenerateResultFileForProjectWithComments() throws Exception {
-		File basedir = resources.getBasedir("hello-world-with-comments-enabled");
+	public void testSpoonGoalGenerateResultFileForProjectWithoutComments() throws Exception {
+		File basedir = resources.getBasedir("hello-world-with-comments-disabled");
 		rule.executeMojo(basedir, "generate");
 
 		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");

@@ -39,7 +39,7 @@ public class SpoonMojoGenerate extends AbstractMojo {
 	 */
 	@Parameter(
 			property = "enableComments",
-			defaultValue = "false")
+			defaultValue = "true")
 	private boolean enableComments;
 
 	/**

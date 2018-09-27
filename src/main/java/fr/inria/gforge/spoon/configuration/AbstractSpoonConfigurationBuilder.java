@@ -92,8 +92,8 @@ abstract class AbstractSpoonConfigurationBuilder
 	
 	@Override
 	public SpoonConfigurationBuilder addEnableComments() {
-		if (spoon.isEnableComments()){
-			parameters.add("--enable-comments");
+		if (!spoon.isEnableComments()){
+			parameters.add("--disable-comments");
 		}
 		return this;
 	}
