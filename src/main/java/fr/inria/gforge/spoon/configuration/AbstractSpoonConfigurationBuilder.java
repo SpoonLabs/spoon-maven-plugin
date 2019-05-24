@@ -51,6 +51,8 @@ abstract class AbstractSpoonConfigurationBuilder
 			}
 		}
 
+		srcDir.removeIf(file -> !file.exists());
+
 		if (srcDir.isEmpty()) {
 			throw new SpoonMavenPluginException(String.format("No source directory for %s project.", spoon.getProject().getName()));
 		}
@@ -58,9 +60,6 @@ abstract class AbstractSpoonConfigurationBuilder
 		String inputs = "";
 		for (int i = 0; i < srcDir.size(); i++) {
 			File file = srcDir.get(i);
-			if (!file.exists()) {
-				throw new SpoonMavenPluginException(file.getName() + " don't exist.");
-			}
 			inputs += file.getAbsolutePath();
 			if (i != srcDir.size() - 1) {
 				inputs += File.pathSeparatorChar;

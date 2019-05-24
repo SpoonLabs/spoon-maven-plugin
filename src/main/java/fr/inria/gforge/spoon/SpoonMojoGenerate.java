@@ -24,9 +24,12 @@ import spoon.processing.ProcessorPropertiesImpl;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Properties;
+import java.util.stream.Stream;
 
 @SuppressWarnings("UnusedDeclaration")
 @Mojo(
@@ -261,11 +264,29 @@ public class SpoonMojoGenerate extends AbstractMojo {
 
 		// Displays final classpath of the target classloader.
 		LogWrapper.info(this, "Running spoon with classpath:");
-		final URL[] urlClassLoader = ((URLClassLoader) ClassLoader.getSystemClassLoader()).getURLs();
+		final URL[] urlClassLoader = urlsFromClassLoader(ClassLoader.getSystemClassLoader());
 		for (URL currentURL : urlClassLoader) {
 			LogWrapper.info(this, currentURL.toString());
 		}
 	}
+
+    private static URL[] urlsFromClassLoader(ClassLoader classLoader) {
+        if (classLoader instanceof URLClassLoader) {
+            return ((URLClassLoader) classLoader).getURLs();
+        }
+        return Stream.of(ManagementFactory.getRuntimeMXBean().getClassPath().split(File.pathSeparator))
+                .map(SpoonMojoGenerate::toURL).toArray(URL[]::new);
+    }
+
+    private static URL toURL(String classPathEntry) {
+        try {
+            return new File(classPathEntry).toURI().toURL();
+        }
+        catch (MalformedURLException ex) {
+            throw new IllegalArgumentException(
+                    "URL could not be created from '" + classPathEntry + "'", ex);
+        }
+    }
 
 	public File getSrcFolder() {
 		return srcFolder;
