@@ -99,6 +99,28 @@ In the example below, we add processor `fr.inria.gforge.spoon.processors.CountSt
 </dependencies>
 ```
 
+# How to speficy the template path?
+
+Spoon can use [templates](src/main/java/fr/inria/gforge/spoon/SpoonModel.java) to transform source code.
+To specify the template path, one does as follows.
+
+```xml
+<configuration>
+  <templates>
+    <template>
+      /path/to/my/templates
+    </template>
+  </templates>
+</configuration>
+<dependencies>
+  <dependency>
+    <groupId>fr.inria.gforge.spoon</groupId>
+    <artifactId>spoon-processors</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </dependency>
+</dependencies>
+```
+
 ## How to pass properties to a processor? 
 
 Spoon allow to pass custom properties to the processor you want to use, directly in the `pom.xml`. 
