@@ -27,10 +27,12 @@ To use spoon-maven-plugin, you need to declare it on the `build` tag in the `pom
 The usage below is the minimum to execute the plugin and run spoon on your project.
 
 ```xml
+<build>
+<plugins>
 <plugin>
   <groupId>fr.inria.gforge.spoon</groupId>
   <artifactId>spoon-maven-plugin</artifactId>
-  <version>LATEST</version>
+  <version>LATEST</version><!-- replace LATEST by the value of the badge at the top of the README -->
   <executions>
     <execution>
       <phase>generate-sources</phase>
@@ -40,6 +42,8 @@ The usage below is the minimum to execute the plugin and run spoon on your proje
     </execution>
   </executions>
 </plugin>
+</plugins>
+</build>
 ```
 
 Consequently, when `mvn clean install` is run on your project, the source code is first rewritten by spoon before compilation.
