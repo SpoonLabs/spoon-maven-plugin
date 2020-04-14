@@ -14,6 +14,9 @@ import java.util.Map;
 public class ProcessorWithProperty extends AbstractProcessor<CtClass> {
 
     @Property
+    String methods;
+
+    @Property
     String oldClassName;
 
     @Property
