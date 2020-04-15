@@ -15,13 +15,19 @@ jdk:
 install: true
 
 script:
-- mvn install
+# we need to install the processors first
 - cd src/test/projects/processor
 - mvn install
 - cd ../../../..
+- mvn install
 - cd src/test/projects/hello-world
 # updating to latest version
-- xmlstarlet edit -L --update '/_:project/_:build/_:plugins/_:plugin/_:version' --value $CURRENT_VERSION_NO_SNAPSHOT pom.xml
+- xmlstarlet edit -L --update '/_:project/_:build/_:plugins/_:plugin/_:version' --value $SPOON_MAVEN_PLUGIN_VERSION pom.xml
+- mvn install
+- cd ../../../..
+- cd src/test/projects/hello-world-with-properties
+# updating to latest version
+- xmlstarlet edit -L --update '/_:project/_:build/_:plugins/_:plugin/_:version' --value $SPOON_MAVEN_PLUGIN_VERSION pom.xml
 - mvn install
 
 
