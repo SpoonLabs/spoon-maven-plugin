@@ -20,6 +20,7 @@ script:
 - mvn install
 - cd ../../../..
 - mvn install
+# trying a real transformation as done in reality
 - cd src/test/projects/hello-world-with-processor
 # updating to latest version
 - xmlstarlet edit -L --update '/_:project/_:build/_:plugins/_:plugin/_:version' --value $SPOON_MAVEN_PLUGIN_VERSION pom.xml
