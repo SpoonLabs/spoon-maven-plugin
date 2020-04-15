@@ -131,7 +131,11 @@ abstract class AbstractSpoonConfigurationBuilder
 	@Override
 	public SpoonConfigurationBuilder addNoClasspath() {
 		if (spoon.isNoClasspath()) {
-			parameters.add("-x");
+			parameters.add("--cpmode");
+			parameters.add("NOCLASSPATH");
+		} else {
+			parameters.add("--cpmode");
+			parameters.add("FULLCLASSPATH");
 		}
 		return this;
 	}
