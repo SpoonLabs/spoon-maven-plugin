@@ -8,10 +8,9 @@ import spoon.reflect.declaration.CtClass;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by urli on 21/09/2017.
- */
 public class ProcessorWithProperty extends AbstractProcessor<CtClass> {
+    @Property
+    String methods;
 
     @Property
     String oldClassName;

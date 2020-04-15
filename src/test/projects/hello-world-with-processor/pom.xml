@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>fr.inria.gforge.spoon</groupId>
-  <artifactId>hello-world</artifactId>
+  <artifactId>hello-world-with-processor</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <build>
@@ -22,9 +22,49 @@
 					</executions>
 					<configuration>
 						<processors>
-							<processor>
-								fr.inria.gforge.spoon.mojo.CountStatementProcessor
-							</processor>
+							<processor>fr.inria.gforge.spoon.mojo.CountStatementProcessor</processor>
+							<processor>fr.inria.gforge.spoon.mojo.ProcessorWithProperty</processor>
+						</processors>
+							<processorProperties>
+								<processorProperty>
+									<name>fr.inria.gforge.spoon.mojo.ProcessorWithProperty</name>
+									<properties>
+										<property>
+											<name>methods</name>
+											<value><![CDATA[
+												{
+												<!-- Does not make any sense in the context of an application server and it can cause memory
+												leaks -->
+												"java.io.File": ["deleteOnExit"],
+												<!-- The URL#equals implementation is insane (it actually tries to access the host with HTTP URLs
+												for example) -->
+												"java.net.URL": ["equals"]
+												}
+												]]></value>
+											</property>
+											<property>
+											<name>oldClassName</name>
+											<value>App</value>
+										</property>
+										<property>
+											<name>newClassName</name>
+											<value>NewName</value>
+										</property>
+										<property>
+											<name>comments</name>
+											<value>["hello","hello, world"]</value>
+										</property>
+										<property>
+											<name>other</name>
+											<value>[0,2,4]</value>
+										</property>
+										<property>
+											<name>mapTest</name>
+											<value>{"un":1,"deux":"two","trois":"3,1"}</value>
+										</property>
+									</properties>
+								</processorProperty>
+							</processorProperties>
 						</processors>
 					</configuration>
 					<dependencies>
