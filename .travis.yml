@@ -3,5 +3,25 @@ git:
 
 language: java 
 
+sudo: required
+
+before_install:
+- sudo apt-get install -y xmlstarlet
+- SPOON_MAVEN_PLUGIN_VERSION=`xmlstarlet sel -t -v '/_:project/_:version' pom.xml`
+
 jdk:
   - openjdk8
+
+install: true
+
+script:
+- mvn install
+- cd src/test/projects/processor
+- mvn install
+- cd ../../../..
+- cd src/test/projects/hello-world
+# updating to latest version
+- xmlstarlet edit -L --update '/_:project/_:build/_:plugins/_:plugin/_:version' --value $CURRENT_VERSION_NO_SNAPSHOT pom.xml
+- mvn install
+
+

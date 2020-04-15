@@ -11,7 +11,30 @@
       <plugin>
         <groupId>fr.inria.gforge.spoon</groupId>
         <artifactId>spoon-maven-plugin</artifactId>
-      </plugin>
+				<version>3.2</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+					</executions>
+					<configuration>
+						<processors>
+							<processor>
+								fr.inria.gforge.spoon.mojo.CountStatementProcessor
+							</processor>
+						</processors>
+					</configuration>
+					<dependencies>
+						<dependency>
+						<groupId>fr.inria.gforge.spoon</groupId>
+						<artifactId>processors</artifactId>
+						<version>1.0-SNAPSHOT</version>
+						</dependency>
+					</dependencies>
+					</plugin>
     </plugins>
   </build>
 </project>
