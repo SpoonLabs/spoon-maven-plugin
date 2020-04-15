@@ -29,6 +29,7 @@ public class ProcessorWithProperty extends AbstractProcessor<CtClass> {
 
     @Override
     public void process(CtClass element) {
+        System.out.println(methods);
         if (!(comments != null && comments.size() == 2 && comments.get(0).equals("hello") && comments.get(1).equals("hello, world"))) {
             element.addComment(this.getFactory().createInlineComment("Content comments: "+ StringUtils.join(comments.iterator(),",")));
             return;
