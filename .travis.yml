@@ -16,7 +16,7 @@ install: true
 
 script:
 # we need to install the processors first
-- cd src/test/projects/processor
+- cd src/test/projects/processors
 - mvn install
 - cd ../../../..
 - mvn install
