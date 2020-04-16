@@ -3,5 +3,28 @@ git:
 
 language: java 
 
+sudo: required
+
+before_install:
+- sudo apt-get install -y xmlstarlet
+- SPOON_MAVEN_PLUGIN_VERSION=`xmlstarlet sel -t -v '/_:project/_:version' pom.xml`
+
 jdk:
   - openjdk8
+
+install: true
+
+script:
+# we need to install the processors first
+- cd src/test/projects/processors
+- mvn install
+- cd ../../../..
+- mvn install
+# trying a real transformation as done in reality
+- cd src/test/projects/hello-world-with-processor
+# updating to latest version
+- xmlstarlet edit -L --update '/_:project/_:build/_:plugins/_:plugin/_:version' --value $SPOON_MAVEN_PLUGIN_VERSION pom.xml
+- mvn install
+- cd ../../../..
+
+
