@@ -255,3 +255,10 @@ If you add the following to your `~/.m2/settings.xml`
 </pluginGroups>
 ```
 Then, the plugin is automatically discovered ([through prefix resolution](https://maven.apache.org/guides/introduction/introduction-to-plugin-prefix-mapping.html)), and you can simply run `mvn spoon:generate`.
+
+## Changelogs
+
+* Version 3.3
+  * Update to Spoon 8.1
+  * Fixes noclasspath, see https://github.com/INRIA/spoon/issues/3325
+ 
