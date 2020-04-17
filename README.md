@@ -159,7 +159,7 @@ Maps and objects are created like this:
 
 ## How to change source and output folder?
 
-You can specify at spoon its input and output directories with, respectively, `srcFolder` and `outFolder` tags.
+You can specify at spoon its input and output directories with, respectively, `srcFolder`, `testFolder` and `outFolder` tags.
 
 ## How to compile original sources?
 
