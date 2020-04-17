@@ -273,4 +273,16 @@ public final class SpoonMojoTest {
 		assertThat(sourceFiles.length).isEqualTo(2);
 		assertTrue(Arrays.stream(sourceFiles).allMatch(v->v.getName().equals("AppTest.java") || v.getName().equals("App.java")));
 	}
+
+	@Test
+	public void testSpoonCheckGoalWithTest() throws Exception {
+		File basedir = resources.getBasedir("hello-world-with-test");
+		rule.executeMojo(basedir, "check");
+
+		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
+		assertThat(dirOutputResults).exists();
+
+		final File contentSource = new File(basedir, "target/generated-sources/spoon/fr/inria/gforge/spoon");
+		assertThat(contentSource).doesNotExist();
+	}
 }
