@@ -12,7 +12,7 @@
         <groupId>fr.inria.gforge.spoon</groupId>
         <artifactId>spoon-maven-plugin</artifactId>
         <configuration>
-          <testFolder>"test/main/java"</testFolder>
+          <testFolder>test/main/java</testFolder>
         </configuration>
       </plugin>
     </plugins>
