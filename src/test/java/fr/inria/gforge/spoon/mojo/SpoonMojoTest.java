@@ -284,5 +284,8 @@ public final class SpoonMojoTest {
 
 		final File contentSource = new File(basedir, "target/generated-sources/spoon/fr/inria/gforge/spoon");
 		assertThat(contentSource).doesNotExist();
+		
+		final File resultFileProcessor = new File(basedir, "target/spoon-maven-plugin/spoon-nb-statement.txt");
+		assertThat(resultFileProcessor).exists();
 	}
 }
