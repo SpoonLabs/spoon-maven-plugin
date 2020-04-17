@@ -13,9 +13,7 @@ import spoon.SpoonException;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 public final class SpoonMojoTest {
 	@Rule
@@ -270,8 +268,8 @@ public final class SpoonMojoTest {
 		assertThat(contentSource).exists();
 
 		final File[] sourceFiles = contentSource.listFiles();
-		assertThat(sourceFiles.length).isEqualTo(2);
-		assertTrue(Arrays.stream(sourceFiles).allMatch(v->v.getName().equals("AppTest.java") || v.getName().equals("App.java")));
+		assertThat(sourceFiles.length).isEqualTo(1);
+		assertThat(sourceFiles[0].getName()).isEqualTo("AppTest.java");
 	}
 
 	@Test
@@ -284,5 +282,10 @@ public final class SpoonMojoTest {
 
 		final File contentSource = new File(basedir, "target/generated-sources/spoon/fr/inria/gforge/spoon");
 		assertThat(contentSource).doesNotExist();
+
+		final WildcardFileFilter filter = new WildcardFileFilter("result-spoon-*.xml");
+		final File[] files = dirOutputResults.listFiles((FileFilter) filter);
+		assertThat(files.length).isEqualTo(1);
+		assertThat(files[0].getName()).startsWith("result-spoon");
 	}
 }
