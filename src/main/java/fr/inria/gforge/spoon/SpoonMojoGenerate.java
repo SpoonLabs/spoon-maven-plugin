@@ -35,7 +35,7 @@ import java.util.stream.Stream;
 @Mojo(
 		name = "generate",
 		defaultPhase = LifecyclePhase.GENERATE_SOURCES,
-		requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
+		requiresDependencyResolution = ResolutionScope.TEST)
 public class SpoonMojoGenerate extends AbstractMojo {
 	/**
 	 * Tells to spoon that it should copy comments
@@ -51,7 +51,7 @@ public class SpoonMojoGenerate extends AbstractMojo {
 	@Parameter(property = "folder.src")
 	private File srcFolder;
 	/**
-	 * Input directories for Spoo,.
+	 * Input directories for Spoon.
 	 */
 	@Parameter(property = "folder.src")
 	private File[] srcFolders;
@@ -136,6 +136,17 @@ public class SpoonMojoGenerate extends AbstractMojo {
 	)
 	private boolean skipSpoonErrors;
 
+	/**
+	 * Input test directory for Spoon.
+	 */
+	@Parameter(property = "folder.test")
+	private File testFolder;
+	/**
+	 * Input test directories for Spoon.
+	 */
+	@Parameter(property = "folder.test")
+	private File[] testFolders;
+	
 	@Parameter
 	private ProcessorProperties[] processorProperties;
 
@@ -358,5 +369,12 @@ public class SpoonMojoGenerate extends AbstractMojo {
 
 	public boolean getSkipSpoonErrors() {
 		return skipSpoonErrors;
+	}
+	public File getTestFolder() {
+		return testFolder;
+	}
+
+	public File[] getTestFolders() {
+		return testFolders;
 	}
 }
