@@ -272,5 +272,4 @@ public final class SpoonMojoTest {
 		assertThat(sourceFiles.length).isEqualTo(1);
 		assertThat(sourceFiles[0].getName()).isEqualTo("AppTest.java");
 	}
-
 }
