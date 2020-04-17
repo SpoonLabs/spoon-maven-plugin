@@ -35,6 +35,9 @@ import java.util.stream.Stream;
 @Mojo(
 		name = "generate",
 		defaultPhase = LifecyclePhase.GENERATE_SOURCES,
+		// Use the TEST scope so that both compile and test dependency artifacts are put in the Spoon classloader
+		// so that Spoon processors can also analyze test files. Note that by default the test source folder is not
+		// included by default and requires the usage of the testFolder/testFolders configuration parameters.
 		requiresDependencyResolution = ResolutionScope.TEST)
 public class SpoonMojoGenerate extends AbstractMojo {
 	/**
