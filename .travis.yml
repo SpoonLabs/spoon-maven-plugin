@@ -28,5 +28,6 @@ script:
 - cd ../../../..
 # try processor on hello-word-with-test
 - cd src/test/projects/hello-world-with-test
-- mvn check
+- mvn spoon:check
+- cd ../../../..
 
