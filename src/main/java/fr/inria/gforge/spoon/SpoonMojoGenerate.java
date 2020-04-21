@@ -54,7 +54,7 @@ public class SpoonMojoGenerate extends AbstractMojo {
 	@Parameter(property = "folder.src")
 	private File srcFolder;
 	/**
-	 * Input directories for Spoon.
+	 * Input directories for Spoo,.
 	 */
 	@Parameter(property = "folder.src")
 	private File[] srcFolders;
@@ -139,17 +139,6 @@ public class SpoonMojoGenerate extends AbstractMojo {
 	)
 	private boolean skipSpoonErrors;
 
-	/**
-	 * Input test directory for Spoon.
-	 */
-	@Parameter(property = "folder.test")
-	private File testFolder;
-	/**
-	 * Input test directories for Spoon.
-	 */
-	@Parameter(property = "folder.test")
-	private File[] testFolders;
-	
 	@Parameter
 	private ProcessorProperties[] processorProperties;
 
@@ -271,6 +260,7 @@ public class SpoonMojoGenerate extends AbstractMojo {
 			LogWrapper.info(this, "There is not artifact in this project.");
 		} else {
 			for (Artifact artifact : project.getArtifacts()) {
+				System.out.println(artifact);
 				LogWrapper.debug(this, artifact.toString());
 				ClasspathHacker.addFile(artifact.getFile());
 			}
@@ -372,12 +362,5 @@ public class SpoonMojoGenerate extends AbstractMojo {
 
 	public boolean getSkipSpoonErrors() {
 		return skipSpoonErrors;
-	}
-	public File getTestFolder() {
-		return testFolder;
-	}
-
-	public File[] getTestFolders() {
-		return testFolders;
 	}
 }

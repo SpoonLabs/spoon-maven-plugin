@@ -26,5 +26,7 @@ script:
 - xmlstarlet edit -L --update '/_:project/_:build/_:plugins/_:plugin/_:version' --value $SPOON_MAVEN_PLUGIN_VERSION pom.xml
 - mvn install
 - cd ../../../..
-
+# try processor on hello-word-with-test
+- cd src/test/projects/hello-world-with-test
+- mvn check
 

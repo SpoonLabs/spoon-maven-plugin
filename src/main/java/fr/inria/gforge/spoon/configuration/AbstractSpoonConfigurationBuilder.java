@@ -46,25 +46,15 @@ abstract class AbstractSpoonConfigurationBuilder
 				for (String s : spoon.getProject().getCompileSourceRoots()) {
 					srcDir.add(new File(s));
 				}
-			} else {
-				srcDir.add(new File(spoon.getProject().getBuild().getSourceDirectory()));
-			}
-		}
-
-		if (spoon.getTestFolders().length > 0) {
-			srcDir.addAll(Arrays.asList(spoon.getTestFolders()));
-		} else if (spoon.getTestFolder() != null) {
-			srcDir.add(spoon.getTestFolder());
-		} else {
-			if (!spoon.getSkipGeneratedSources()) {
 				for (String s : spoon.getProject().getTestCompileSourceRoots()) {
 					srcDir.add(new File(s));
 				}
 			} else {
+				srcDir.add(new File(spoon.getProject().getBuild().getSourceDirectory()));
 				srcDir.add(new File(spoon.getProject().getBuild().getTestSourceDirectory()));
 			}
 		}
-		
+
 		srcDir.removeIf(file -> !file.exists());
 
 		if (srcDir.isEmpty()) {
