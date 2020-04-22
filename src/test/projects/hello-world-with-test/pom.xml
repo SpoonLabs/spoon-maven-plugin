@@ -26,7 +26,7 @@
         <artifactId>spoon-maven-plugin</artifactId>
         <configuration>
           <srcFolder>test/main/java</srcFolder>
-          <noClasspath>true</noClasspath>
+          <noClasspath>false</noClasspath>
           <processors>
             <processor>fr.inria.gforge.spoon.mojo.CountStatementProcessor</processor>
           </processors>
