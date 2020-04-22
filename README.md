@@ -245,6 +245,10 @@ It's also possible to skip the plugin execution using `skip` property as in :
 
 or from command line using `-Dspoon.skip=true`.
 
+## How to set Spoon in FULLCLASSPATH mode?
+
+Add `< <configuration>>false</noClasspath>` to the `<configuration>` block of the plugin. Otherwise, NOCLASSPATH is the default.
+
 ## Command-line usage
 
 If you add the following to your `~/.m2/settings.xml`
