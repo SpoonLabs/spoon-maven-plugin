@@ -6,7 +6,7 @@ import org.junit.Assert;
 public class AppTest {
 
   @Test
-  public void foo() {
+  public void testFoo() {
     Assert.assertTrue(true||false);
     Assert.assertNotNull(null);
   }

@@ -10,6 +10,7 @@ import fr.inria.gforge.spoon.metrics.SpoonLauncherDecorator;
 import fr.inria.gforge.spoon.util.ClasspathHacker;
 import fr.inria.gforge.spoon.util.LogWrapper;
 import org.apache.maven.artifact.Artifact;
+import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -254,7 +255,7 @@ public class SpoonMojoGenerate extends AbstractMojo {
 		}
 	}
 
-	private void addArtifactsInClasspathOfTargetClassLoader() throws IOException {
+	private void addArtifactsInClasspathOfTargetClassLoader() throws IOException, DependencyResolutionRequiredException {
 		// Changes classpath of the target class loader.
 		if (project.getArtifacts() == null || project.getArtifacts().isEmpty()) {
 			LogWrapper.info(this, "There is not artifact in this project.");
@@ -263,6 +264,11 @@ public class SpoonMojoGenerate extends AbstractMojo {
 				System.out.println(artifact);
 				LogWrapper.debug(this, artifact.toString());
 				ClasspathHacker.addFile(artifact.getFile());
+			}
+			for (String testDependency : project.getTestClasspathElements()) {
+				System.out.println(testDependency);
+				LogWrapper.debug(this, testDependency);
+				ClasspathHacker.addFile(testDependency);
 			}
 		}
 
