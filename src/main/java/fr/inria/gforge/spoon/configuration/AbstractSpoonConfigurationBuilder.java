@@ -4,9 +4,11 @@ import fr.inria.gforge.spoon.SpoonMojoGenerate;
 import fr.inria.gforge.spoon.logging.ReportBuilder;
 import fr.inria.gforge.spoon.util.LogWrapper;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
+import org.apache.maven.model.Dependency;
 import org.apache.maven.project.MavenProject;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -115,6 +117,18 @@ abstract class AbstractSpoonConfigurationBuilder
 		List<String> compileClasspath;
 		try {
 			compileClasspath = project.getCompileClasspathElements();
+			String userHome = System.getProperty("user.home");
+			File mavenHome = new File(userHome + "/.m2/repository");
+			for (Dependency dependency : project.getDependencies()) {
+				String groupPath = dependency.getGroupId().replaceAll("\\.", "/");
+				String artifactName = dependency.getArtifactId();
+				String version = dependency.getVersion();
+				File entry = Paths.get(mavenHome.toString(), groupPath, artifactName, version,
+						artifactName + "-" + version + "." + dependency.getType()).toFile();
+				if (entry.exists()) {
+					compileClasspath.add(entry.getAbsolutePath());
+				}
+			}
 		} catch (DependencyResolutionRequiredException e) {
 			throw new SpoonMavenPluginException("Cannot get compile classpath elements.", e);
 		}

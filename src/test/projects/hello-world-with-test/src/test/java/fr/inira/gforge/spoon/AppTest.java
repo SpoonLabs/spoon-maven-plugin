@@ -8,6 +8,6 @@ public class AppTest {
   @Test
   public void testFoo() {
     Assert.assertTrue(true||false);
-    Assert.assertNotNull(null);
+    Assert.assertNotNull(Boolean.FALSE);
   }
 }
