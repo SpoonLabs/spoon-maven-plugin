@@ -247,7 +247,7 @@ or from command line using `-Dspoon.skip=true`.
 
 ## How to set Spoon in FULLCLASSPATH mode?
 
-Add `< <configuration>>false</noClasspath>` to the `<configuration>` block of the plugin. Otherwise, NOCLASSPATH is the default.
+Add `<noClasspath>false</noClasspath>` or `<noClasspath>true</noClasspath>` to the `<configuration>` block of the plugin. 
 
 ## Command-line usage
 
