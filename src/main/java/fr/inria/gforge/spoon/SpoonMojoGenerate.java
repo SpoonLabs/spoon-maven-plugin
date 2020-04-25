@@ -265,11 +265,6 @@ public class SpoonMojoGenerate extends AbstractMojo {
 				LogWrapper.debug(this, artifact.toString());
 				ClasspathHacker.addFile(artifact.getFile());
 			}
-			for (String testDependency : project.getTestClasspathElements()) {
-				System.out.println(testDependency);
-				LogWrapper.debug(this, testDependency);
-				ClasspathHacker.addFile(testDependency);
-			}
 		}
 
 		// Displays final classpath of the target classloader.

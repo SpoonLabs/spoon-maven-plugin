@@ -115,20 +115,10 @@ abstract class AbstractSpoonConfigurationBuilder
 	public SpoonConfigurationBuilder addSourceClasspath() throws SpoonMavenPluginException {
 		final MavenProject project = spoon.getProject();
 		List<String> compileClasspath;
+		List<String> testClasspath;
 		try {
 			compileClasspath = project.getCompileClasspathElements();
-			String userHome = System.getProperty("user.home");
-			File mavenHome = new File(userHome + "/.m2/repository");
-			for (Dependency dependency : project.getDependencies()) {
-				String groupPath = dependency.getGroupId().replaceAll("\\.", "/");
-				String artifactName = dependency.getArtifactId();
-				String version = dependency.getVersion();
-				File entry = Paths.get(mavenHome.toString(), groupPath, artifactName, version,
-						artifactName + "-" + version + "." + dependency.getType()).toFile();
-				if (entry.exists()) {
-					compileClasspath.add(entry.getAbsolutePath());
-				}
-			}
+			testClasspath = project.getTestClasspathElements();
 		} catch (DependencyResolutionRequiredException e) {
 			throw new SpoonMavenPluginException("Cannot get compile classpath elements.", e);
 		}
@@ -137,6 +127,12 @@ abstract class AbstractSpoonConfigurationBuilder
 			// Start at one because we don't would like the first compile classpath.
 			for (int i = 1; i < compileClasspath.size(); i++) {
 				classpath.append(compileClasspath.get(i)).append(File.pathSeparatorChar);
+			}
+			if(testClasspath.size() > 2) {
+				for (int i = 2; i < testClasspath.size(); i++) {
+					// start at two because 1 is target/test-classes and 2 is target/classes
+				classpath.append(testClasspath.get(i)).append(File.pathSeparatorChar);
+				}
 			}
 			LogWrapper.debug(spoon, String.format("Source classpath: %s", classpath.toString()));
 			parameters.add("--source-classpath");
