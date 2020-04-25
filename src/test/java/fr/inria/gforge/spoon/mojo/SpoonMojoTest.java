@@ -2,7 +2,6 @@ package fr.inria.gforge.spoon.mojo;
 
 import fr.inria.gforge.spoon.configuration.SpoonMavenPluginException;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
-import org.apache.maven.plugin.Mojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.testing.MojoRule;
 import org.apache.maven.plugin.testing.resources.TestResources;
