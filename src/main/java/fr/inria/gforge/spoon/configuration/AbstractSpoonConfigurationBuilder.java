@@ -4,11 +4,9 @@ import fr.inria.gforge.spoon.SpoonMojoGenerate;
 import fr.inria.gforge.spoon.logging.ReportBuilder;
 import fr.inria.gforge.spoon.util.LogWrapper;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
-import org.apache.maven.model.Dependency;
 import org.apache.maven.project.MavenProject;
 
 import java.io.File;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -130,7 +128,7 @@ abstract class AbstractSpoonConfigurationBuilder
 			}
 			if(testClasspath.size() > 2) {
 				for (int i = 2; i < testClasspath.size(); i++) {
-					// start at two because 1 is target/test-classes and 2 is target/classes
+				// start at two because 1 is target/test-classes and 2 is target/classes
 				classpath.append(testClasspath.get(i)).append(File.pathSeparatorChar);
 				}
 			}
