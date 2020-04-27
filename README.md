@@ -159,7 +159,8 @@ Maps and objects are created like this:
 
 ## How to change source and output folder?
 
-You can specify at spoon its input and output directories with, respectively, `srcFolder`, `testFolder` and `outFolder` tags.
+You can specify at spoon its input and output directories with, respectively, `srcFolder` and `outFolder` tags.
+By default, spoon-maven-plugin considers the source folders (application sources and test sources) configured in the pom.xml.
 
 ## How to compile original sources?
 
