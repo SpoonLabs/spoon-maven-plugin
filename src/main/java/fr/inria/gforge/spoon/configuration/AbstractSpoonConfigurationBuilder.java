@@ -8,9 +8,9 @@ import org.apache.maven.project.MavenProject;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 abstract class AbstractSpoonConfigurationBuilder
 		implements SpoonConfigurationBuilder {
@@ -36,39 +36,19 @@ abstract class AbstractSpoonConfigurationBuilder
 	@Override
 	public SpoonConfigurationBuilder addInputFolder() throws SpoonMavenPluginException {
 		final List<File> srcDir = new ArrayList<>();
-
-		if (spoon.getSrcFolders().length > 0) {
-			srcDir.addAll(Arrays.asList(spoon.getSrcFolders()));
-		} else if (spoon.getSrcFolder() != null) {
-			srcDir.add(spoon.getSrcFolder());
-		} else {
-			if (!spoon.getSkipGeneratedSources()) {
-				for (String s : spoon.getProject().getCompileSourceRoots()) {
-					srcDir.add(new File(s));
-				}
-				for (String s : spoon.getProject().getTestCompileSourceRoots()) {
-					srcDir.add(new File(s));
-				}
-			} else {
-				srcDir.add(new File(spoon.getProject().getBuild().getSourceDirectory()));
-				srcDir.add(new File(spoon.getProject().getBuild().getTestSourceDirectory()));
-			}
+		if(spoon.isIncludeSrcDirectories()) {
+			srcDir.add(new File(spoon.getProject().getBuild().getSourceDirectory()));
 		}
-
+		if(spoon.isIncludeTestDirectories()) {
+			srcDir.add(new File(spoon.getProject().getBuild().getTestSourceDirectory()));
+		}
+		//TODO: Fallback with generated resources needed? Maven should always know src and test folder way better than us or?
 		srcDir.removeIf(file -> !file.exists());
 
 		if (srcDir.isEmpty()) {
 			throw new SpoonMavenPluginException(String.format("No source directory for %s project.", spoon.getProject().getName()));
 		}
-
-		String inputs = "";
-		for (int i = 0; i < srcDir.size(); i++) {
-			File file = srcDir.get(i);
-			inputs += file.getAbsolutePath();
-			if (i != srcDir.size() - 1) {
-				inputs += File.pathSeparatorChar;
-			}
-		}
+		String inputs = srcDir.stream().map(File::getAbsolutePath).collect(Collectors.joining(File.pathSeparator));
 
 		parameters.add("-i");
 		parameters.add(inputs);

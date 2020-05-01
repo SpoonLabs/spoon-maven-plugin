@@ -31,7 +31,6 @@ import java.net.URLClassLoader;
 import java.util.Properties;
 import java.util.stream.Stream;
 
-@SuppressWarnings("UnusedDeclaration")
 @Mojo(
 		name = "generate",
 		defaultPhase = LifecyclePhase.GENERATE_SOURCES,
@@ -48,16 +47,6 @@ public class SpoonMojoGenerate extends AbstractMojo {
 			defaultValue = "true")
 	private boolean enableComments;
 
-	/**
-	 * Input directory for Spoon.
-	 */
-	@Parameter(property = "folder.src")
-	private File srcFolder;
-	/**
-	 * Input directories for Spoo,.
-	 */
-	@Parameter(property = "folder.src")
-	private File[] srcFolders;
 	/**
 	 * Output directory where Spoon must generate his output (spooned source code).
 	 */
@@ -142,6 +131,17 @@ public class SpoonMojoGenerate extends AbstractMojo {
 	@Parameter
 	private ProcessorProperties[] processorProperties;
 
+	@Parameter(
+		property = "Include test directories as input. Test directories are resolved by maven.",
+		defaultValue =  "false"
+	)
+	private boolean includeTestDirectories;
+
+	@Parameter(
+		property = "Include source directories as input. Source directories are resolved by maven.",
+		defaultValue =  "false"
+	)
+	private boolean includeSrcDirectories;
 
     /**
      * Skip execution.
@@ -291,14 +291,6 @@ public class SpoonMojoGenerate extends AbstractMojo {
         }
     }
 
-	public File getSrcFolder() {
-		return srcFolder;
-	}
-
-	public File[] getSrcFolders() {
-		return srcFolders;
-	}
-
 	public File getOutFolder() {
 		return outFolder;
 	}
@@ -359,7 +351,22 @@ public class SpoonMojoGenerate extends AbstractMojo {
 		return skipGeneratedSources;
 	}
 
+	/**
+	 * @return the includeSrcDirectories
+	 */
+	public boolean isIncludeSrcDirectories() {
+		return includeSrcDirectories;
+	}
+
+	/**
+	 * @return the includeTestDirectories
+	 */
+	public boolean isIncludeTestDirectories() {
+		return includeTestDirectories;
+	}
+
 	public boolean getSkipSpoonErrors() {
 		return skipSpoonErrors;
 	}
+	
 }
