@@ -135,13 +135,13 @@ public class SpoonMojoGenerate extends AbstractMojo {
 		property = "Include test directories as input. Test directories are resolved by maven.",
 		defaultValue =  "false"
 	)
-	private boolean includeTestDirectories;
+	private boolean includeTest;
 
 	@Parameter(
 		property = "Include source directories as input. Source directories are resolved by maven.",
-		defaultValue =  "false"
+		defaultValue =  "true"
 	)
-	private boolean includeSrcDirectories;
+	private boolean includeSource;
 
     /**
      * Skip execution.
@@ -355,14 +355,14 @@ public class SpoonMojoGenerate extends AbstractMojo {
 	 * @return the includeSrcDirectories
 	 */
 	public boolean isIncludeSrcDirectories() {
-		return includeSrcDirectories;
+		return includeSource;
 	}
 
 	/**
 	 * @return the includeTestDirectories
 	 */
 	public boolean isIncludeTestDirectories() {
-		return includeTestDirectories;
+		return includeTest;
 	}
 
 	public boolean getSkipSpoonErrors() {
