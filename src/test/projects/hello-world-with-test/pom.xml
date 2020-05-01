@@ -32,7 +32,8 @@
           </execution>
         </executions>
         <configuration>
-          <srcFolder>src/test/java</srcFolder>
+          <includeTest>true</includeTest>
+          <includeSource>false</includeSource>
           <noClasspath>false</noClasspath>
           <debug>true</debug>
           <processors>

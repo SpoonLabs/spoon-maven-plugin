@@ -12,10 +12,8 @@
         <groupId>fr.inria.gforge.spoon</groupId>
         <artifactId>spoon-maven-plugin</artifactId>
         <configuration>
-          <srcFolders>
-            <srcFolder>src/main/java</srcFolder>
-            <srcFolder>test/main/java</srcFolder>
-          </srcFolders>
+            <includeSource>true</includeSource>
+            <includeTest>true</includeTest>
         </configuration>
       </plugin>
     </plugins>
