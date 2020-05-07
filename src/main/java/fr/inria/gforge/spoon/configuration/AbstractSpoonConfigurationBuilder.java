@@ -42,7 +42,6 @@ abstract class AbstractSpoonConfigurationBuilder
 		if(spoon.isIncludeTestDirectories()) {
 			srcDir.add(new File(spoon.getProject().getBuild().getTestSourceDirectory()));
 		}
-		//TODO: Fallback with generated resources needed? Maven should always know src and test folder way better than us or?
 		srcDir.removeIf(file -> !file.exists());
 
 		if (srcDir.isEmpty()) {
