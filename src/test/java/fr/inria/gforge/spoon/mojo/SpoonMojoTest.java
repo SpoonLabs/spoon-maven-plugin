@@ -139,28 +139,6 @@ public final class SpoonMojoTest {
 		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
 		assertThat(dirOutputResults).doesNotExist();
 	}
-	@Ignore("source folder could point to a non existent folder early, asking maven for source folders removes this.")
-	@Test
-	public void testSpoonConfigThrowException() throws Exception {
-		File basedir = resources.getBasedir("hello-world-config-exception");
-		try {
-			rule.executeMojo(basedir, "generate");
-		} catch (MojoExecutionException e) {
-			assertThat(e.getCause()).isInstanceOf(SpoonMavenPluginException.class);
-		}
-
-		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
-		assertThat(dirOutputResults).doesNotExist();
-	}
-	@Ignore("source folder could point to a non existent folder early, asking maven for source folders removes this.")
-	@Test
-	public void testSpoonConfigCatchException() throws Exception {
-		File basedir = resources.getBasedir("hello-world-config-exception-ignored");
-		rule.executeMojo(basedir, "generate");
-
-		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
-		assertThat(dirOutputResults).doesNotExist();
-	}
 
 	@Test
 	public void testSpoonNoSources() throws Exception {
