@@ -2,7 +2,6 @@ package fr.inria.gforge.spoon.mojo;
 
 import fr.inria.gforge.spoon.configuration.SpoonMavenPluginException;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
-import org.apache.maven.plugin.Mojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.testing.MojoRule;
 import org.apache.maven.plugin.testing.resources.TestResources;
@@ -13,7 +12,6 @@ import spoon.SpoonException;
 
 import java.io.File;
 import java.io.FileFilter;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public final class SpoonMojoTest {
@@ -143,28 +141,6 @@ public final class SpoonMojoTest {
 	}
 
 	@Test
-	public void testSpoonConfigThrowException() throws Exception {
-		File basedir = resources.getBasedir("hello-world-config-exception");
-		try {
-			rule.executeMojo(basedir, "generate");
-		} catch (MojoExecutionException e) {
-			assertThat(e.getCause()).isInstanceOf(SpoonMavenPluginException.class);
-		}
-
-		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
-		assertThat(dirOutputResults).doesNotExist();
-	}
-
-	@Test
-	public void testSpoonConfigCatchException() throws Exception {
-		File basedir = resources.getBasedir("hello-world-config-exception-ignored");
-		rule.executeMojo(basedir, "generate");
-
-		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
-		assertThat(dirOutputResults).doesNotExist();
-	}
-
-	@Test
 	public void testSpoonNoSources() throws Exception {
 		File basedir = resources.getBasedir("hello-world-no-sources");
 		rule.executeMojo(basedir, "generate");
@@ -249,6 +225,43 @@ public final class SpoonMojoTest {
 		assertThat(dirOutputResults).exists();
 
 		final File[] files = dirOutputResults.listFiles();
+		assertThat(files.length).isEqualTo(1);
+		assertThat(files[0].getName()).startsWith("result-spoon");
+	}
+
+	@Test
+	public void testSpoonGoalWithTestClass() throws Exception {
+		File basedir = resources.getBasedir("hello-world-with-test");
+		rule.executeMojo(basedir, "generate");
+
+		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
+		assertThat(dirOutputResults).exists();
+
+		final File[] files = dirOutputResults.listFiles();
+		assertThat(files.length).isEqualTo(1);
+		assertThat(files[0].getName()).startsWith("result-spoon");
+
+		final File contentSource = new File(basedir, "target/generated-sources/spoon/fr/inria/gforge/spoon");
+		assertThat(contentSource).exists();
+
+		final File[] sourceFiles = contentSource.listFiles();
+		assertThat(sourceFiles.length).isEqualTo(1);
+		assertThat(sourceFiles[0].getName()).isEqualTo("AppTest.java");
+	}
+
+	@Test
+	public void testSpoonCheckGoalWithTest() throws Exception {
+		File basedir = resources.getBasedir("hello-world-with-test");
+		rule.executeMojo(basedir, "check");
+
+		final File dirOutputResults = new File(basedir, "target/spoon-maven-plugin");
+		assertThat(dirOutputResults).exists();
+
+		final File contentSource = new File(basedir, "target/generated-sources/spoon/fr/inria/gforge/spoon");
+		assertThat(contentSource).doesNotExist();
+
+		final WildcardFileFilter filter = new WildcardFileFilter("result-spoon-*.xml");
+		final File[] files = dirOutputResults.listFiles((FileFilter) filter);
 		assertThat(files.length).isEqualTo(1);
 		assertThat(files[0].getName()).startsWith("result-spoon");
 	}

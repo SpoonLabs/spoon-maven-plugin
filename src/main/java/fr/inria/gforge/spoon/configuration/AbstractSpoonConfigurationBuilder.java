@@ -8,9 +8,9 @@ import org.apache.maven.project.MavenProject;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 abstract class AbstractSpoonConfigurationBuilder
 		implements SpoonConfigurationBuilder {
@@ -36,35 +36,18 @@ abstract class AbstractSpoonConfigurationBuilder
 	@Override
 	public SpoonConfigurationBuilder addInputFolder() throws SpoonMavenPluginException {
 		final List<File> srcDir = new ArrayList<>();
-
-		if (spoon.getSrcFolders().length > 0) {
-			srcDir.addAll(Arrays.asList(spoon.getSrcFolders()));
-		} else if (spoon.getSrcFolder() != null) {
-			srcDir.add(spoon.getSrcFolder());
-		} else {
-			if (!spoon.getSkipGeneratedSources()) {
-				for (String s : spoon.getProject().getCompileSourceRoots()) {
-					srcDir.add(new File(s));
-				}
-			} else {
-				srcDir.add(new File(spoon.getProject().getBuild().getSourceDirectory()));
-			}
+		if(spoon.isIncludeSrcDirectories()) {
+			srcDir.add(new File(spoon.getProject().getBuild().getSourceDirectory()));
 		}
-
+		if(spoon.isIncludeTestDirectories()) {
+			srcDir.add(new File(spoon.getProject().getBuild().getTestSourceDirectory()));
+		}
 		srcDir.removeIf(file -> !file.exists());
 
 		if (srcDir.isEmpty()) {
 			throw new SpoonMavenPluginException(String.format("No source directory for %s project.", spoon.getProject().getName()));
 		}
-
-		String inputs = "";
-		for (int i = 0; i < srcDir.size(); i++) {
-			File file = srcDir.get(i);
-			inputs += file.getAbsolutePath();
-			if (i != srcDir.size() - 1) {
-				inputs += File.pathSeparatorChar;
-			}
-		}
+		String inputs = srcDir.stream().map(File::getAbsolutePath).collect(Collectors.joining(File.pathSeparator));
 
 		parameters.add("-i");
 		parameters.add(inputs);
@@ -109,8 +92,10 @@ abstract class AbstractSpoonConfigurationBuilder
 	public SpoonConfigurationBuilder addSourceClasspath() throws SpoonMavenPluginException {
 		final MavenProject project = spoon.getProject();
 		List<String> compileClasspath;
+		List<String> testClasspath;
 		try {
 			compileClasspath = project.getCompileClasspathElements();
+			testClasspath = project.getTestClasspathElements();
 		} catch (DependencyResolutionRequiredException e) {
 			throw new SpoonMavenPluginException("Cannot get compile classpath elements.", e);
 		}
@@ -119,6 +104,12 @@ abstract class AbstractSpoonConfigurationBuilder
 			// Start at one because we don't would like the first compile classpath.
 			for (int i = 1; i < compileClasspath.size(); i++) {
 				classpath.append(compileClasspath.get(i)).append(File.pathSeparatorChar);
+			}
+			if(testClasspath.size() > 2) {
+				for (int i = 2; i < testClasspath.size(); i++) {
+				// start at two because 1 is target/test-classes and 2 is target/classes
+				classpath.append(testClasspath.get(i)).append(File.pathSeparatorChar);
+				}
 			}
 			LogWrapper.debug(spoon, String.format("Source classpath: %s", classpath.toString()));
 			parameters.add("--source-classpath");

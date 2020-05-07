@@ -31,11 +31,13 @@ import java.net.URLClassLoader;
 import java.util.Properties;
 import java.util.stream.Stream;
 
-@SuppressWarnings("UnusedDeclaration")
 @Mojo(
 		name = "generate",
 		defaultPhase = LifecyclePhase.GENERATE_SOURCES,
-		requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
+		// Use the TEST scope so that both compile and test dependency artifacts are put in the Spoon classloader
+		// so that Spoon processors can also analyze test files. Note that by default the test source folder is not
+		// included by default and requires the usage of the testFolder/testFolders configuration parameters.
+		requiresDependencyResolution = ResolutionScope.TEST)
 public class SpoonMojoGenerate extends AbstractMojo {
 	/**
 	 * Tells to spoon that it should copy comments
@@ -45,16 +47,6 @@ public class SpoonMojoGenerate extends AbstractMojo {
 			defaultValue = "true")
 	private boolean enableComments;
 
-	/**
-	 * Input directory for Spoon.
-	 */
-	@Parameter(property = "folder.src")
-	private File srcFolder;
-	/**
-	 * Input directories for Spoo,.
-	 */
-	@Parameter(property = "folder.src")
-	private File[] srcFolders;
 	/**
 	 * Output directory where Spoon must generate his output (spooned source code).
 	 */
@@ -139,6 +131,17 @@ public class SpoonMojoGenerate extends AbstractMojo {
 	@Parameter
 	private ProcessorProperties[] processorProperties;
 
+	@Parameter(
+		property = "Include test directories as input. Test directories are resolved by maven.",
+		defaultValue =  "false"
+	)
+	private boolean includeTest;
+
+	@Parameter(
+		property = "Include source directories as input. Source directories are resolved by maven.",
+		defaultValue =  "true"
+	)
+	private boolean includeSource;
 
     /**
      * Skip execution.
@@ -288,14 +291,6 @@ public class SpoonMojoGenerate extends AbstractMojo {
         }
     }
 
-	public File getSrcFolder() {
-		return srcFolder;
-	}
-
-	public File[] getSrcFolders() {
-		return srcFolders;
-	}
-
 	public File getOutFolder() {
 		return outFolder;
 	}
@@ -356,7 +351,22 @@ public class SpoonMojoGenerate extends AbstractMojo {
 		return skipGeneratedSources;
 	}
 
+	/**
+	 * @return the includeSrcDirectories
+	 */
+	public boolean isIncludeSrcDirectories() {
+		return includeSource;
+	}
+
+	/**
+	 * @return the includeTestDirectories
+	 */
+	public boolean isIncludeTestDirectories() {
+		return includeTest;
+	}
+
 	public boolean getSkipSpoonErrors() {
 		return skipSpoonErrors;
 	}
+	
 }

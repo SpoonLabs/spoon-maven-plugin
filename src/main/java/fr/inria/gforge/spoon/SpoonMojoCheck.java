@@ -2,16 +2,17 @@ package fr.inria.gforge.spoon;
 
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
-import java.io.File;
 
 @SuppressWarnings("UnusedDeclaration")
 @Mojo(
 		name = "check",
 		defaultPhase = LifecyclePhase.VERIFY,
-		requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
+		// Use the TEST scope so that both compile and test dependency artifacts are put in the Spoon classloader
+		// so that Spoon processors can also analyze test files. Note that by default the test source folder is not
+		// included by default and requires the usage of the testFolder/testFolders configuration parameters.
+		requiresDependencyResolution = ResolutionScope.TEST)
 
 public class SpoonMojoCheck extends SpoonMojoGenerate {
 	@Override
