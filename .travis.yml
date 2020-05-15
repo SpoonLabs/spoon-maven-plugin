@@ -32,6 +32,6 @@ script:
 - cd ../../../..
 # try processor on javacc-generate
 - cd src/test/projects/javacc-generate
-- mvn install
+- mvn package
 - cd ../../../..
 

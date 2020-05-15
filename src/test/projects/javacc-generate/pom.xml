@@ -32,28 +32,10 @@
           </dependency>
         </dependencies>
       </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>build-helper-maven-plugin</artifactId>
-        <version>3.0.0</version>
-        <executions>
-            <execution>
-                <phase>generate-sources</phase>
-                <goals>
-                    <goal>add-source</goal>
-                </goals>
-                <configuration>
-                    <sources>
-                        <source>${project.build.directory}/generated-sources/javacc/</source><!-- adjust folder name to your needs -->
-                    </sources>
-                </configuration>
-            </execution>
-        </executions>
-    </plugin>
     <plugin>
       <groupId>fr.inria.gforge.spoon</groupId>
       <artifactId>spoon-maven-plugin</artifactId>
-      <version>3.4</version>
+      <version>3.5-SNAPSHOT</version>
       <executions>
         <execution>
           <phase>generate-sources</phase>

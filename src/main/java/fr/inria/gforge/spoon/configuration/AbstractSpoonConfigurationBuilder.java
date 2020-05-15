@@ -39,6 +39,7 @@ abstract class AbstractSpoonConfigurationBuilder
 		if (spoon.isIncludeSrcDirectories()) {
 			srcDir.add(new File(spoon.getProject().getBuild().getSourceDirectory()));
 			if (!spoon.getSkipGeneratedSources()) {
+				spoon.getProject().addCompileSourceRoot(spoon.getProject().getBuild().getOutputDirectory());
 				for (String s : spoon.getProject().getCompileSourceRoots()) {
 					srcDir.add(new File(s));
 				}
@@ -47,6 +48,7 @@ abstract class AbstractSpoonConfigurationBuilder
 		if(spoon.isIncludeTestDirectories()) {
 			srcDir.add(new File(spoon.getProject().getBuild().getTestSourceDirectory()));
 			if (!spoon.getSkipGeneratedSources()) {
+				spoon.getProject().addTestCompileSourceRoot(spoon.getProject().getBuild().getTestOutputDirectory());
 				for (String s : spoon.getProject().getTestCompileSourceRoots()) {
 					srcDir.add(new File(s));
 				}
