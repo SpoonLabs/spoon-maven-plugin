@@ -36,12 +36,24 @@ abstract class AbstractSpoonConfigurationBuilder
 	@Override
 	public SpoonConfigurationBuilder addInputFolder() throws SpoonMavenPluginException {
 		final List<File> srcDir = new ArrayList<>();
-		if(spoon.isIncludeSrcDirectories()) {
+		if (spoon.isIncludeSrcDirectories()) {
 			srcDir.add(new File(spoon.getProject().getBuild().getSourceDirectory()));
+			if (!spoon.getSkipGeneratedSources()) {
+				for (String s : spoon.getProject().getCompileSourceRoots()) {
+					srcDir.add(new File(s));
+				}
+			}
 		}
 		if(spoon.isIncludeTestDirectories()) {
 			srcDir.add(new File(spoon.getProject().getBuild().getTestSourceDirectory()));
+			if (!spoon.getSkipGeneratedSources()) {
+				for (String s : spoon.getProject().getTestCompileSourceRoots()) {
+					srcDir.add(new File(s));
+				}
+			}
 		}
+
+
 		srcDir.removeIf(file -> !file.exists());
 
 		if (srcDir.isEmpty()) {
