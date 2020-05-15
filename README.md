@@ -265,6 +265,13 @@ Then, the plugin is automatically discovered ([through prefix resolution](https:
 
 ## Changelogs
 
+* Version 3.4.1
+  * Allow analysis of generated source files, even if the generating pluging missbehaves see https://github.com/SpoonLabs/spoon-maven-plugin/pull/70
+
+* Version 3.4
+  * Replacement of srcFolder(s) parameter with new includeSrc parameter
+  * Allow analysis of test dependencies, see https://github.com/SpoonLabs/spoon-maven-plugin/pull/68
+  
 * Version 3.3
   * Update to Spoon 8.1
   * Fixes noclasspath, see https://github.com/INRIA/spoon/issues/3325
