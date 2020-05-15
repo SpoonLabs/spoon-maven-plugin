@@ -9,11 +9,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
-    <dependency>
-      <groupId>fr.inria.gforge.spoon</groupId>
-      <artifactId>processors</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -58,6 +53,7 @@
     <plugin>
       <groupId>fr.inria.gforge.spoon</groupId>
       <artifactId>spoon-maven-plugin</artifactId>
+      <version>3.4</version>
       <executions>
         <execution>
           <phase>generate-sources</phase>
@@ -65,22 +61,24 @@
             <goal>generate</goal>
           </goals>
         </execution>
-      </executions>
-      <configuration>
-        <processors>
-          <processor>
-            fr.inria.gforge.spoon.processors.CountStatementProcessor
-          </processor>
-        </processors>
-      </configuration>
-      <dependencies>
-        <dependency>
+        </executions>
+        <configuration>
+          <includeTest>false</includeTest>
+          <includeSource>true</includeSource>
+          <noClasspath>false</noClasspath>
+          <debug>true</debug>
+          <processors>
+            <processor>fr.inria.gforge.spoon.mojo.CountStatementProcessor</processor>
+          </processors>
+        </configuration>
+        <dependencies>
+          <dependency>
           <groupId>fr.inria.gforge.spoon</groupId>
-          <artifactId>spoon-processors</artifactId>
+          <artifactId>processors</artifactId>
           <version>1.0-SNAPSHOT</version>
-        </dependency>
-      </dependencies>
-    </plugin>
+          </dependency>
+        </dependencies>
+        </plugin>
     </plugins>
   </build>
 </project>
