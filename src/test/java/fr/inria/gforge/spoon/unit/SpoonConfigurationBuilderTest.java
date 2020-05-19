@@ -7,7 +7,6 @@ import fr.inria.gforge.spoon.logging.ReportBuilder;
 import fr.inria.gforge.spoon.logging.ReportFactory;
 import org.apache.maven.plugin.testing.MojoRule;
 import org.apache.maven.plugin.testing.resources.TestResources;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
