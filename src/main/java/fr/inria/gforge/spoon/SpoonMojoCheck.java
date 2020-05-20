@@ -10,8 +10,8 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 		name = "check",
 		defaultPhase = LifecyclePhase.VERIFY,
 		// Use the TEST scope so that both compile and test dependency artifacts are put in the Spoon classloader
-		// so that Spoon processors can also analyze test files. Note that by default the test source folder is not
-		// included by default and requires the usage of the testFolder/testFolders configuration parameters.
+		// so that Spoon processors can also analyze test files. Note that the test source folder is not
+		// included by default and requires the usage of the includeTest configuration parameter.
 		requiresDependencyResolution = ResolutionScope.TEST)
 
 public class SpoonMojoCheck extends SpoonMojoGenerate {
