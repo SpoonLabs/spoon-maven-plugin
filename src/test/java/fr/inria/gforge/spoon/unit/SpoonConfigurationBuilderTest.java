@@ -13,6 +13,7 @@ import org.junit.Test;
 import java.io.File;
 import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public final class SpoonConfigurationBuilderTest {
 	@Rule
@@ -44,7 +45,7 @@ public final class SpoonConfigurationBuilderTest {
 		assertThat(config[0]).isEqualTo("--level");
 		assertThat(config[1]).isEqualTo("INFO");
 	}
-
+	
 	@Test
 	public void testConfigurationOfTheDefaultInputFolder() throws Exception {
 		final File basedir = resources.getBasedir("hello-world");
@@ -55,7 +56,7 @@ public final class SpoonConfigurationBuilderTest {
 		assertThat(config[0]).isEqualTo("--level");
 		assertThat(config[1]).isEqualTo("INFO");
 		assertThat(config[2]).isEqualTo("-i");
-		assertThat(config[3]).isEqualTo(basedir + File.separator + "src" + File.separator + "main" + File.separator + "java");
+		assertTrue(Arrays.stream(config).anyMatch(v->v.contains(basedir + File.separator + "src" + File.separator + "main" + File.separator + "java")));
 	}
 
 	@Test

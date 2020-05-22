@@ -30,4 +30,8 @@ script:
 - cd src/test/projects/hello-world-with-test
 - mvn spoon:check
 - cd ../../../..
+# try processor on javacc-generate
+- cd src/test/projects/javacc-generate
+- mvn package
+- cd ../../../..
 

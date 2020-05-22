@@ -1,0 +1,28 @@
+PARSER_BEGIN(Example)
+package generate.javacc.spoon;
+/** Simple brace matcher. */
+public class Example {
+
+  /** Main entry point. */
+  public static void main(String args[]) throws ParseException {
+    Example parser = new Example(System.in);
+    parser.Input();
+  }
+
+}
+
+PARSER_END(Example)
+
+/** Root production. */
+void Input() :
+{}
+{
+  MatchedBraces() ("\n"|"\r")* <EOF>
+}
+
+/** Brace matching production. */
+void MatchedBraces() :
+{}
+{
+  "{" [ MatchedBraces() ] "}"
+}
