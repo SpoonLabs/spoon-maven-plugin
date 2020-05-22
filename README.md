@@ -267,7 +267,7 @@ Then, the plugin is automatically discovered ([through prefix resolution](https:
 
 * Version 3.4.1
   * Allow analysis of generated source files e.g. from javacc, see https://github.com/SpoonLabs/spoon-maven-plugin/pull/70
-  * Use fullclasspath by default.
+  * Use fullclasspath by default
 
 * Version 3.4
   * Replacement of srcFolder(s) parameter with new includeSrc parameter
