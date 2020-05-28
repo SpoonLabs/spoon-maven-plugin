@@ -16,10 +16,10 @@ jobs:
     - "mvn install"
   stage: "run junit"
 language: java
-projectName: 
-  - hello-world-with-processor
-  - javacc-generate
-  - hello-world-with-test
+env:
+  - projectName=hello-world-with-processor
+  - projectName=javacc-generate
+  - projectName=hello-world-with-test
 script: 
   - "cd src/test/projects/processors"
   - "mvn install -DskipTests"
