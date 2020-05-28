@@ -39,7 +39,7 @@ script:
   - "mvn install -DskipTests"
   - "cd src/test/projects/"
   - cd $projectName
-  - "xmlstarlet edit -L --update '/_:project/_:build/_:plugins/_:plugin/_:version' --value $SPOON_MAVEN_PLUGIN_VERSION pom.xml"
+  - mvn versions:use-latest-snapshots
   - "mvn package"
   - "mvn clean"
   - "cd ../../../.."
