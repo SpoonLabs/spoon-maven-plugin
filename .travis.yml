@@ -1,23 +1,5 @@
 --- 
-git: 
-  depth: 1
-install:
-    - "cd src/test/projects/processors"
-    - "mvn install"
-    - "cd ../../../.."
-    - "mvn install"
-cache:
-  directories:
-  - $HOME/.m2/fr/inria/gforge/spoon/processors/
-  - $HOME/.m2/fr/inria/gforge/spoon/processors/spoon-maven-plugin/
-before_cache:
-  - rm -rf $HOME/.m2/fr/inria/gforge/spoon/processors/spoon-maven-plugin/
-jdk: 
-  - openjdk8
-  - openjdk11
-
-language: java
-env:
+env: 
   - projectName=custom-configuration
   - projectName=hello-world
   - projectName=hello-world-commented
@@ -32,15 +14,28 @@ env:
   - projectName=hello-world-with-processor
   - projectName=hello-world-with-properties
   - projectName=javacc-generate
+git: 
+  depth: 1
+install: true
+jdk: 
+  - openjdk8
+  - openjdk11
+jobs: 
+  script: 
+    - "cd src/test/projects/processors"
+    - "mvn install -DskipTests"
+    - "cd ../../../.."
+    - "mvn install"
+language: java
 script: 
   - "cd src/test/projects/processors"
   - "mvn install -DskipTests"
   - "cd ../../../.."
   - "mvn install -DskipTests"
   - "cd src/test/projects/"
-  - cd $projectName
-  - mvn versions:use-next-releases 
-  - mvn versions:use-latest-snapshots
+  - "cd $projectName"
+  - "mvn versions:use-next-releases"
+  - "mvn versions:use-latest-snapshots"
   - "mvn package"
   - "mvn clean"
   - "cd ../../../.."
