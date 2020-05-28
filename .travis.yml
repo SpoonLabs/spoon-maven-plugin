@@ -8,19 +8,13 @@ install: true
 jdk: 
   - openjdk8
 jobs: 
-  include: 
-    - 
-      script: 
-        - "cd src/test/projects/processors"
-        - "mvn install -DskipTests"
-        - "cd ../../../.."
-        - "mvn install -DskipTests"
-        - "cd src/test/projects/"
-        - cd projectName
-        - "xmlstarlet edit -L --update '/_:project/_:build/_:plugins/_:plugin/_:version' --value $SPOON_MAVEN_PLUGIN_VERSION pom.xml"
-        - "mvn package"
-        - "mvn clean"
-        - "cd ../../../.."
+  include: ~
+  script: 
+    - "cd src/test/projects/processors"
+    - "mvn install -DskipTests"
+    - "cd ../../../.."
+    - "mvn install"
+  stage: "run junit"
 language: java
 projectName: 
   - hello-world-with-processor
@@ -30,5 +24,11 @@ script:
   - "cd src/test/projects/processors"
   - "mvn install -DskipTests"
   - "cd ../../../.."
-  - "mvn install"
+  - "mvn install -DskipTests"
+  - "cd src/test/projects/"
+  - "cd ${projectName}"
+  - "xmlstarlet edit -L --update '/_:project/_:build/_:plugins/_:plugin/_:version' --value $SPOON_MAVEN_PLUGIN_VERSION pom.xml"
+  - "mvn package"
+  - "mvn clean"
+  - "cd ../../../.."
 sudo: required
