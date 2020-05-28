@@ -1,7 +1,4 @@
 --- 
-before_install: 
-  - "sudo apt-get install -y xmlstarlet"
-  - "SPOON_MAVEN_PLUGIN_VERSION=`xmlstarlet sel -t -v '/_:project/_:version' pom.xml`"
 git: 
   depth: 1
 install: true
@@ -39,8 +36,8 @@ script:
   - "mvn install -DskipTests"
   - "cd src/test/projects/"
   - cd $projectName
+  - mvn versions:use-next-releases 
   - mvn versions:use-latest-snapshots
   - "mvn package"
   - "mvn clean"
   - "cd ../../../.."
-sudo: required
