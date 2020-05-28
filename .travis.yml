@@ -19,17 +19,24 @@ projectName:
 
 install: true
 
+script: 
+  # we need to install the processors first
+  - cd src/test/projects/processors
+  - mvn install -DskipTests
+  - cd ../../../..
+  - mvn install
+
 jobs: 
   include:
     - stage: installProcessor
     script: 
       # we need to install the processors first
       - cd src/test/projects/processors
-      - mvn install
+      - mvn install -DskipTests
       - cd ../../../..
     - stage: installProject 
     script:
-      - mvn install
+      - mvn install -DskipTests
     - stage: testProjects
     script:
       - cd src/test/projects/$projectName
