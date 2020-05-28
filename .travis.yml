@@ -1,6 +1,5 @@
 --- 
 env: 
-  - projectName=junitCore
   - projectName=custom-configuration
   - projectName=hello-world
   - projectName=hello-world-commented
@@ -22,19 +21,17 @@ jdk:
   - openjdk8
   - openjdk11
 jobs: 
-  script: 
-    - "cd src/test/projects/processors"
-    - "mvn install -DskipTests"
-    - "cd ../../../.."
-    - "mvn install"
-language: java
-script: 
-  - if [$projectName=="junitCore"]; then
+  include:
+    - stage: "unit test"
+    script: 
       - "cd src/test/projects/processors"
-      - "mvn install"
+      - "mvn install -DskipTests"
       - "cd ../../../.."
       - "mvn install"
-      else
+    - jdk: openjdk8
+    - env: projectName=junitCore
+language: java
+script: 
       - "cd src/test/projects/processors"
       - "mvn install -DskipTests"
       - "cd ../../../.."
@@ -46,4 +43,3 @@ script:
       - "mvn package"
       - "mvn clean"
       - "cd ../../../.."
-    fi
