@@ -12,26 +12,28 @@ before_install:
 jdk:
   - openjdk8
 
+env: 
+  - projectName=hello-world-with-processor
+  - projectName=javacc-generate
+  - projectName=hello-world-with-test
+
 install: true
 
-script:
-# we need to install the processors first
-- cd src/test/projects/processors
-- mvn install
-- cd ../../../..
-- mvn install
-# trying a real transformation as done in reality
-- cd src/test/projects/hello-world-with-processor
-# updating to latest version
-- xmlstarlet edit -L --update '/_:project/_:build/_:plugins/_:plugin/_:version' --value $SPOON_MAVEN_PLUGIN_VERSION pom.xml
-- mvn install
-- cd ../../../..
-# try processor on hello-word-with-test
-- cd src/test/projects/hello-world-with-test
-- mvn spoon:check
-- cd ../../../..
-# try processor on javacc-generate
-- cd src/test/projects/javacc-generate
-- mvn package
-- cd ../../../..
-
+jobs: 
+  include:
+    - stage: installProcessor
+    script: 
+      # we need to install the processors first
+      - cd src/test/projects/processors
+      - mvn install
+      - cd ../../../..
+    - stage: installProject 
+    script:
+      - mvn install
+    - stage: testProjects
+    script:
+      - cd src/test/projects/$projectName
+      - xmlstarlet edit -L --update '/_:project/_:build/_:plugins/_:plugin/_:version' --value $SPOON_MAVEN_PLUGIN_VERSION pom.xml
+      - mvn package
+      - mvn clean
+      - cd ../../../..
