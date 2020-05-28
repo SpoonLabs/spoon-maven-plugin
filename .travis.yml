@@ -2,6 +2,9 @@
 git: 
   depth: 1
 install: true
+cache:
+  directories:
+  - $HOME/.m2/fr/inria/gforge/spoon/processors/
 jdk: 
   - openjdk8
   - openjdk11
