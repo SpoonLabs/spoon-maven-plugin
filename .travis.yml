@@ -19,7 +19,7 @@ projectName:
 
 install: true
 
-script: 
+- script: 
   # we need to install the processors first
   - cd src/test/projects/processors
   - mvn install -DskipTests
