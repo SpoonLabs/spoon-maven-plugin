@@ -14,19 +14,12 @@ jobs:
         - "cd src/test/projects/processors"
         - "mvn install -DskipTests"
         - "cd ../../../.."
-      stage: installProcessor
-    - 
-      script: 
         - "mvn install -DskipTests"
-      stage: installProject
-    - 
-      script: 
         - "cd src/test/projects/$projectName"
         - "xmlstarlet edit -L --update '/_:project/_:build/_:plugins/_:plugin/_:version' --value $SPOON_MAVEN_PLUGIN_VERSION pom.xml"
         - "mvn package"
         - "mvn clean"
         - "cd ../../../.."
-      stage: testProjects
 language: java
 projectName: 
   - hello-world-with-processor
