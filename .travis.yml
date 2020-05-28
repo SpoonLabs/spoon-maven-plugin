@@ -21,25 +21,29 @@ jdk:
   - openjdk8
   - openjdk11
 jobs: 
-  include:
-    - stage: "unit test"
-    script: 
-      - "cd src/test/projects/processors"
-      - "mvn install -DskipTests"
-      - "cd ../../../.."
-      - "mvn install"
-    - jdk: openjdk8
-    - env: projectName=junitCore
+  include: 
+    - 
+      stage: "unit test"
+    - 
+      script: 
+        - "cd src/test/projects/processors"
+        - "mvn install -DskipTests"
+        - "cd ../../../.."
+        - "mvn install"
+    - 
+      jdk: openjdk8
+    - 
+      env: projectName=junitCore
 language: java
 script: 
-      - "cd src/test/projects/processors"
-      - "mvn install -DskipTests"
-      - "cd ../../../.."
-      - "mvn install -DskipTests"
-      - "cd src/test/projects/"
-      - "cd $projectName"
-      - "mvn versions:use-next-releases"
-      - "mvn versions:use-latest-snapshots"
-      - "mvn package"
-      - "mvn clean"
-      - "cd ../../../.."
+  - "cd src/test/projects/processors"
+  - "mvn install -DskipTests"
+  - "cd ../../../.."
+  - "mvn install -DskipTests"
+  - "cd src/test/projects/"
+  - "cd $projectName"
+  - "mvn versions:use-next-releases"
+  - "mvn versions:use-latest-snapshots"
+  - "mvn package"
+  - "mvn clean"
+  - "cd ../../../.."
