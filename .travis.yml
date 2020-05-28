@@ -1,5 +1,6 @@
 --- 
 env: 
+  - projectName=junitCore
   - projectName=custom-configuration
   - projectName=hello-world
   - projectName=hello-world-commented
@@ -28,14 +29,20 @@ jobs:
     - "mvn install"
 language: java
 script: 
-  - "cd src/test/projects/processors"
-  - "mvn install -DskipTests"
-  - "cd ../../../.."
-  - "mvn install -DskipTests"
-  - "cd src/test/projects/"
-  - "cd $projectName"
-  - "mvn versions:use-next-releases"
-  - "mvn versions:use-latest-snapshots"
-  - "mvn package"
-  - "mvn clean"
-  - "cd ../../../.."
+  if: $projectName=="junitCore"
+    - "cd src/test/projects/processors"
+    - "mvn install"
+    - "cd ../../../.."
+    - "mvn install"
+  if: $projectName!="junitCore"
+    - "cd src/test/projects/processors"
+    - "mvn install -DskipTests"
+    - "cd ../../../.."
+    - "mvn install -DskipTests"
+    - "cd src/test/projects/"
+    - "cd $projectName"
+    - "mvn versions:use-next-releases"
+    - "mvn versions:use-latest-snapshots"
+    - "mvn package"
+    - "mvn clean"
+    - "cd ../../../.."
