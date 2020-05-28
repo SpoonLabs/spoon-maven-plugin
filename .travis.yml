@@ -1,21 +1,21 @@
 --- 
 git: 
   depth: 1
-install: true
+install:
+    - "cd src/test/projects/processors"
+    - "mvn install"
+    - "cd ../../../.."
+    - "mvn install"
 cache:
   directories:
   - $HOME/.m2/fr/inria/gforge/spoon/processors/
+  - $HOME/.m2/fr/inria/gforge/spoon/processors/spoon-maven-plugin/
+before_cache:
+  - rm -rf $HOME/.m2/fr/inria/gforge/spoon/processors/spoon-maven-plugin/
 jdk: 
   - openjdk8
   - openjdk11
-jobs: 
-  include: ~
-  script: 
-    - "cd src/test/projects/processors"
-    - "mvn install -DskipTests"
-    - "cd ../../../.."
-    - "mvn install"
-  stage: "run junit"
+
 language: java
 env:
   - projectName=custom-configuration
