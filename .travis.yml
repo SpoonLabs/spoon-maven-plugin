@@ -12,10 +12,10 @@ before_install:
 jdk:
   - openjdk8
 
-env: 
-  - projectName=hello-world-with-processor
-  - projectName=javacc-generate
-  - projectName=hello-world-with-test
+projectName: 
+  - hello-world-with-processor
+  - javacc-generate
+  - hello-world-with-test
 
 install: true
 
