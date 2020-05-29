@@ -5,7 +5,9 @@
   <groupId>fr.inria.gforge.spoon</groupId>
   <artifactId>hello-world-with-processor</artifactId>
   <version>1.0-SNAPSHOT</version>
-
+  <properties>
+    <spoonPlugin.version>3.4.1</spoon-plugin.version>
+  </properties>
   <build>
     <plugins>
       <plugin>
