@@ -19,24 +19,23 @@ git:
 install: true
 jdk: 
   - openjdk8
-  - openjdk11
 jobs: 
   include: 
     - stage: "unit test"
       script: 
         - "cd src/test/projects/processors"
-        - "mvn install -DskipTests"
+        - "mvn install -DskipTests -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8"
         - "cd ../../../.."
-        - "mvn install"
+        - "mvn install -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8"
       jdk: openjdk8
       env: projectName=junitCore
 
 language: java
 script: 
   - "cd src/test/projects/processors"
-  - "mvn install -DskipTests"
+  - "mvn install -DskipTests -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8"
   - "cd ../../../.."
-  - "mvn install -DskipTests"
+  - "mvn install -DskipTests -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8"
   - "cd src/test/projects/"
   - "cd $projectName"
   - "mvn versions:use-latest-releases"
