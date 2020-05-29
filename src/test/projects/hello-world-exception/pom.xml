@@ -13,6 +13,7 @@
       <plugin>
         <groupId>fr.inria.gforge.spoon</groupId>
         <artifactId>spoon-maven-plugin</artifactId>
+        <version>${spoonPlugin.version}</version>
         <configuration>
           <processors>
             <processor>fr.inria.gforge.spoon.mojo.ProcessorWithException</processor>
