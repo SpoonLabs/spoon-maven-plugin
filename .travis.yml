@@ -1,5 +1,6 @@
 --- 
 env:
+  - pluginversion=3.5-SNAPSHOT
   - projectName=custom-configuration
   - projectName=hello-world
   - projectName=hello-world-commented
@@ -14,8 +15,7 @@ env:
   - projectName=hello-world-with-processor
   - projectName=hello-world-with-properties
   - projectName=javacc-generate
-    global:
-    -pluginversion=3.5-SNAPSHOT
+
 git: 
   depth: 1
 install: true
