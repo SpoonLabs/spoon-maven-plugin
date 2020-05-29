@@ -1,21 +1,22 @@
 --- 
-env:
-  - pluginversion=3.5-SNAPSHOT
-  - projectName=custom-configuration
-  - projectName=hello-world
-  - projectName=hello-world-commented
-  - projectName=hello-world-config-exception
-  - projectName=hello-world-config-exception-ignored
-  - projectName=hello-world-exception
-  - projectName=hello-world-inputs
-  - projectName=hello-world-no-sources
-  - projectName=hello-world-spoon-xml
-  - projectName=hello-world-with-comments-disabled
-  - projectName=hello-world-with-imports
-  - projectName=hello-world-with-processor
-  - projectName=hello-world-with-properties
-  - projectName=javacc-generate
 
+pluginversion:
+  - 3.5-SNAPSHOT
+projectName: 
+  - custom-configuration
+  - hello-world
+  - hello-world-commented
+  - hello-world-config-exception
+  - hello-world-config-exception-ignored
+  - hello-world-exception
+  - hello-world-inputs
+  - hello-world-no-sources
+  - hello-world-spoon-xml
+  - hello-world-with-comments-disabled
+  - hello-world-with-imports
+  - hello-world-with-processor
+  - hello-world-with-properties
+  - javacc-generate
 git: 
   depth: 1
 install: true
