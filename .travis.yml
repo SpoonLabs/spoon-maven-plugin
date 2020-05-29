@@ -23,14 +23,14 @@ jdk:
 jobs: 
   include: 
     - stage: "unit test"
-    - script: 
+      script: 
         - "cd src/test/projects/processors"
         - "mvn install -DskipTests"
         - "cd ../../../.."
         - "mvn install"
-    - jdk: openjdk8
-    - env: projectName=junitCore
-    
+      jdk: openjdk8
+      env: projectName=junitCore
+
 language: java
 script: 
   - "cd src/test/projects/processors"
