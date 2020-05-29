@@ -55,6 +55,13 @@
             </processorProperty>
           </processorProperties>
         </configuration>
+            <dependencies>
+						<dependency>
+						<groupId>fr.inria.gforge.spoon</groupId>
+						<artifactId>processors</artifactId>
+						<version>1.0-SNAPSHOT</version>
+						</dependency>
+					</dependencies>
       </plugin>
     </plugins>
   </build>
