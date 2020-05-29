@@ -1,5 +1,5 @@
 --- 
-env: 
+env:
   - projectName=custom-configuration
   - projectName=hello-world
   - projectName=hello-world-commented
@@ -14,8 +14,8 @@ env:
   - projectName=hello-world-with-processor
   - projectName=hello-world-with-properties
   - projectName=javacc-generate
-pluginversion:
-  - 3.5-SNAPSHOT
+    global:
+    -pluginversion=3.5-SNAPSHOT
 git: 
   depth: 1
 install: true
@@ -41,7 +41,7 @@ script:
   - "cd src/test/projects/"
   - "cd $projectName"
   - "mvn versions:use-latest-releases"
-  - "mvn package -DspoonPlugin.version=$pluginversion"
+  - mvn package -"DspoonPlugin.version"=$pluginversion
   - "mvn clean"
   - "cd ../../../.."
 stages:
