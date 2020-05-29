@@ -11,6 +11,15 @@
       <plugin>
         <groupId>fr.inria.gforge.spoon</groupId>
         <artifactId>spoon-maven-plugin</artifactId>
+              <version>3.4.1</version>
+      <executions>
+        <execution>
+          <phase>generate-sources</phase>
+          <goals>
+            <goal>generate</goal>
+          </goals>
+        </execution>
+        </executions>
         <configuration>
           <skipSpoonErrors>true</skipSpoonErrors>
           <srcFolder>./foo</srcFolder>

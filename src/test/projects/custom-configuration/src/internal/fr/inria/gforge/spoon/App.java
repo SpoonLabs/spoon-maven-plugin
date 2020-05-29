@@ -1,4 +1,4 @@
-package fr.inria.gforge.spoon;
+package internal.fr.inria.gforge.spoon;
 
 /**
  * Hello world!
