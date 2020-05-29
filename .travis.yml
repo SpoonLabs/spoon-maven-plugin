@@ -44,3 +44,6 @@ script:
   - "mvn package"
   - "mvn clean"
   - "cd ../../../.."
+stages:
+  - unit test
+  - test
