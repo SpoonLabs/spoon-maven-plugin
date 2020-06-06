@@ -41,7 +41,7 @@ script:
   - "cd src/test/projects/"
   - "cd $projectName"
   - "mvn versions:use-latest-releases"
-  - mvn package -"DspoonPlugin.version"=$pluginversion
+  - mvn install -"DspoonPlugin.version"=$pluginversion
   - "mvn clean"
   - "cd ../../../.."
 stages:
