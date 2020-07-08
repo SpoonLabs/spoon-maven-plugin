@@ -111,18 +111,20 @@ abstract class AbstractSpoonConfigurationBuilder
 		} catch (DependencyResolutionRequiredException e) {
 			throw new SpoonMavenPluginException("Cannot get compile classpath elements.", e);
 		}
+		final StringBuilder classpath = new StringBuilder();
 		if (compileClasspath.size() > 1) {
-			final StringBuilder classpath = new StringBuilder();
 			// Start at one because we don't would like the first compile classpath.
 			for (int i = 1; i < compileClasspath.size(); i++) {
 				classpath.append(compileClasspath.get(i)).append(File.pathSeparatorChar);
 			}
-			if(testClasspath.size() > 2) {
+		}
+		if (testClasspath.size() > 2) {
 				for (int i = 2; i < testClasspath.size(); i++) {
 				// start at two because 1 is target/test-classes and 2 is target/classes
 				classpath.append(testClasspath.get(i)).append(File.pathSeparatorChar);
 				}
-			}
+		}
+		if (classpath.length() != 0) {
 			LogWrapper.debug(spoon, String.format("Source classpath: %s", classpath.toString()));
 			parameters.add("--source-classpath");
 			parameters.add(classpath.toString());
