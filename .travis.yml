@@ -1,37 +1,49 @@
-git:
+--- 
+env:
+# https://github.com/travis-ci/travis-ci/issues/9901 see here why we need to do this
+  - projectName=custom-configuration pluginversion=3.5-SNAPSHOT
+  - projectName=hello-world pluginversion=3.5-SNAPSHOT
+  - projectName=hello-world-commented pluginversion=3.5-SNAPSHOT
+  - projectName=hello-world-config-exception pluginversion=3.5-SNAPSHOT
+  - projectName=hello-world-config-exception-ignored pluginversion=3.5-SNAPSHOT
+  - projectName=hello-world-exception pluginversion=3.5-SNAPSHOT
+  - projectName=hello-world-inputs pluginversion=3.5-SNAPSHOT
+  - projectName=hello-world-no-sources pluginversion=3.5-SNAPSHOT
+  - projectName=hello-world-spoon-xml pluginversion=3.5-SNAPSHOT
+  - projectName=hello-world-with-comments-disabled pluginversion=3.5-SNAPSHOT
+  - projectName=hello-world-with-imports pluginversion=3.5-SNAPSHOT
+  - projectName=hello-world-with-processor pluginversion=3.5-SNAPSHOT
+  - projectName=hello-world-with-properties pluginversion=3.5-SNAPSHOT
+  - projectName=javacc-generate pluginversion=3.5-SNAPSHOT
+
+git: 
   depth: 1
-
-language: java 
-
-sudo: required
-
-before_install:
-- sudo apt-get install -y xmlstarlet
-- SPOON_MAVEN_PLUGIN_VERSION=`xmlstarlet sel -t -v '/_:project/_:version' pom.xml`
-
-jdk:
-  - openjdk8
-
 install: true
+jdk: 
+  - openjdk8
+jobs: 
+  include: 
+    - stage: "unit test"
+      script: 
+        - "cd src/test/projects/processors"
+        - "mvn install -DskipTests -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8"
+        - "cd ../../../.."
+        - "mvn install -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8"
+      jdk: openjdk8
+      env: projectName=junitCore
 
-script:
-# we need to install the processors first
-- cd src/test/projects/processors
-- mvn install
-- cd ../../../..
-- mvn install
-# trying a real transformation as done in reality
-- cd src/test/projects/hello-world-with-processor
-# updating to latest version
-- xmlstarlet edit -L --update '/_:project/_:build/_:plugins/_:plugin/_:version' --value $SPOON_MAVEN_PLUGIN_VERSION pom.xml
-- mvn install
-- cd ../../../..
-# try processor on hello-word-with-test
-- cd src/test/projects/hello-world-with-test
-- mvn spoon:check
-- cd ../../../..
-# try processor on javacc-generate
-- cd src/test/projects/javacc-generate
-- mvn package
-- cd ../../../..
-
+language: java
+script: 
+  - "cd src/test/projects/processors"
+  - "mvn install -DskipTests -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8"
+  - "cd ../../../.."
+  - "mvn install -DskipTests -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8"
+  - "cd src/test/projects/"
+  - "cd $projectName"
+  - "mvn versions:use-latest-releases"
+  - mvn install -"DspoonPlugin.version"=$pluginversion
+  - "mvn clean"
+  - "cd ../../../.."
+stages:
+  - unit test
+  - test

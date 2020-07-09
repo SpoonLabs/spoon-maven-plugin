@@ -5,12 +5,15 @@
   <groupId>fr.inria.gforge.spoon</groupId>
   <artifactId>hello-world</artifactId>
   <version>1.0-SNAPSHOT</version>
-
+  <properties>
+    <spoonPlugin.version>3.4.1</spoonPlugin.version>
+  </properties>
   <build>
     <plugins>
       <plugin>
         <groupId>fr.inria.gforge.spoon</groupId>
         <artifactId>spoon-maven-plugin</artifactId>
+        <version>${spoonPlugin.version}</version>
         <configuration>
           <processors>
             <processor>fr.inria.gforge.spoon.mojo.ProcessorWithException</processor>
