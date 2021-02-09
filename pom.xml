@@ -40,10 +40,10 @@
 
   <repositories>
     <repository>
-      <id>maven.inria.fr-snapshot</id>
-      <name>Maven Repository for Spoon Snapshot</name>
-      <url>http://maven.inria.fr/artifactory/spoon-public-snapshot/</url>
-      <snapshots />
+      <id>ow2.org-snapshot</id>
+      <name>Maven Repository for Spoon Snapshots</name>
+      <url>https://repository.ow2.org/nexus/content/repositories/snapshots/</url>
+      <snapshots/>
     </repository>
   </repositories>
 
