@@ -38,15 +38,6 @@
     <additionalparam>-Xdoclint:none</additionalparam>
   </properties>
 
-  <repositories>
-    <repository>
-      <id>ow2.org-snapshot</id>
-      <name>Maven Repository for Spoon Snapshots</name>
-      <url>https://repository.ow2.org/nexus/content/repositories/snapshots/</url>
-      <snapshots/>
-    </repository>
-  </repositories>
-
   <scm>
     <url>https://github.com/SpoonLabs/spoon-maven-plugin</url>
     <connection>scm:git:git://github.com/SpoonLabs/spoon-maven-plugin.git</connection>
