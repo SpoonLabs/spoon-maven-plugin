@@ -22,7 +22,7 @@
     <!-- Compilation -->
     <java.version>1.8</java.version>
     <spoon.version>8.1.0</spoon.version>
-    <commons-io.version>2.6</commons-io.version>
+    <commons-io.version>2.7</commons-io.version>
     <jaxb-api.version>2.2.11</jaxb-api.version>
     <jaxb-runtime.version>2.3.1</jaxb-runtime.version>
     <maven-plugin-annotations.version>3.5</maven-plugin-annotations.version>
