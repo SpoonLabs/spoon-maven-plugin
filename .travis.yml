@@ -20,7 +20,7 @@ git:
   depth: 1
 install: true
 jdk: 
-  - openjdk8
+  - openjdk11
 jobs: 
   include: 
     - stage: "unit test"
