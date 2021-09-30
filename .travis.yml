@@ -21,6 +21,7 @@ git:
 install: true
 jdk: 
   - openjdk11
+  - oraclejdk11
 jobs: 
   include: 
     - stage: "unit test"
