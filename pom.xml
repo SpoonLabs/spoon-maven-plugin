@@ -30,7 +30,7 @@
     <maven-plugin-api>3.3.9</maven-plugin-api>
 
     <!-- Test Dependencies -->
-    <junit.version>4.13.1</junit.version>
+    <junit.version>4.13.2</junit.version>
     <maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
     <assertj-core.version>3.8.0</assertj-core.version>
 
