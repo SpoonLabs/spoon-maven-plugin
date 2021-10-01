@@ -196,8 +196,7 @@ public class SpoonMojoGenerate extends AbstractMojo {
 		this.reportBuilder.setProjectName(project.getName());
 		this.reportBuilder.setModuleName(project.getName());
 
-		//ClassLoader cl = addArtifactsInClasspathOfTargetClassLoader();
-		ClassLoader cl = ClassLoader.getSystemClassLoader();
+		ClassLoader cl = addArtifactsInClasspathOfTargetClassLoader();
 
 		// Initializes and launch launcher of spoon.
 		this.spoonLauncher = (Launcher) cl.loadClass("spoon.Launcher").newInstance();
@@ -256,7 +255,7 @@ public class SpoonMojoGenerate extends AbstractMojo {
 	}
 
 	private URLClassLoader addArtifactsInClasspathOfTargetClassLoader() throws IOException {
-		URLClassLoader urlClassLoader = new URLClassLoader(new URL[0], ClassLoader.getSystemClassLoader());
+		URLClassLoader urlClassLoader = new URLClassLoader(new URL[0], getClass().getClassLoader());
 		// Changes classpath of the target class loader.
 		if (project.getArtifacts() == null || project.getArtifacts().isEmpty()) {
 			LogWrapper.info(this, "There is not artifact in this project.");
