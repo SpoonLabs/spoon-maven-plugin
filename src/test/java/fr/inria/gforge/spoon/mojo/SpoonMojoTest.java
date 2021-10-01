@@ -12,6 +12,8 @@ import spoon.SpoonException;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public final class SpoonMojoTest {
