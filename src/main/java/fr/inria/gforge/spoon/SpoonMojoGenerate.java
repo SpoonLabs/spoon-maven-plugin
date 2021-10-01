@@ -196,7 +196,8 @@ public class SpoonMojoGenerate extends AbstractMojo {
 		this.reportBuilder.setProjectName(project.getName());
 		this.reportBuilder.setModuleName(project.getName());
 
-		ClassLoader cl = addArtifactsInClasspathOfTargetClassLoader();
+		//ClassLoader cl = addArtifactsInClasspathOfTargetClassLoader();
+		ClassLoader cl = ClassLoader.getSystemClassLoader();
 
 		// Initializes and launch launcher of spoon.
 		this.spoonLauncher = (Launcher) cl.loadClass("spoon.Launcher").newInstance();
