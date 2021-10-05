@@ -74,9 +74,9 @@
 
   <distributionManagement>
     <snapshotRepository>
-      <id>ossrh-snapshot</id>
-      <name>Snapshots</name>
-      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        <id>ow2.org-snapshot</id>
+        <name>Maven Repository for Spoon Snapshots</name>
+        <url>https://repository.ow2.org/nexus/content/repositories/snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
 
