@@ -10,24 +10,14 @@ public final class ClasspathHacker {
 	private ClasspathHacker() {
 	}
 
-	public static void addFile(String filename) throws IOException {
-		addFile(new File(filename));
-	}
-
-	public static void addFile(File file) throws IOException {
-		addURL(file.toURI().toURL());
-	}
-
-	public static void addURL(URL u) throws IOException {
-		URLClassLoader systemClassLoader = (URLClassLoader) Thread
-				.currentThread().getContextClassLoader();
+	public static void addURL(URLClassLoader urlClassLoader, URL u) throws IOException {
 		Class<URLClassLoader> classLoaderClass = URLClassLoader.class;
 
 		try {
 			Method method = classLoaderClass.getDeclaredMethod("addURL",
 					new Class[] { URL.class });
 			method.setAccessible(true);
-			method.invoke(systemClassLoader, new Object[] { u });
+			method.invoke(urlClassLoader, new Object[] { u });
 		} catch (Throwable t) {
 			t.printStackTrace();
 			throw new IOException(

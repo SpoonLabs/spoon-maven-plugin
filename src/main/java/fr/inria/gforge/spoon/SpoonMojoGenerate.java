@@ -196,10 +196,10 @@ public class SpoonMojoGenerate extends AbstractMojo {
 		this.reportBuilder.setProjectName(project.getName());
 		this.reportBuilder.setModuleName(project.getName());
 
-		addArtifactsInClasspathOfTargetClassLoader();
+		ClassLoader cl = addArtifactsInClasspathOfTargetClassLoader();
 
 		// Initializes and launch launcher of spoon.
-		this.spoonLauncher = new Launcher();
+		this.spoonLauncher = (Launcher) cl.loadClass("spoon.Launcher").newInstance();
 
 		this.spoonLauncher.setArgs(this.buildArguments(spoonBuilder));
 
@@ -254,23 +254,18 @@ public class SpoonMojoGenerate extends AbstractMojo {
 		}
 	}
 
-	private void addArtifactsInClasspathOfTargetClassLoader() throws IOException {
+	private URLClassLoader addArtifactsInClasspathOfTargetClassLoader() throws IOException {
+		URLClassLoader urlClassLoader = new URLClassLoader(new URL[0], getClass().getClassLoader());
 		// Changes classpath of the target class loader.
 		if (project.getArtifacts() == null || project.getArtifacts().isEmpty()) {
 			LogWrapper.info(this, "There is not artifact in this project.");
 		} else {
 			for (Artifact artifact : project.getArtifacts()) {
 				LogWrapper.debug(this, artifact.toString());
-				ClasspathHacker.addFile(artifact.getFile());
+				ClasspathHacker.addURL(urlClassLoader, artifact.getFile().toURI().toURL());
 			}
 		}
-
-		// Displays final classpath of the target classloader.
-		LogWrapper.info(this, "Running spoon with classpath:");
-		final URL[] urlClassLoader = urlsFromClassLoader(ClassLoader.getSystemClassLoader());
-		for (URL currentURL : urlClassLoader) {
-			LogWrapper.info(this, currentURL.toString());
-		}
+		return urlClassLoader;
 	}
 
     private static URL[] urlsFromClassLoader(ClassLoader classLoader) {
