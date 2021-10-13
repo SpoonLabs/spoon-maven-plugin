@@ -263,7 +263,11 @@ If you add the following to your `~/.m2/settings.xml`
 ```
 Then, the plugin is automatically discovered ([through prefix resolution](https://maven.apache.org/guides/introduction/introduction-to-plugin-prefix-mapping.html)), and you can simply run `mvn spoon:generate`.
 
-## Changelogs
+## Releases
+
+* Version 3.5 (from https://github.com/SpoonLabs/spoon-maven-plugin/commit/f0f8fc90b0900cb60d4383f00b7d6ee534104ac3)
+  * Add support for Java 11+
+  * Renovated all dependencies  
 
 * Version 3.4.1
   * Allow analysis of generated source files e.g. from javacc, see https://github.com/SpoonLabs/spoon-maven-plugin/pull/70
