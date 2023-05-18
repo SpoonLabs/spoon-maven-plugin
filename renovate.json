@@ -1,5 +1,18 @@
 {
-  "extends": [
-    "config:base"
-  ]
+   "extends":[
+      "config:base",
+      "helpers:pinGitHubActionDigests"
+   ],
+   "packageRules":[
+      {
+         "matchUpdateTypes":[
+            "minor",
+            "patch",
+            "pin",
+            "digest",
+            "pinDigest"
+         ],
+         "automerge":true
+      }
+   ]
 }
