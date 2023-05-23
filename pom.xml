@@ -26,7 +26,6 @@
     <jaxb-api.version>2.3.1</jaxb-api.version>
     <jaxb-runtime.version>2.3.8</jaxb-runtime.version>
     <maven-plugin-annotations.version>3.9.0</maven-plugin-annotations.version>
-    <maven-project.version>2.2.1</maven-project.version>
     <maven-plugin-api>3.9.2</maven-plugin-api>
 
     <!-- Test Dependencies -->
@@ -74,9 +73,9 @@
 
   <distributionManagement>
     <snapshotRepository>
-        <id>ow2.org-snapshot</id>
-        <name>Maven Repository for Spoon Snapshots</name>
-        <url>https://repository.ow2.org/nexus/content/repositories/snapshots/</url>
+      <id>ow2.org-snapshot</id>
+      <name>Maven Repository for Spoon Snapshots</name>
+      <url>https://repository.ow2.org/nexus/content/repositories/snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
 
@@ -86,10 +85,11 @@
       <artifactId>processors</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>test</scope>
-  </dependency>
-  <dependency>
+    </dependency>
+    <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-core</artifactId>
+      <scope>provided</scope>
       <version>3.9.2</version>
     </dependency>
     <dependency>
@@ -101,12 +101,8 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-plugin-api</artifactId>
+      <scope>provided</scope>
       <version>${maven-plugin-api}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-project</artifactId>
-      <version>${maven-project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.plugin-tools</groupId>
@@ -195,7 +191,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
-        <version>2.5.3</version>
+        <version>3.0.0</version>
         <configuration>
           <autoVersionSubmodules>true</autoVersionSubmodules>
           <useReleaseProfile>false</useReleaseProfile>
