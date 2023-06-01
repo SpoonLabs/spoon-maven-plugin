@@ -9,7 +9,7 @@ It can be used for instance:
 * to implement architectural checks, design pattern check and make the build fail if required
 * execute pre-compilation source code transformations, for instance to automatically add logging, error-handling code, dependency injection, etc.
 
-To report an issue, please use the main Spoon issue tracker: <https://github.com/INRIA/spoon/issues>.
+To report an issue, please use the main Spoon issue tracker, with tag `spoon-maven-plugin`: <[https://github.com/INRIA/spoon/issues](https://github.com/INRIA/spoon/issues?q=is%3Aopen+label%3Aspoon-maven-plugin+sort%3Aupdated-desc)>.
 
 ## Goals
 
