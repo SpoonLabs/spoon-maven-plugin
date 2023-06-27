@@ -26,7 +26,7 @@
     <jaxb-api.version>2.3.1</jaxb-api.version>
     <jaxb-runtime.version>2.3.8</jaxb-runtime.version>
     <maven-plugin-annotations.version>3.9.0</maven-plugin-annotations.version>
-    <maven-plugin-api>3.9.2</maven-plugin-api>
+    <maven-plugin-api>3.9.3</maven-plugin-api>
 
     <!-- Test Dependencies -->
     <junit.version>4.13.2</junit.version>
