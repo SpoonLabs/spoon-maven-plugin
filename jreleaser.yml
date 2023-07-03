@@ -1,0 +1,39 @@
+project:
+  name: spoon-maven-plugin
+  description: Spoon-maven-plugin is a maven plugin for performing code analysis or transformation during build.
+  longDescription: Spoon-maven-plugin is a maven plugin which provides two goals; generate and check to execute source-code transformation and source-code analysis. It supports Java versions up to Java 11.
+  license: (LGPL)
+  links:
+    homepage: https://spoon.gforge.inria.fr/
+  java:
+    groupId: fr.inria.gforge.spoon
+    version: "11"
+
+release:
+  github:
+    owner: INRIA
+    changelog:
+      formatted: ALWAYS
+      preset: conventional-commits
+      format: '- {{commitShortHash}} {{commitTitle}}'
+      contributors:
+        format: '- {{contributorName}} ({{contributorUsernameAsLink}})'
+      hide:
+        contributors:
+          - '[bot]'
+          - 'GitHub'
+signing:
+  active: ALWAYS
+  armored: true
+deploy:
+  maven:
+    nexus2:
+      maven-central:
+        active: ALWAYS
+        # Spoon is hosted on the legacy sonatype instance, see
+        # https://central.sonatype.org/publish/publish-guide/#releasing-to-central
+        url: https://oss.sonatype.org/service/local
+        closeRepository: true
+        releaseRepository: true
+        stagingRepositories:
+          - target/staging-deploy
