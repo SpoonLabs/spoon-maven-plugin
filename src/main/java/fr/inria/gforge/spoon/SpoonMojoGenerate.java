@@ -7,9 +7,7 @@ import fr.inria.gforge.spoon.logging.ReportBuilder;
 import fr.inria.gforge.spoon.logging.ReportFactory;
 import fr.inria.gforge.spoon.metrics.PerformanceDecorator;
 import fr.inria.gforge.spoon.metrics.SpoonLauncherDecorator;
-import fr.inria.gforge.spoon.util.ClasspathHacker;
 import fr.inria.gforge.spoon.util.LogWrapper;
-import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -23,13 +21,7 @@ import spoon.compiler.Environment;
 import spoon.processing.ProcessorPropertiesImpl;
 
 import java.io.File;
-import java.io.IOException;
-import java.lang.management.ManagementFactory;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.Properties;
-import java.util.stream.Stream;
 
 @Mojo(
 		name = "generate",
@@ -196,10 +188,8 @@ public class SpoonMojoGenerate extends AbstractMojo {
 		this.reportBuilder.setProjectName(project.getName());
 		this.reportBuilder.setModuleName(project.getName());
 
-		ClassLoader cl = addArtifactsInClasspathOfTargetClassLoader();
-
 		// Initializes and launch launcher of spoon.
-		this.spoonLauncher = (Launcher) cl.loadClass("spoon.Launcher").newInstance();
+		this.spoonLauncher = new Launcher();
 
 		this.spoonLauncher.setArgs(this.buildArguments(spoonBuilder));
 
@@ -253,38 +243,6 @@ public class SpoonMojoGenerate extends AbstractMojo {
 			environment.setProcessorProperties(processorProperties.getName(), properties);
 		}
 	}
-
-	private URLClassLoader addArtifactsInClasspathOfTargetClassLoader() throws IOException {
-		URLClassLoader urlClassLoader = new URLClassLoader(new URL[0], getClass().getClassLoader());
-		// Changes classpath of the target class loader.
-		if (project.getArtifacts() == null || project.getArtifacts().isEmpty()) {
-			LogWrapper.info(this, "There is not artifact in this project.");
-		} else {
-			for (Artifact artifact : project.getArtifacts()) {
-				LogWrapper.debug(this, artifact.toString());
-				ClasspathHacker.addURL(urlClassLoader, artifact.getFile().toURI().toURL());
-			}
-		}
-		return urlClassLoader;
-	}
-
-    private static URL[] urlsFromClassLoader(ClassLoader classLoader) {
-        if (classLoader instanceof URLClassLoader) {
-            return ((URLClassLoader) classLoader).getURLs();
-        }
-        return Stream.of(ManagementFactory.getRuntimeMXBean().getClassPath().split(File.pathSeparator))
-                .map(SpoonMojoGenerate::toURL).toArray(URL[]::new);
-    }
-
-    private static URL toURL(String classPathEntry) {
-        try {
-            return new File(classPathEntry).toURI().toURL();
-        }
-        catch (MalformedURLException ex) {
-            throw new IllegalArgumentException(
-                    "URL could not be created from '" + classPathEntry + "'", ex);
-        }
-    }
 
 	public File getOutFolder() {
 		return outFolder;
