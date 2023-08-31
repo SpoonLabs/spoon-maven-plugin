@@ -21,7 +21,7 @@
 
     <!-- Compilation -->
     <java.version>11</java.version>
-    <spoon.version>10.4.0</spoon.version>
+    <spoon.version>10.4.1</spoon.version>
     <commons-io.version>2.13.0</commons-io.version>
     <jaxb-api.version>2.3.1</jaxb-api.version>
     <jaxb-runtime.version>2.3.8</jaxb-runtime.version>
