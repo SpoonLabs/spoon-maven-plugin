@@ -11,7 +11,7 @@
   <groupId>fr.inria.gforge.spoon</groupId>
   <artifactId>spoon-maven-plugin</artifactId>
   <packaging>maven-plugin</packaging>
-  <version>3.8.1-SNAPSHOT</version>
+  <version>3.8.0-SNAPSHOT</version>
   <name>Spoon maven plugin</name>
   <description>A maven plugin to run spoon on a target project.</description>
   <url>https://github.com/SpoonLabs/spoon-maven-plugin</url>
@@ -210,18 +210,6 @@
         </configuration>
       </plugin>
 
-      <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <version>1.6.13</version>
-        <extensions>true</extensions>
-        <configuration>
-          <serverId>ossrh</serverId>
-          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-          <autoReleaseAfterClose>true</autoReleaseAfterClose>
-        </configuration>
-      </plugin>
-
     </plugins>
   </build>
 
@@ -274,6 +262,18 @@
                 </goals>
               </execution>
             </executions>
+          </plugin>
+          
+          <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>1.6.13</version>
+            <extensions>true</extensions>
+            <configuration>
+              <serverId>ossrh</serverId>
+              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+            </configuration>
           </plugin>
         </plugins>
       </build>
