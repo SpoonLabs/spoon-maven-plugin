@@ -25,7 +25,7 @@
     <commons-io.version>2.15.1</commons-io.version>
     <jaxb-api.version>2.3.1</jaxb-api.version>
     <jaxb-runtime.version>2.3.9</jaxb-runtime.version>
-    <maven-plugin-annotations.version>3.9.0</maven-plugin-annotations.version>
+    <maven-plugin-annotations.version>3.11.0</maven-plugin-annotations.version>
     <maven-plugin-api>3.9.6</maven-plugin-api>
 
     <!-- Test Dependencies -->
