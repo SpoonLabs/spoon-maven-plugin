@@ -121,6 +121,12 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-utils</artifactId>
+      <version>3.5.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>fr.inria.gforge.spoon</groupId>
       <artifactId>spoon-core</artifactId>
       <version>${spoon.version}</version>

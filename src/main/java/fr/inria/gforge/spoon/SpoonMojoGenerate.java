@@ -21,7 +21,9 @@ import spoon.compiler.Environment;
 import spoon.processing.ProcessorPropertiesImpl;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 
 @Mojo(
 		name = "generate",
@@ -134,6 +136,18 @@ public class SpoonMojoGenerate extends AbstractMojo {
 		defaultValue =  "true"
 	)
 	private boolean includeSource;
+
+    /**
+     * A list of inclusion filters for Spoon input.
+     */
+    @Parameter
+    private Set<String> includes = new HashSet<>();
+
+    /**
+     * A list of exclusion filters for Spoon input.
+     */
+    @Parameter
+    private Set<String> excludes = new HashSet<>();
 
     /**
      * Skip execution.
@@ -311,7 +325,15 @@ public class SpoonMojoGenerate extends AbstractMojo {
 		return includeSource;
 	}
 
-	/**
+    public Set<String> getIncludes() {
+        return includes;
+    }
+
+    public Set<String> getExcludes() {
+        return excludes;
+    }
+
+    /**
 	 * @return the includeTestDirectories
 	 */
 	public boolean isIncludeTestDirectories() {
