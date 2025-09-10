@@ -5,6 +5,7 @@ import fr.inria.gforge.spoon.logging.ReportBuilder;
 import fr.inria.gforge.spoon.util.LogWrapper;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.project.MavenProject;
+import org.codehaus.plexus.util.DirectoryScanner;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,9 +16,13 @@ import java.util.stream.Collectors;
 abstract class AbstractSpoonConfigurationBuilder
 		implements SpoonConfigurationBuilder {
 
+    private static final String[] EMPTY_STRING_ARRAY = {};
+    private static final String[] DEFAULT_INCLUDES = {"**/**"};
+
 	protected final List<String> parameters = new LinkedList<String>();
 	protected final SpoonMojoGenerate spoon;
 	protected final ReportBuilder reportBuilder;
+    private DirectoryScanner directoryScanner = null;
 
 	protected AbstractSpoonConfigurationBuilder(SpoonMojoGenerate spoon,
 			ReportBuilder reportBuilder) {
@@ -30,42 +35,100 @@ abstract class AbstractSpoonConfigurationBuilder
 			parameters.add("--level");
 			parameters.add("INFO");
 		}
-
 	}
 
 	@Override
 	public SpoonConfigurationBuilder addInputFolder() throws SpoonMavenPluginException {
-		final List<File> srcDir = new ArrayList<>();
+		final List<File> inputs = new ArrayList<>();
 		if (spoon.isIncludeSrcDirectories()) {
-			srcDir.add(new File(spoon.getProject().getBuild().getSourceDirectory()));
-			if (!spoon.getSkipGeneratedSources()) {
-				for (String s : spoon.getProject().getCompileSourceRoots()) {
-					srcDir.add(new File(s));
+            final File sourceDirectory = new File(spoon.getProject().getBuild().getSourceDirectory());
+            if (sourceDirectory.exists()) {
+                for (final File input : filterDirectory(sourceDirectory)) {
+                    inputs.add(input);
+                }
+            }
+
+            if (!spoon.getSkipGeneratedSources()) {
+				for (final String compileSourceRootStr : spoon.getProject().getCompileSourceRoots()) {
+                    final File compileSourceRoot = new File(compileSourceRootStr);
+                    if (compileSourceRoot.exists()) {
+                        for (final File input : filterDirectory(compileSourceRoot)) {
+                            inputs.add(input);
+                        }
+                    }
 				}
 			}
 		}
-		if(spoon.isIncludeTestDirectories()) {
-			srcDir.add(new File(spoon.getProject().getBuild().getTestSourceDirectory()));
-			if (!spoon.getSkipGeneratedSources()) {
-				for (String s : spoon.getProject().getTestCompileSourceRoots()) {
-					srcDir.add(new File(s));
+
+		if (spoon.isIncludeTestDirectories()) {
+            final File testSourceDirectory = new File(spoon.getProject().getBuild().getTestSourceDirectory());
+            if (testSourceDirectory.exists()) {
+                for (final File input : filterDirectory(testSourceDirectory)) {
+                    inputs.add(input);
+                }
+            }
+
+            if (!spoon.getSkipGeneratedSources()) {
+				for (final String testCompileSourceRootStr : spoon.getProject().getTestCompileSourceRoots()) {
+                    final File testCompileSourceRoot = new File(testCompileSourceRootStr);
+                    if (testCompileSourceRoot.exists()) {
+                        for (final File input : filterDirectory(testCompileSourceRoot)) {
+                            inputs.add(input);
+                        }
+                    }
 				}
 			}
 		}
 
-
-		srcDir.removeIf(file -> !file.exists());
-
-		if (srcDir.isEmpty()) {
-			throw new SpoonMavenPluginException(String.format("No source directory for %s project.", spoon.getProject().getName()));
+		if (inputs.isEmpty()) {
+			throw new SpoonMavenPluginException(String.format("No input sources for %s project.", spoon.getProject().getName()));
 		}
-		String inputs = srcDir.stream().map(File::getAbsolutePath).collect(Collectors.joining(File.pathSeparator));
+
+		final String inputsString = inputs.stream().map(File::getAbsolutePath).collect(Collectors.joining(File.pathSeparator));
 
 		parameters.add("-i");
-		parameters.add(inputs);
-		reportBuilder.setInput(inputs);
+		parameters.add(inputsString);
+		reportBuilder.setInput(inputsString);
 		return this;
 	}
+
+    private File[] filterDirectory(final File dir) {
+        if (spoon.getIncludes().isEmpty() && spoon.getExcludes().isEmpty()) {
+            return new File[] { dir };
+        }
+
+        if (directoryScanner == null) {
+            directoryScanner = setupScanner();
+        }
+
+        directoryScanner.setBasedir(dir);
+        directoryScanner.scan();
+
+        final String[] includedFiles = directoryScanner.getIncludedFiles();
+        final File[] filtered = new File[includedFiles.length];
+        for (int i = 0; i < includedFiles.length; i++) {
+            filtered[i] = new File(dir, includedFiles[i]);
+        }
+        return filtered;
+    }
+
+    private DirectoryScanner setupScanner() {
+        final DirectoryScanner scanner = new DirectoryScanner();
+
+        if (!spoon.getIncludes().isEmpty()) {
+            scanner.setIncludes(spoon.getIncludes().toArray(EMPTY_STRING_ARRAY));
+        } else {
+            scanner.setIncludes(DEFAULT_INCLUDES);
+        }
+
+
+        if (!spoon.getExcludes().isEmpty()) {
+            String[] excludes = spoon.getExcludes().toArray(EMPTY_STRING_ARRAY);
+            scanner.setExcludes(excludes);
+        }
+
+        return scanner;
+    }
 
 	@Override
 	public SpoonConfigurationBuilder addOutputFolder() {
