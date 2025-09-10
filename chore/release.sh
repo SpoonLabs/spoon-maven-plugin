@@ -1,3 +1,9 @@
+#!/bin/bash
+# release script
+
+# fail when fail
+set -e
+
 if [ -z "$1" ]; then
   echo "Usage: $0 <patch|major|minor>"
   exit 1
