@@ -31,7 +31,7 @@
     <!-- Test Dependencies -->
     <junit.version>4.13.2</junit.version>
     <maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
-    <assertj-core.version>3.27.4</assertj-core.version>
+    <assertj-core.version>3.27.5</assertj-core.version>
 
     <!-- javadoc options -->
     <additionalparam>-Xdoclint:none</additionalparam>
