@@ -16,7 +16,7 @@ jobs:
         uses: ./.github/actions/setup-tests
 
       - name: Update flake.lock
-        uses: DeterminateSystems/update-flake-lock@da2fd6f2563fe3e4f2af8be73b864088564e263d # v20
+        uses: DeterminateSystems/update-flake-lock@c5930b397a673a70ca70be06020e943aeac310a1 # v27
         id: update-flake
         with:
           pr-title: "chore(deps): Update flake.lock"
