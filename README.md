@@ -164,6 +164,19 @@ Input folders are configured with two parameters: `includeTest` and `includeSour
 If you want to include test sources set `<includeTest>true</includeTest>`.
 Mavens source folder setting is extendable with Build Helper Maven Plugin, see https://www.mojohaus.org/build-helper-maven-plugin/index.html.
 
+It is also possible to filter the files to be included or excluded using the `includes` and `excludes` parameters.
+For example, to include only java files in `fr/inria` package and exclude `Test` files:
+```xml
+<configuration>
+    <includes>
+        <include>**/fr/inria/**/*.java</include>
+    </includes>
+    <excludes>
+        <exclude>**/*Test.java</exclude>
+    </excludes>
+</configuration>
+```
+
 ## How to compile original sources?
 
 By default, spoon generate your source code and compile these sources but you can specify at the plugin that you want to compile your original sources with the tag `compileOriginalSources` sets to true.
